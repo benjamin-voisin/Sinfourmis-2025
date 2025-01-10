@@ -6,6 +6,20 @@ simulateur:
 	$(MAKE) -C ./sinfourmis2025	
 	cp ./sinfourmis2025/Sinfourmis ./
 
+simule: simulateur fourmis
+	./Sinfourmis --team ./fourmis.so --team ./fourmis.so ./sinfourmis2025/maps/test.json
+
+animateur:
+	npm i SinfourmisAnimator/
+
 fourmis:
 	$(MAKE) -C ./src/ fourmis.so
 	cp ./src/fourmis.so ./
+
+clean:
+	$(RM) ./fourmis.so
+	$(RM) ./Sinfourmis
+
+
+cleanall: clean
+	$(MAKE) -C ./sinfourmis2025/ clean
