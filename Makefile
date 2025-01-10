@@ -1,5 +1,6 @@
 CXX = g++
 
+default: fourmis
 
 simulateur:
 	cmake -B sinfourmis2025/ sinfourmis2025/
@@ -11,6 +12,9 @@ simule: simulateur fourmis
 
 animateur:
 	npm --prefix SinfourmisAnimator/ i
+
+map-creator:
+	npm --prefix SinfourmisMapCreator/ i
 
 fourmis:
 	$(MAKE) -C ./src/ fourmis.so
