@@ -10,7 +10,7 @@ simule: simulateur fourmis
 	./Sinfourmis --team ./fourmis.so --team ./fourmis.so ./sinfourmis2025/maps/test.json
 
 animateur:
-	npm i SinfourmisAnimator/
+	npm --prefix SinfourmisAnimator/ i
 
 fourmis:
 	$(MAKE) -C ./src/ fourmis.so
