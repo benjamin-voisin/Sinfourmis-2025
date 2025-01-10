@@ -1,0 +1,9 @@
+[submodule "SinfourmisAnimator"]
+	path = SinfourmisAnimator
+	url = https://github.com/Wyrdix/SinfourmisAnimator
+[submodule "SinfourmisMapCreator"]
+	path = SinfourmisMapCreator
+	url = https://github.com/Wyrdix/SinfourmisMapCreator
+[submodule "sinfourmis2025"]
+	path = sinfourmis2025
+	url = https://github.com/ErwanTLG/sinfourmis2025/
