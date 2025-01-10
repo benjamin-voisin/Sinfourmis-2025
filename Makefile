@@ -8,13 +8,14 @@ simulateur:
 	cp ./sinfourmis2025/Sinfourmis ./
 
 simule: simulateur fourmis
-	./Sinfourmis --team ./fourmis.so --team ./fourmis.so ./sinfourmis2025/maps/test.json
+	./Sinfourmis -t dummy -t ./fourmis.so ./sinfourmis2025/maps/test.json
 
 animateur:
 	npm --prefix SinfourmisAnimator/ i
 
 map-creator:
 	npm --prefix SinfourmisMapCreator/ i
+	mkdir SinfourmisMapCreator/data
 
 fourmis:
 	$(MAKE) -C ./src/ fourmis.so
@@ -22,7 +23,9 @@ fourmis:
 
 clean:
 	$(RM) ./fourmis.so
+	$(RM) ./src/fourmis.so
 	$(RM) ./Sinfourmis
+	$(RM) *.json
 
 
 cleanall: clean

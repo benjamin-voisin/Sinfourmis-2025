@@ -1,5 +1,4 @@
 #include "sinfourmis.h"
-#include "memoire.h"
 
 #include <iostream>
 #include <vector>
@@ -12,7 +11,7 @@ reine_retour cpp_reine_activation(fourmi_etat fourmis[], const unsigned int nb_f
 
 fourmi_retour cpp_fourmi_activation(fourmi_etat *etat, const salle *salle) {
     std::cout << "prout" << std::endl;
-    return {.action = FOURMI_PASSE, .arg = 0, .depose_pheromone = false, .pheromone = 0};
+    return {.action = FOURMI_PASSE, .arg = 0, .depose_pheromone = NO_PHEROMONE, .pheromone = 0};
 }
 
 extern "C" {
