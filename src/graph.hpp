@@ -41,8 +41,10 @@ class Edge {
 		size_t _cost;
 		uint8_t _life;
 		node_id _target_id;
+		uint8_t degree_entrant; // Le numéro d’arrête dans le nœud qu’il faut prendre pour prendre cette arrête
+		uint8_t degree_sortant; // Le numéro d’arrête qu’il faut prendre dans le nœud d’arrivée pour retourner au nœeud d’avant
 	public:
-		Edge(node_id target, size_t cost);
+		Edge(node_id target, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant);
 		node_id get_target();
 };
 
@@ -53,7 +55,7 @@ class Graph {
 		int _n_nodes;
 	public:
 		void add_node(node_type_t tag, node_data_t data, node_id id);
-		void add_edge(node_id node1, node_id node2, size_t cost);
+		void add_edge(node_id node1, node_id node2, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant);
 		void remove_edge(node_id node1, node_id node2);
 		Graph();
 };
