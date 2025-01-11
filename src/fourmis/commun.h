@@ -26,13 +26,14 @@ typedef struct memoire_commun_s {
     pilemetadata_t pilemetadata;
     uint8_t type;
     enum communcomportement_e comportement;
+    uint32_t team_id;
     uint8_t vie;
     int32_t eau;
     int32_t nourriture;
     fourmi_retour ret;
 } memoire_commun_t;
 
-void commun_loads(fourmi_etat* etat, pile_t* pile, size_t size);
+void commun_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size);
 
 void commun_postaction(fourmi_etat* etat, const salle *salle);
 
