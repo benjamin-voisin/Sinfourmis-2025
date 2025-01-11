@@ -35,4 +35,6 @@ void scout_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size,
 fourmi_retour scout_action(fourmi_etat *etat, const salle *salle);
 void scout_postaction(fourmi_etat *etat, const salle *salle);
 
+void scout_pp(FILE* f, fourmi_etat* etat);
+
 #endif

@@ -83,4 +83,23 @@ fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
     return ret;
 }
 
+void new_pp(FILE* f, fourmi_etat* etat) {
+    fprintf(f, "NEW_ANT {\n");
+    commun_body_pp(f, etat);
+    fprintf(f, "}\n");
+}
+
+void fourmi_pp(FILE* f, fourmi_etat* etat) {
+    memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
+    switch (mem->type) {
+    case ANT_KIND_SCOUT:
+        scout_pp(f, etat);
+    case ANT_KIND_COMMON:
+        commun_pp(f, etat);
+    case ANT_KIND_NEW:
+        new_pp(f, etat);
+    default:
+        fprintf(f, "UNKNOWN_ANT\n");
+    }
+}
 
