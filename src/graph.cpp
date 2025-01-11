@@ -23,6 +23,7 @@ const bool Graph::is_empty() {
 void Graph::add_node(node_type_t type, node_data_t data, node_id id) {
 	if (!_nodes[id].has_value()) {
 		_nodes[id] = Node(type, data, id);
+		_n_nodes++;
 	}
 }
 
