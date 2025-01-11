@@ -47,20 +47,23 @@ void false_empiler(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     assert(!(pile_complete(memoire)));
     met->taillepile += 1;
+    if (met->taillepilemax < met->taillepile) {
+        met->taillepilemax = met->taillepile;
+    }
 }
 
 void empiler(char* memoire, pile_t e) {
     pilemetadata_t* met = pilemetadata(memoire);
     met->taillepile += 1;
+    if (met->taillepilemax < met->taillepile) {
+        met->taillepilemax = met->taillepile;
+    }
     pile_t* hd = head(memoire);
     hd->id = e.id;
     hd->degree_entrant = e.degree_entrant;
     hd->degree_sortant = e.degree_sortant;
     hd->poid = e.poid;
     hd->type = e.type;
-    if (met->taillepilemax < met->taillepile) {
-        met->taillepilemax = met->taillepile;
-    }
 }
 
 pile_t* depiler(char* memoire) {
@@ -104,6 +107,7 @@ uint32_t water2base(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     uint32_t water = 0;
     for (size_t i=0; i<met->taillepile; ++i) {
+        printf("i=%lu, imax=%lu\n", i, met->taillepile);
         pile_t* p = pile_get(memoire, i);
         water += p->poid;
         if (p->type == EAU)
@@ -116,6 +120,7 @@ uint32_t water2dest(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     uint32_t water = 0;
     for (size_t i=met->taillepile+1; i<met->taillepilemax; ++i) {
+        printf("i=%lu, imax=%lu\n", i, met->taillepilemax);
         pile_t* p = pile_get(memoire, i);
         water += p->poid;
         if (p->type == EAU)
