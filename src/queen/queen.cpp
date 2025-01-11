@@ -6,6 +6,7 @@
 #include "../fourmis/scout.h"
 #include <algorithm>
 #include <cstdint>
+#include <iostream>
 #include <thread>
 #include <vector>
 
@@ -25,15 +26,12 @@ reine_retour give_args_to_thread(
 
   std::vector<fourmi_etat> ouvrieres_garage(fourmis, fourmis + nb_fourmis);
 
-  
-
   // Send info to the queen thread
   to_reine.send_message(
       {.forumis_miam_miam = ouvrieres_garage, .state = etat, .node = salle});
 
   // Wait for return from the queen thread
   return from_reine.wait_message();
-    
 }
 
 void reine_thread() {
@@ -44,8 +42,11 @@ void reine_thread() {
         auto input = to_reine.wait_message();
         queen_state.register_last_state(*input.state);
 
+        std::cerr << "[QUEEN] Woke up on tick " << queen_state.ticks() << std::endl;
+
         // Ajoute le noeud originel si jamais y'en a po
         if (queen_state.graph()->is_empty()) {
+            std::cerr << "[QUEEN] Init graph" << std::endl;
             node_data_t data;
             data.queen = {.friendly = true, .tag = 0};
             queen_state.graph()->add_node(YAS_QUEEN, data, 0);
@@ -67,11 +68,13 @@ void reine_thread() {
                 break;
             }
         }
+        std::cerr << "[QUEEN] Friendly ants in node: " << friendly_ants_present << ", ants in garage: " << input.forumis_miam_miam.size() << std::endl;
         // On rappel les fourmis si on a la place et totu
         auto storage_space = input.state->max_stockage - input.forumis_miam_miam.size();
         if (storage_space <= friendly_ants_present) {
             action = RECUPERER_FOURMI;
             arg = friendly_ants_present;
+            std::cerr << "[QUEEN] Calling back " << arg << " ants in garage" << std::endl;
         } else if (!input.forumis_miam_miam.empty()) {
             // Sinon, on vide un peu le stockage
         		// On initialise la mémoire de totute les fourmis
@@ -80,6 +83,7 @@ void reine_thread() {
         		}
             action = ENVOYER_FOURMI;
             arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
+            std::cerr << "[QUEEN] Sent " << arg << " ants from garage" << std::endl;
         }
 
         // Et on renvoit notre retour qu'on veut, voilà
