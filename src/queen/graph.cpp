@@ -1,17 +1,19 @@
 #include "graph.hpp"
+#include "path.hpp"
 
 #include <iostream>
+#include <vector>
 
-Node::Node(node_type_t type, node_data_t data, node_id id) : _type{type}, _data{data}, _id{id}	{}
+Node::Node(node_type_t type, node_data_t data, node_id id) : type{type}, data{data}, id{id}	{}
 
 node_id Node::get_id() {
-	return _id;
+	return id;
 }
 
-Edge::Edge(node_id target, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant) : _cost{cost}, _target_id{target}, _life{1} {}
+Edge::Edge(node_id target, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant) : cost{cost}, target_id{target}, life{1} {}
 
 node_id Edge::get_target() {
-	return _target_id;
+	return target_id;
 }
 
 Graph::Graph() : _n_nodes{0}  {}
@@ -78,4 +80,9 @@ void Graph::remove_edge(node_id node1, node_id node2) {
 	// Puis on pop
 	_adjacency[node2].pop_back();
 
+}
+
+// Computes all shortest paths from one source to all known nodes.
+std::vector<Path> Graph::compute_shortest_paths(node_id source) {
+	{}
 }

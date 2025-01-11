@@ -1,5 +1,6 @@
 #pragma once
 
+#include "path.hpp"
 #include <cstdint>
 #include <vector>
 #include <optional>
@@ -27,23 +28,22 @@ typedef union node_data_u {
 typedef uint8_t node_id;
 
 class Node {
-	private:
-		node_type_t _type; // Le type du nœud, water, food, queen, empty
-		node_data_t _data; // La data dans le nœud
-		node_id _id;
 	public:
+		node_type_t type; // Le type du nœud, water, food, queen, empty
+		node_data_t data; // La data dans le nœud
+		node_id id;
+
 		Node(node_type_t type, node_data_t data, node_id id);
 		node_id get_id();
 };
 
 class Edge {
-	private:
-		size_t _cost;
-		uint8_t _life;
-		node_id _target_id;
+	public:
+		size_t cost;
+		uint8_t life;
+		node_id target_id;
 		uint8_t degree_entrant; // Le numéro d’arrête dans le nœud qu’il faut prendre pour prendre cette arrête
 		uint8_t degree_sortant; // Le numéro d’arrête qu’il faut prendre dans le nœud d’arrivée pour retourner au nœeud d’avant
-	public:
 		Edge(node_id target, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant);
 		node_id get_target();
 };
@@ -58,6 +58,8 @@ class Graph {
 		void add_node(node_type_t tag, node_data_t data, node_id id);
 		void add_edge(node_id node1, node_id node2, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant);
 		void remove_edge(node_id node1, node_id node2);
+
+		std::vector<Path> compute_shortest_paths(node_id source);
 
 		Graph();
 };

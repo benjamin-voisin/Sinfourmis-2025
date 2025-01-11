@@ -1,6 +1,6 @@
 #include "queen.hpp"
 #include "../sinfourmis.h"
-#include "../graph.hpp"
+#include "graph.hpp"
 #include "read_scout.hpp"
 #include "thread_queue.h"
 #include "../fourmis/main.h"
