@@ -66,12 +66,12 @@ void pile_pp(FILE* f, char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     pilemetadata_pp_body(f, memoire);
     fprintf(f, "PILE:\n");
-    fprintf(f, "\033[31m");
+    fprintf(f, "\033[32m");
     for (size_t i=0; i<met->taillepile; ++i) {
         pile_t* p = pile_get(memoire, i);
         pile_pp_part(f, p);
     }
-    fprintf(f, "\033[32m");
+    fprintf(f, "\033[33m");
     for (size_t i=met->taillepile; i<met->taillepilemax; ++i) {
         pile_t* p = pile_get(memoire, i);
         pile_pp_part(f, p);
