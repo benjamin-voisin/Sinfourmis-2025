@@ -1,6 +1,6 @@
 #pragma once 
 
-#include "../graph.hpp"
+#include "graph.hpp"
 #include "../sinfourmis.h"
 #include "thread_queue.h"
 #include <thread>
