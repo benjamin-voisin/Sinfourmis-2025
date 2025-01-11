@@ -36,11 +36,10 @@ fourmi_retour commun_action_versbase(fourmi_etat* etat, const salle *salle) {
     return commun_action_versdirection_(etat, salle, VERSBASE, hd->degree_sortant, NO_PHEROMONE, 0);
 }
 
-fourmi_retour commun_action_verslead(fourmi_etat* etat, const salle *salle,
-        pheromone_type pheromone_type, uint8_t pheromone) {
+fourmi_retour commun_action_verslead(fourmi_etat* etat, const salle *salle) {
     false_empiler(etat->memoire);
     pile_t* p = head(etat->memoire);
-    return commun_action_versdirection(etat, salle, p->degree_sortant, pheromone_type, pheromone);
+    return commun_action_versdirection(etat, salle, p->degree_sortant, NO_PHEROMONE, 0);
 }
 
 void commun_feedback_deplacement(fourmi_etat* etat, const salle *salle) {

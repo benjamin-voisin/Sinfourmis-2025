@@ -43,4 +43,8 @@ void commun_feedback_termine_construction(fourmi_etat* etat, const salle *salle)
 
 void commun_feedback_attaque_tunnel(fourmi_etat* etat, const salle *salle);
 
+fourmi_retour commun_action_verslead(fourmi_etat* etat, const salle *salle);
+
+fourmi_retour commun_action_versbase(fourmi_etat* etat, const salle *salle);
+
 #endif
