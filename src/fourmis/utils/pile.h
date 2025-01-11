@@ -37,6 +37,7 @@ pile_t* depiler(char* memoire);
 
 // Pour que la reine puisse retrouver le trajet d'une fourmisse
 pile_t* pile_dumps(char* memoire, size_t* size);
+void pile_loads(char* memoire, pile_t* pile, size_t size);
 
 
 uint32_t water2base(char* memoire);
