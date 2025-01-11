@@ -1,1 +1,541 @@
-{"nodes":[{"type":"VIDE","x":850,"y":300,"id":1,"neighbors":[{"to":23,"life":1},{"to":4,"life":1},{"to":25,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"EAU","x":1036,"y":328,"id":2,"neighbors":[{"to":3,"life":1},{"to":16,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0,"nodeType":"VIDE"},{"type":"VIDE","x":1050,"y":250,"id":3,"neighbors":[{"to":9,"life":1},{"to":10,"life":1},{"to":11,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0,"nodeType":"EAU"},{"type":"VIDE","x":860,"y":380,"id":4,"neighbors":[{"to":6,"life":1},{"to":25,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"VIDE","x":770,"y":400,"id":5,"neighbors":[{"to":24,"life":1},{"to":4,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"VIDE","x":840,"y":470,"id":6,"neighbors":[{"to":5,"life":1},{"to":7,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"NOURRITURE","x":960,"y":410,"id":7,"neighbors":[{"to":2,"life":1},{"to":4,"life":1},{"to":13,"life":1},{"to":12,"life":1}],"initial_food":5,"max_food":10,"regen":1,"total_available":30,"nodeType":"VIDE"},{"type":"NOURRITURE","x":960,"y":240,"id":9,"neighbors":[{"to":22,"life":1},{"to":2,"life":1},{"to":25,"life":1}],"initial_food":5,"max_food":10,"regen":1,"total_available":30,"nodeType":"VIDE"},{"type":"NOURRITURE","x":1140,"y":250,"id":10,"neighbors":[{"to":22,"life":1},{"to":17,"life":1}],"initial_food":5,"max_food":10,"regen":1,"total_available":30,"nodeType":"VIDE"},{"type":"VIDE","x":1140,"y":340,"id":11,"neighbors":[{"to":15,"life":1},{"to":21,"life":1},{"to":10,"life":1},{"to":2,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"NOURRITURE","x":1010,"y":480,"id":12,"neighbors":[{"to":13,"life":1}],"initial_food":5,"max_food":10,"regen":1,"total_available":30,"nodeType":"VIDE"},{"type":"EAU","x":910,"y":520,"id":13,"neighbors":[{"to":6,"life":1},{"to":14,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0,"nodeType":"VIDE"},{"type":"EAU","x":1110,"y":530,"id":14,"neighbors":[{"to":15,"life":1},{"to":12,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0,"nodeType":"VIDE"},{"type":"VIDE","x":1170,"y":430,"id":15,"neighbors":[{"to":18,"life":1},{"to":16,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"NOURRITURE","x":1080,"y":430,"id":16,"neighbors":[{"to":11,"life":1},{"to":7,"life":1},{"to":12,"life":1},{"to":14,"life":1}],"initial_food":5,"max_food":10,"regen":1,"total_available":30,"nodeType":"REINE"},{"type":"VIDE","x":1220,"y":300,"id":17,"neighbors":[{"to":19,"life":1},{"to":21,"life":1},{"to":11,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"VIDE","x":1230,"y":490,"id":18,"neighbors":[{"to":20,"life":1},{"to":14,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"VIDE","x":1190,"y":200,"id":19,"neighbors":[{"to":10,"life":1},{"to":20,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"REINE","x":1330,"y":350,"id":20,"neighbors":[{"to":17,"life":1},{"to":21,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0,"nodeType":"VIDE"},{"type":"VIDE","x":1240,"y":380,"id":21,"neighbors":[{"to":18,"life":1},{"to":15,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"EAU","x":1010,"y":170,"id":22,"neighbors":[{"to":3,"life":1},{"to":19,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0,"nodeType":"VIDE"},{"type":"VIDE","x":850,"y":230,"id":23,"neighbors":[{"to":9,"life":1},{"to":22,"life":1},{"to":24,"life":1},{"to":25,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0},{"type":"REINE","x":750,"y":300,"id":24,"neighbors":[{"to":1,"life":1},{"to":4,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0,"nodeType":"VIDE"},{"type":"VIDE","x":940,"y":310,"id":25,"neighbors":[{"to":2,"life":1},{"to":7,"life":1}],"initial_food":0,"max_food":0,"regen":0,"total_available":0}],"teams":[]}
+{
+  "nodes": [
+    {
+      "type": "VIDE",
+      "x": 850,
+      "y": 300,
+      "id": 1,
+      "neighbors": [
+        {
+          "to": 23,
+          "life": 1
+        },
+        {
+          "to": 4,
+          "life": 1
+        },
+        {
+          "to": 25,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "EAU",
+      "x": 1036,
+      "y": 328,
+      "id": 2,
+      "neighbors": [
+        {
+          "to": 3,
+          "life": 1
+        },
+        {
+          "to": 16,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "VIDE",
+      "x": 1050,
+      "y": 250,
+      "id": 3,
+      "neighbors": [
+        {
+          "to": 9,
+          "life": 1
+        },
+        {
+          "to": 10,
+          "life": 1
+        },
+        {
+          "to": 11,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0,
+      "nodeType": "EAU"
+    },
+    {
+      "type": "VIDE",
+      "x": 860,
+      "y": 380,
+      "id": 4,
+      "neighbors": [
+        {
+          "to": 6,
+          "life": 1
+        },
+        {
+          "to": 25,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "VIDE",
+      "x": 770,
+      "y": 400,
+      "id": 5,
+      "neighbors": [
+        {
+          "to": 24,
+          "life": 1
+        },
+        {
+          "to": 4,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "VIDE",
+      "x": 840,
+      "y": 470,
+      "id": 6,
+      "neighbors": [
+        {
+          "to": 5,
+          "life": 1
+        },
+        {
+          "to": 7,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "NOURRITURE",
+      "x": 960,
+      "y": 410,
+      "id": 7,
+      "neighbors": [
+        {
+          "to": 2,
+          "life": 1
+        },
+        {
+          "to": 4,
+          "life": 1
+        },
+        {
+          "to": 13,
+          "life": 1
+        },
+        {
+          "to": 12,
+          "life": 1
+        }
+      ],
+      "initial_food": 5,
+      "max_food": 10,
+      "regen": 1,
+      "total_available": 30,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "NOURRITURE",
+      "x": 960,
+      "y": 240,
+      "id": 9,
+      "neighbors": [
+        {
+          "to": 22,
+          "life": 1
+        },
+        {
+          "to": 2,
+          "life": 1
+        },
+        {
+          "to": 25,
+          "life": 1
+        }
+      ],
+      "initial_food": 5,
+      "max_food": 10,
+      "regen": 1,
+      "total_available": 30,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "NOURRITURE",
+      "x": 1140,
+      "y": 250,
+      "id": 10,
+      "neighbors": [
+        {
+          "to": 22,
+          "life": 1
+        },
+        {
+          "to": 17,
+          "life": 1
+        }
+      ],
+      "initial_food": 5,
+      "max_food": 10,
+      "regen": 1,
+      "total_available": 30,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "VIDE",
+      "x": 1140,
+      "y": 340,
+      "id": 11,
+      "neighbors": [
+        {
+          "to": 15,
+          "life": 1
+        },
+        {
+          "to": 21,
+          "life": 1
+        },
+        {
+          "to": 10,
+          "life": 1
+        },
+        {
+          "to": 2,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "NOURRITURE",
+      "x": 1010,
+      "y": 480,
+      "id": 12,
+      "neighbors": [
+        {
+          "to": 13,
+          "life": 1
+        }
+      ],
+      "initial_food": 5,
+      "max_food": 10,
+      "regen": 1,
+      "total_available": 30,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "EAU",
+      "x": 910,
+      "y": 520,
+      "id": 13,
+      "neighbors": [
+        {
+          "to": 6,
+          "life": 1
+        },
+        {
+          "to": 14,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "EAU",
+      "x": 1110,
+      "y": 530,
+      "id": 14,
+      "neighbors": [
+        {
+          "to": 15,
+          "life": 1
+        },
+        {
+          "to": 12,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "VIDE",
+      "x": 1170,
+      "y": 430,
+      "id": 15,
+      "neighbors": [
+        {
+          "to": 18,
+          "life": 1
+        },
+        {
+          "to": 16,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "NOURRITURE",
+      "x": 1080,
+      "y": 430,
+      "id": 16,
+      "neighbors": [
+        {
+          "to": 11,
+          "life": 1
+        },
+        {
+          "to": 7,
+          "life": 1
+        },
+        {
+          "to": 12,
+          "life": 1
+        },
+        {
+          "to": 14,
+          "life": 1
+        }
+      ],
+      "initial_food": 5,
+      "max_food": 10,
+      "regen": 1,
+      "total_available": 30,
+      "nodeType": "REINE"
+    },
+    {
+      "type": "VIDE",
+      "x": 1220,
+      "y": 300,
+      "id": 17,
+      "neighbors": [
+        {
+          "to": 19,
+          "life": 1
+        },
+        {
+          "to": 21,
+          "life": 1
+        },
+        {
+          "to": 11,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "VIDE",
+      "x": 1230,
+      "y": 490,
+      "id": 18,
+      "neighbors": [
+        {
+          "to": 20,
+          "life": 1
+        },
+        {
+          "to": 14,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "VIDE",
+      "x": 1190,
+      "y": 200,
+      "id": 19,
+      "neighbors": [
+        {
+          "to": 10,
+          "life": 1
+        },
+        {
+          "to": 20,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "REINE",
+      "x": 1330,
+      "y": 350,
+      "id": 20,
+      "neighbors": [
+        {
+          "to": 17,
+          "life": 1
+        },
+        {
+          "to": 21,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "VIDE",
+      "x": 1240,
+      "y": 380,
+      "id": 21,
+      "neighbors": [
+        {
+          "to": 18,
+          "life": 1
+        },
+        {
+          "to": 15,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "EAU",
+      "x": 1010,
+      "y": 170,
+      "id": 22,
+      "neighbors": [
+        {
+          "to": 3,
+          "life": 1
+        },
+        {
+          "to": 19,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "VIDE",
+      "x": 850,
+      "y": 230,
+      "id": 23,
+      "neighbors": [
+        {
+          "to": 9,
+          "life": 1
+        },
+        {
+          "to": 22,
+          "life": 1
+        },
+        {
+          "to": 24,
+          "life": 1
+        },
+        {
+          "to": 25,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    },
+    {
+      "type": "REINE",
+      "x": 750,
+      "y": 300,
+      "id": 24,
+      "neighbors": [
+        {
+          "to": 1,
+          "life": 1
+        },
+        {
+          "to": 4,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0,
+      "nodeType": "VIDE"
+    },
+    {
+      "type": "VIDE",
+      "x": 940,
+      "y": 310,
+      "id": 25,
+      "neighbors": [
+        {
+          "to": 2,
+          "life": 1
+        },
+        {
+          "to": 7,
+          "life": 1
+        }
+      ],
+      "initial_food": 0,
+      "max_food": 0,
+      "regen": 0,
+      "total_available": 0
+    }
+  ],
+  "teams": []
+}

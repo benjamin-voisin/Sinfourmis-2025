@@ -83,7 +83,7 @@ void reine_thread() {
         		for (fourmi_etat* fourmis : input.forumis_miam_miam) {
         			fourmi_pp(stdout, fourmis);
     					std::cerr << "[QUEEN] gaslight ant\n";
-        			scout_loads(fourmis, input.state->team_id, NULL, 0, 1);
+        			scout_loads(fourmis, input.state->team_id, NULL, 0, queen_state.produced_ants());
         		}
             action = ENVOYER_FOURMI;
             arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);

@@ -1,5 +1,5 @@
-#include "main.h"
 
+#include "../sinfourmis.h"
 #include "queen.hpp"
 
 reine_retour reine_activation(fourmi_etat fourmis[],
