@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 Node::Node(node_type_t type, node_data_t data, node_id id) : type{type}, data{data}, id{id}	{}
 
@@ -16,7 +17,11 @@ node_id Edge::get_target() {
 	return target_id;
 }
 
-Graph::Graph() : _n_nodes{0}  {}
+Graph::Graph() : _n_nodes{0}  {
+	for (size_t i = 0; i < 256; i++) {
+		_nodes[i] = std::nullopt;
+	}
+}
 
 const bool Graph::is_empty() {
 	return _n_nodes == 0;
@@ -85,4 +90,24 @@ void Graph::remove_edge(node_id node1, node_id node2) {
 // Computes all shortest paths from one source to all known nodes.
 std::vector<Path> Graph::compute_shortest_paths(node_id source) {
 	{}
+}
+
+void Graph::to_dot(std::string file) {
+	std::ofstream output;
+	output.open(file);
+	output << "digraph G {\n";
+	for (std::optional<Node> node : _nodes) {
+		if (node.has_value()) {
+			auto value = node.value();
+			int id = value.get_id();
+			std::cout << id << "\n";
+			// On dessine le nœud dans tous les cas
+			output << "\t" << "0" << ";\n";
+			// On dessine les arrêtes
+			for (Edge edge: _adjacency[id]) {
+				output << id << " -> " << edge.get_target() << ";\n";
+			}
+		}
+	}
+	output << "}";
 }

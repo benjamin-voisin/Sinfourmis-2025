@@ -3,14 +3,24 @@
 #include "graph.hpp"
 #include "read_scout.hpp"
 #include "thread_queue.h"
+<<<<<<< Updated upstream
 #include "../fourmis/main.h"
 #include "../fourmis/scout.h"
 
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
+||||||| Stash base
+=======
+
+>>>>>>> Stashed changes
 #include <thread>
+<<<<<<< Updated upstream
 #include <vector>
+||||||| Stash base
+=======
+#include <iostream>
+>>>>>>> Stashed changes
 
 std::thread* queen_thread = nullptr;
 ThreadQueue<reine_input_t> to_reine;
@@ -56,6 +66,7 @@ void reine_thread() {
 
         // Update les infos par les scouts
         queen_state.read_scouts(input.forumis_miam_miam);
+		queen_state.graph()->to_dot("graph.dot");
 
         // Cherche la prochaine action à faire
         auto action = REINE_PASSE;
