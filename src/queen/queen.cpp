@@ -59,6 +59,11 @@ void reine_thread() {
         auto action = REINE_PASSE;
         auto arg = 0;
 
+		if (queen_state.ticks() == 1) {
+			action = CREER_FOURMI;
+			arg = 1;
+		}
+
         // Vérifie si il y a des fourmis sur la case
         std::vector<fourmis_compteur> ants_present(input.node->compteurs_fourmis, input.node->compteurs_fourmis + input.node->taille_liste);
         uint32_t friendly_ants_present = 0;
@@ -79,7 +84,8 @@ void reine_thread() {
             // Sinon, on vide un peu le stockage
         		// On initialise la mémoire de totute les fourmis
         		for (fourmi_etat fourmis : input.forumis_miam_miam) {
-        			scout_loads(&fourmis, input.state->team_id, {0}, 0, 1);
+					std::cerr << "[QUEEN] gaslight ant\n";
+        			scout_loads(&fourmis, input.state->team_id, NULL, 0, 1);
         		}
             action = ENVOYER_FOURMI;
             arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
