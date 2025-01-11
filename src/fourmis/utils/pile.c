@@ -60,5 +60,28 @@ pile_t* pile_dumps(char* memoire, size_t* size) {
     return pile_get(memoire, met->taillepilemax - 1);
 } 
 
+uint32_t water2base(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    uint32_t water = 0;
+    for (size_t i=0; i<met->taillepile; ++i) {
+        pile_t* p = pile_get(memoire, i);
+        water += p->poid;
+        if (p->type == EAU)
+            return water;
+    }
+    return water;
+}
+
+uint32_t water2dest(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    uint32_t water = 0;
+    for (size_t i=met->taillepile+1; i<met->taillepilemax; ++i) {
+        pile_t* p = pile_get(memoire, i);
+        water += p->poid;
+        if (p->type == EAU)
+            return water;
+    }
+    return water;
+}
 
 

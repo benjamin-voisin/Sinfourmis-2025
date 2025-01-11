@@ -5,7 +5,7 @@
 
 void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
-    switch (mem->action) {
+    switch (mem->ret.action) {
     case DEPLACEMENT:
         commun_feedback_deplacement(etat, salle);
         break;
@@ -65,6 +65,8 @@ fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
     fourmi_feedback(etat, salle);
     fourmi_retour ret = fourmi_action(etat, salle);
     fourmi_postaction(ret, etat, salle);
+    memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
+    mem->ret = ret;
     return ret;
 }
 
