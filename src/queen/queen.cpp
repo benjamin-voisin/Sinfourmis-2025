@@ -88,7 +88,7 @@ void reine_thread() {
             action = ENVOYER_FOURMI;
             arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
             std::cerr << "[QUEEN] Sent " << arg << " ants from garage" << std::endl;
-        } else if (queen_state.produced_ants() < 5 && input.state->nourriture > 40) {
+        } else if (queen_state.produced_ants() < 5 && input.state->nourriture > 15) {
             // On créé des potites froumis si on a de la bouffe et qu'on en a moins de 5
             action = CREER_FOURMI;
             arg = std::min((input.state->max_nourriture - 10) / 10, input.state->max_production);
