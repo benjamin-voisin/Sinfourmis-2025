@@ -13,6 +13,14 @@ pilemetadata_t* pilemetadata(char* memoire) {
     return (pilemetadata_t*) memoire;
 }
 
+pile_t* pile_get(char* memoire, size_t i) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    assert(met->taillepilemax > 0);
+    assert(i < met->taillepilemax);
+    pile_t* p = pile(memoire);
+    return p - i - 1;
+}
+
 void pilemetadata_pp_body(FILE* f, char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     fprintf(f, "PILEMETADATA:\n");
@@ -20,7 +28,7 @@ void pilemetadata_pp_body(FILE* f, char* memoire) {
     fprintf(f, "    taillemax  = %u\n", met->taillepilemax);
 }
 
-void pile_pp(FILE* f, pile_t* p) {
+void pile_pp_part(FILE* f, pile_t* p) {
     fprintf(f, "NOEUDPILE [\n");
     fprintf(f, "    id         = %u\n", p->id);
     fprintf(f, "    d_entrant  = %u\n", p->degree_entrant);
@@ -30,6 +38,23 @@ void pile_pp(FILE* f, pile_t* p) {
     fprintf(f, "]\n");
 }
 
+void pile_pp(FILE* f, char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    pilemetadata_pp_body(f, memoire);
+    fprintf(f, "PILE:\n");
+    fprintf(f, "\033[31m");
+    for (size_t i=0; i<met->taillepile; ++i) {
+        pile_t* p = pile_get(memoire, i);
+        pile_pp_part(f, p);
+    }
+    fprintf(f, "\033[32m");
+    for (size_t i=met->taillepile+1; i<met->taillepilemax; ++i) {
+        pile_t* p = pile_get(memoire, i);
+        pile_pp_part(f, p);
+    }
+    fprintf(f, "\033[0m");
+}
+
 bool pile_vide(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     return met->taillepile == 0; 
@@ -37,14 +62,6 @@ bool pile_vide(char* memoire) {
 bool pile_complete(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     return met->taillepile >= met->taillepilemax; 
-}
-
-pile_t* pile_get(char* memoire, size_t i) {
-    pilemetadata_t* met = pilemetadata(memoire);
-    assert(met->taillepilemax > 0);
-    assert(i < met->taillepilemax);
-    pile_t* p = pile(memoire);
-    return p - i - 1;
 }
 
 pile_t* head(char* memoire) {
@@ -117,7 +134,6 @@ uint32_t water2base(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     uint32_t water = 0;
     for (size_t i=0; i<met->taillepile; ++i) {
-        printf("i=%lu, imax=%lu\n", i, met->taillepile);
         pile_t* p = pile_get(memoire, i);
         water += p->poid;
         if (p->type == EAU)
@@ -130,7 +146,6 @@ uint32_t water2dest(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     uint32_t water = 0;
     for (size_t i=met->taillepile+1; i<met->taillepilemax; ++i) {
-        printf("i=%lu, imax=%lu\n", i, met->taillepilemax);
         pile_t* p = pile_get(memoire, i);
         water += p->poid;
         if (p->type == EAU)
