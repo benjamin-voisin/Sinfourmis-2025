@@ -95,3 +95,50 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
 void scout_postaction(fourmi_etat *etat, const salle *salle) {
 
 }
+
+void scout_coportement_pp(FILE* f, enum scoutcomportement_e comportement) {
+    switch (comportement)
+    {
+    case FOLLOWLEAD:
+        fprintf(f, "FOLLOWLEAD");
+        break;
+    case SCOUTING:
+        fprintf(f, "SCOUTING");
+        break;
+    case SCOUTING_NEW_TILE:
+        fprintf(f, "SCOUTING_NEW_TILE");
+        break;
+    case BACK:
+        fprintf(f, "BACK");
+        break;
+    case BACKWATER:
+        fprintf(f, "BACKWATER");
+        break;
+    case WAITWATER:
+        fprintf(f, "WAITWATER");
+        break;
+    case WAITBASE:
+        fprintf(f, "WAITBASE");
+        break;
+    default:
+        fprintf(f, "UNKNOWN");
+        break;
+    }
+}
+
+void scout_body_pp(FILE* f, fourmi_etat* etat) {
+    memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
+    fprintf(f, "SCOUT BODY:\n");
+    fprintf(f, "    status     = ");
+    scout_coportement_pp(f, mem->comportement);
+    fprintf(f, "\n");
+    fprintf(f, "    scout_id   = %u\n", mem->id);
+    fprintf(f, "    tile_count = %u\n", mem->tile_counter);
+}
+
+void scout_pp(FILE* f, fourmi_etat* etat) {
+    fprintf(f, "SCOUT_ANT {\n");
+    scout_body_pp(f, etat);
+    commun_body_pp(f, etat);
+    fprintf(f, "}\n");
+}

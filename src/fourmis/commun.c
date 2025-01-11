@@ -132,9 +132,9 @@ void common_kind_pp(FILE* f, uint8_t type) {
     }
 }
 
-void commun_pp(FILE* f, fourmi_etat* etat) {
+void commun_body_pp(FILE* f, fourmi_etat* etat) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
-    fprintf(f, "FOURMIS {\n");
+    fprintf(f, "COMMON BODY:\n");
     fprintf(f, "    kind       = ");
     common_kind_pp(f, mem->type);
     fprintf(f, "\n");
@@ -142,5 +142,10 @@ void commun_pp(FILE* f, fourmi_etat* etat) {
     fprintf(f, "    vie        = %u\n", mem->vie);
     fprintf(f, "    eau        = %u\n", mem->eau);
     fprintf(f, "    nourriture = %u\n", mem->nourriture);
+}
+
+void commun_pp(FILE* f, fourmi_etat* etat) {
+    fprintf(f, "COMMON_ANT {\n");
+    commun_body_pp(f, etat);
     fprintf(f, "}\n");
 }
