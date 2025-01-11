@@ -7,9 +7,10 @@
 
 class Queen {
 	private:
-		Graph graph;
+		Graph _graph;
 	public:
 		Queen();
+		Graph* get_graph();
 };
 
 extern std::thread* queen_thread;

@@ -23,3 +23,5 @@ void reine_thread() {
         from_reine.send_message({ .action = REINE_PASSE, .arg = called });
     }
 }
+
+Graph* Queen::get_graph() { return &_graph; }
