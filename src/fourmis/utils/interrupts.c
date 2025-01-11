@@ -1,7 +1,8 @@
 #include "interrupts.h"
+#include "pile.h"
 
 enum fourminterrupt_e interrupt(fourmi_etat *etat, const salle *salle) {
-    if (etat->eau < 18)
+    if ((etat->eau < 16) && !(pile_vide(etat->memoire)))
         return INTERRUPT_WATER;
     if (salle->taille_liste > 1)
         return INTERRUPT_ENNEMY;
