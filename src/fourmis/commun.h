@@ -29,8 +29,8 @@ typedef struct memoire_commun_s {
     uint8_t vie;
     int32_t eau;
     int32_t nourriture;
-    fourmi_action action;
     uint32_t allies;
+    fourmi_retour ret;
 } memoire_commun_t;
 
 void commun_postaction(fourmi_retour ret, fourmi_etat* etat, const salle *salle);
