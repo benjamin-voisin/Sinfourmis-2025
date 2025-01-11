@@ -19,13 +19,13 @@ class Queen {
 		uint32_t ticks();
 		void update_tick_counter(reine_action action);
 
-		void read_scouts(const std::vector<fourmi_etat>& states);
+		void read_scouts(const std::vector<fourmi_etat*>& states);
 };
 
 extern std::thread* queen_thread;
 
 typedef struct {
-    std::vector<fourmi_etat> forumis_miam_miam;
+    std::vector<fourmi_etat*> forumis_miam_miam;
     const reine_etat* state;
     const salle* node;
 } reine_input_t;

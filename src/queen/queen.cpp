@@ -15,7 +15,7 @@ ThreadQueue<reine_input_t> to_reine;
 ThreadQueue<reine_retour> from_reine;
 
 reine_retour give_args_to_thread(
-    fourmi_etat fourmis[],
+    fourmi_etat* fourmis,
     const unsigned int nb_fourmis,
     const reine_etat *etat, const salle *salle
 ) {
@@ -24,7 +24,7 @@ reine_retour give_args_to_thread(
     queen_thread = new std::thread(reine_thread);
   }
 
-  std::vector<fourmi_etat> ouvrieres_garage(fourmis, fourmis + nb_fourmis);
+  std::vector<fourmi_etat*> ouvrieres_garage(&fourmis, &fourmis + nb_fourmis);
 
   // Send info to the queen thread
   to_reine.send_message(
@@ -83,9 +83,9 @@ void reine_thread() {
         } else if (!input.forumis_miam_miam.empty()) {
             // Sinon, on vide un peu le stockage
         		// On initialise la mémoire de totute les fourmis
-        		for (fourmi_etat fourmis : input.forumis_miam_miam) {
+        		for (fourmi_etat* fourmis : input.forumis_miam_miam) {
 					std::cerr << "[QUEEN] gaslight ant\n";
-        			scout_loads(&fourmis, input.state->team_id, NULL, 0, 1);
+        			scout_loads(fourmis, input.state->team_id, NULL, 0, 1);
         		}
             action = ENVOYER_FOURMI;
             arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
@@ -100,9 +100,9 @@ void reine_thread() {
 
 
 // Met à jour le graph de la reine selon l'état des fourmis présentes.
-void Queen::read_scouts(const std::vector<fourmi_etat>& states) {
+void Queen::read_scouts(const std::vector<fourmi_etat*>& states) {
     for (auto state : states) {
-        read_scout(&this->_graph, state);
+        read_scout(&this->_graph, *state);
     }
 }
 
