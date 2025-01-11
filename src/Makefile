@@ -4,8 +4,8 @@ OUTPUT_NAME = fourmis.so
 
 default: fourmis.so
 
-fourmis.so: fourmis.cpp memoire.c ram.c graph.cpp
-	$(CXX) -o fourmis.so -shared -fPIC fourmis.cpp graph.cpp
+fourmis.so: fourmis.cpp memoire.c ram.c graph.cpp thread_queue.h
+	$(CXX) -o fourmis.so -shared -fPIC fourmis.cpp graph.cpp thread_queue.h
 
 clean:
 	$(RM) *.o

@@ -1,4 +1,4 @@
-CXX = g++
+CXX = gcc
 
 default: fourmis
 
