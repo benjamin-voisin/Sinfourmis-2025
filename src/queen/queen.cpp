@@ -46,6 +46,11 @@ void reine_thread() {
 
         std::cerr << "[QUEEN] Woke up on tick " << queen_state.ticks() << std::endl;
 
+        if (queen_state.ticks() % 20 == 0) {
+            std::cerr << "[QUEEN] Wrote graph to ./graph.dot" << std::endl;
+            queen_state.graph()->to_dot("graph.dot");
+        }
+
         // Ajoute le noeud originel si jamais y'en a po
         if (queen_state.graph()->is_empty()) {
             std::cerr << "[QUEEN] Init graph" << std::endl;
