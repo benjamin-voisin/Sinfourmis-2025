@@ -16,12 +16,16 @@ void fourmi_pp(FILE* f, fourmi_etat* etat) {
     switch (mem->type) {
     case ANT_KIND_SCOUT:
         scout_pp(f, etat);
+        break;
     case ANT_KIND_COMMON:
         commun_pp(f, etat);
+        break;
     case ANT_KIND_NEW:
         new_pp(f, etat);
+        break;
     default:
         fprintf(f, "UNKNOWN_ANT\n");
+        break;
     }
 }
 
