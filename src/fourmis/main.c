@@ -74,6 +74,7 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat, const salle *salle)
 }
 
 fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
+    commun_pp(stdout, etat);
     fourmi_feedback(etat, salle);
     fourmi_retour ret = fourmi_act(etat, salle);
     fourmi_postaction(ret, etat, salle);

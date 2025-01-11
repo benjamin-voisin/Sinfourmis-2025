@@ -3,7 +3,6 @@
 #include "utils/b_constants.h"
 
 #include <stdbool.h>
-#include <stdio.h>
 #include <assert.h>
 
 void stats_loads(fourmi_etat* etat) {
@@ -113,4 +112,35 @@ void commun_feedback_termine_construction(fourmi_etat* etat, const salle *salle)
 void commun_feedback_attaque_tunnel(fourmi_etat* etat, const salle *salle) {
     printf("Failwith todo %s\n", "commun_feedback_attaque_tunnel");
     exit(1);
+}
+
+void common_kind_pp(FILE* f, uint8_t type) {
+    switch (type)
+    {
+    case ANT_KIND_NEW:
+        fprintf(f, "ANT_KIND_NEW");
+        break;
+    case ANT_KIND_COMMON:
+        fprintf(f, "ANT_KIND_COMMON");
+        break;
+    case ANT_KIND_SCOUT:
+        fprintf(f, "ANT_KIND_SCOUT");
+        break;
+    default:
+        fprintf(f, "ANT_KIND_UNKNOWN");
+        break;
+    }
+}
+
+void commun_pp(FILE* f, fourmi_etat* etat) {
+    memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
+    fprintf(f, "FOURMIS {\n");
+    fprintf(f, "    kind       = ");
+    common_kind_pp(f, mem->type);
+    fprintf(f, "\n");
+    fprintf(f, "    team_id    = %u\n", mem->team_id);
+    fprintf(f, "    vie        = %u\n", mem->vie);
+    fprintf(f, "    eau        = %u\n", mem->eau);
+    fprintf(f, "    nourriture = %u\n", mem->nourriture);
+    fprintf(f, "}\n");
 }
