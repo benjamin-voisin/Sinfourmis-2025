@@ -32,6 +32,12 @@ simulateur:
 	$(MAKE) -C ./sinfourmis2025	
 	cp ./sinfourmis2025/Sinfourmis ./
 
+simuletest: simulateur $(NAME)
+	./Sinfourmis -t dummy -t ./$(NAME) -d 50 ./sinfourmis2025/maps/test.json
+
+simuletest_full: simulateur $(NAME)
+	./Sinfourmis -t dummy -t ./$(NAME) -d 50 ./sinfourmis2025/maps/test.json
+
 simule: simulateur $(NAME)
 	./Sinfourmis -t dummy -t dummy -t dummy -t ./$(NAME) -d 50 ./sinfourmis2025/maps/spiral.json
 
