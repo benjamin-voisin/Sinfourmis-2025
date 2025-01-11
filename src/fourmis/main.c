@@ -90,6 +90,7 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat, const salle *salle)
         break;
     case ANT_KIND_NEW:
         printf("FOURMIS TYPE ANT_KIND_NEW CHERCHE POSTACTION\n");
+		break;
     default:
         printf("FOURMIS TYPE UNKNOWN CHERCHE POSTACTION\n");
         exit(1);

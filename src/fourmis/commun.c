@@ -82,6 +82,7 @@ void commun_feedback_deplacement(fourmi_etat* etat, const salle *salle) {
         switch (mem->comportement) {
             case VERSBASE:
                 depiler(etat->memoire);
+				break;
             case DEPUISBASE:
                 pile_t hd;
                 hd.degree_sortant = etat->result;
@@ -90,6 +91,7 @@ void commun_feedback_deplacement(fourmi_etat* etat, const salle *salle) {
                 hd.type = salle->type;
                 hd.poid = mem->eau - etat->eau;
                 empiler(etat->memoire, hd);
+				break;
             case AUCUN:
                 printf("ERREUR COMPORTEMENT DE DEPLACEMENT INDEFINI");
                 exit(1);
