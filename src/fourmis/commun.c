@@ -20,11 +20,11 @@ void commun_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size
     mem->type = ANT_KIND_COMMON;
     mem->comportement = AUCUN;
     stats_loads(etat);
-    fourmi_retour ret;
-	ret.pheromone = 0;
-	ret.depose_pheromone = NO_PHEROMONE;
-	ret.action = FOURMI_PASSE;
-	ret.arg = 0;
+
+	mem->ret.pheromone = 0;
+	mem->ret.depose_pheromone = NO_PHEROMONE;
+	mem->ret.action = FOURMI_PASSE;
+	mem->ret.arg = 0;
 }
 
 void commun_postaction(fourmi_etat* etat, const salle *salle) {
