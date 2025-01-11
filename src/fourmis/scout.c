@@ -58,10 +58,11 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
         return scout_action(etat, salle);
         
     case SCOUTING:
+        /* 
         if (water2base(etat->memoire) > 1.5 * etat->eau) {
             mem->comportement = BACK;
             return scout_action(etat, salle);
-        }
+        } */
 
         direction = random_other_dir(etat, salle);
         mem->comportement = SCOUTING_NEW_TILE;
