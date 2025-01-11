@@ -33,7 +33,7 @@ simulateur:
 	cp ./sinfourmis2025/Sinfourmis ./
 
 simule: simulateur $(NAME)
-	./Sinfourmis -t dummy -t ./$(NAME) -d 50 ./sinfourmis2025/maps/test.json
+	./Sinfourmis -t dummy -t ./$(NAME) ./src/map/basic_map.json
 
 animateur:
 	npm --prefix SinfourmisAnimator/ i
