@@ -4,6 +4,7 @@
 #include "../constants.hpp"
 
 #include <stdio.h>
+#include <assert.h>
 
 uint8_t freshid(fourmi_etat *etat) {
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
