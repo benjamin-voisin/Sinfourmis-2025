@@ -21,7 +21,9 @@ const bool Graph::is_empty() {
 }
 
 void Graph::add_node(node_type_t type, node_data_t data, node_id id) {
-	_nodes[id] = Node(type, data, id);
+	if (!_nodes[id].has_value()) {
+		_nodes[id] = Node(type, data, id);
+	}
 }
 
 void Graph::add_edge(node_id node1, node_id node2, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant) {

@@ -1,3 +1,7 @@
 #pragma once
 
-#include "../fourmis/utils/pile.h"
+#include "../graph.hpp"
+#include "../sinfourmis.h"
+
+
+void read_scout(Graph *graph, fourmi_etat *fourmi);
