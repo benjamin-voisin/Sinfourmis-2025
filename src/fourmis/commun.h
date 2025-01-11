@@ -6,6 +6,7 @@
 #include "stdint.h"
 #include "../sinfourmis.h"
 
+#include <cstdint>
 #include <stdio.h>
 
 enum communcomportement_e {
@@ -56,6 +57,8 @@ fourmi_retour commun_action_versdirection(fourmi_etat* etat, const salle *salle,
 fourmi_retour commun_action_attendre_phero(pheromone_type pheromone_type, uint8_t pheromone);
 
 fourmi_retour commun_action_attendre();
+
+fourmi_retour commun_action_attaque(uint8_t team_id);
 
 void commun_pp(FILE* f, fourmi_etat* etat);
 
