@@ -22,6 +22,7 @@ void scout_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size,
     assert(id > 0);
     commun_loads(etat, team_id, pile, size);
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
+    mem->comm.type = ANT_KIND_SCOUT;
     mem->comportement = FOLLOWLEAD;
     mem->id = id;
     mem->tile_counter = 0;
