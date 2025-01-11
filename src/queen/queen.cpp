@@ -1,6 +1,6 @@
 #include "queen.hpp"
 #include "../sinfourmis.h"
-#include "../graph.hpp"
+#include "graph.hpp"
 #include "read_scout.hpp"
 #include "thread_queue.h"
 #include "../fourmis/main.h"
@@ -73,7 +73,7 @@ void reine_thread() {
         std::cerr << "[QUEEN] Friendly ants in node: " << friendly_ants_present << ", ants in garage: " << input.forumis_miam_miam.size() << std::endl;
         // On rappel les fourmis si on a la place et totu
         auto storage_space = input.state->max_stockage - input.forumis_miam_miam.size();
-        if (storage_space <= friendly_ants_present) {
+        if (storage_space >= friendly_ants_present && friendly_ants_present > 0) {
             action = RECUPERER_FOURMI;
             arg = friendly_ants_present;
             std::cerr << "[QUEEN] Calling back " << arg << " ants in garage" << std::endl;
@@ -90,12 +90,16 @@ void reine_thread() {
             std::cerr << "[QUEEN] Sent " << arg << " ants from garage" << std::endl;
         } else if (queen_state.produced_ants() < 5 && input.state->nourriture > 15) {
             // On créé des potites froumis si on a de la bouffe et qu'on en a moins de 5
-            action = CREER_FOURMI;
+            /* action = CREER_FOURMI; */
             arg = std::min((input.state->max_nourriture - 10) / 10, input.state->max_production);
             queen_state.produce_ants(arg);
             std::cerr << "[QUEEN] Created " << arg << " ants" << std::endl;
         }
 
+		if (queen_state.ticks() == 1) {
+			action = CREER_FOURMI;
+			arg = 1;
+		}
         // Et on renvoit notre retour qu'on veut, voilà
         from_reine.send_message({ .action = action, .arg = arg });
         queen_state.update_tick_counter(action);
