@@ -1,6 +1,7 @@
 #include "commun.h"
 
 #include "utils/b_constants.h"
+#include "utils/utils.h"
 
 #include <stdbool.h>
 #include <assert.h>
