@@ -72,11 +72,14 @@ void pile_edit_id(char* memoire, uint8_t id) {
 
 pile_t* pile_dumps_last(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
+    assert(met->taillepilemax > 0);
     return pile_get(memoire, met->taillepilemax - 1);
 }
 pile_t* pile_dumps(char* memoire, size_t* size) {
     pilemetadata_t* met = pilemetadata(memoire);
     *size = met->taillepilemax;
+    if (met->taillepilemax == 0)
+        return NULL;
     return pile_dumps_last(memoire);
 } 
 #include <string.h>
