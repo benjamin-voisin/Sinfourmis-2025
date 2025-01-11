@@ -36,7 +36,7 @@ void empiler(char* memoire, pile_t e) {
     pilemetadata_t* met = pilemetadata(memoire);
     met->taillepile += 1;
     pile_t* hd = head(memoire);
-    hd->direction = e.direction;
+    hd->id = e.id;
     hd->degree_entrant = e.degree_entrant;
     hd->degree_sortant = e.degree_sortant;
     hd->poid = e.poid;
