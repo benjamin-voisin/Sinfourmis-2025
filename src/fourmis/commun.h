@@ -33,7 +33,7 @@ typedef struct memoire_commun_s {
     fourmi_retour ret;
 } memoire_commun_t;
 
-void commun_postaction(fourmi_retour ret, fourmi_etat* etat, const salle *salle);
+void commun_postaction(fourmi_etat* etat, const salle *salle);
 
 void commun_feedback_deplacement(fourmi_etat* etat, const salle *salle);
 

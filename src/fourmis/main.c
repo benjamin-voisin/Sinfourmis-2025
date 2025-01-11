@@ -58,7 +58,7 @@ fourmi_retour fourmi_postaction(fourmi_retour ret, fourmi_etat *etat, const sall
         printf("FOURMIS TYPE UNKNOWN CHERCHE POSTACTION\n");
         exit(1);
     }
-    commun_postaction(ret, etat, salle);
+    commun_postaction(etat, salle);
 }
 
 fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
