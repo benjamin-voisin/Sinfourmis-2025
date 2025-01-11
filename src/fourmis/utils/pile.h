@@ -28,6 +28,7 @@ typedef struct pilemetadata_s {
 
 void pilemetadata_pp_body(FILE* f, char* memoire);
 void pile_pp(FILE* f, char* memoire);
+void pile_pp_part(FILE* f, pile_t* p);
 
 pile_t* head(char* memoire);
 
