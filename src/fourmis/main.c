@@ -8,31 +8,40 @@
 
 void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
-    switch (mem->ret.action) {
-    case DEPLACEMENT:
-        commun_feedback_deplacement(etat, salle);
-        break;
-    case RAMASSE_NOURRITURE:
-        assert(etat->result >= 0);
-        break;
-    case COMMENCE_CONSTRUCTION:
-        commun_feedback_commence_construction(etat, salle);
-        break;
-    case TERMINE_CONSTRUCTION:
-        commun_feedback_termine_construction(etat, salle);
-        break;
-    case ATTAQUE:
-        assert(etat->result > 0);
-        break;
-    case ATTAQUE_TUNNEL:
-        commun_feedback_attaque_tunnel(etat, salle);
-        break;
-    case FOURMI_PASSE:
-        break;
-    default:
-        printf("FOURMIS ACTION UNKNOWN\n");
+    switch (mem->type) {
+    case ANT_KIND_SCOUT:
+        switch (mem->ret.action) {
+        case DEPLACEMENT:
+            commun_feedback_deplacement(etat, salle);
+            break;
+        case RAMASSE_NOURRITURE:
+            assert(etat->result >= 0);
+            break;
+        case COMMENCE_CONSTRUCTION:
+            commun_feedback_commence_construction(etat, salle);
+            break;
+        case TERMINE_CONSTRUCTION:
+            commun_feedback_termine_construction(etat, salle);
+            break;
+        case ATTAQUE:
+            assert(etat->result > 0);
+            break;
+        case ATTAQUE_TUNNEL:
+            commun_feedback_attaque_tunnel(etat, salle);
+            break;
+        case FOURMI_PASSE:
+            break;
+        default:
+            printf("FOURMIS ACTION UNKNOWN\n");
+            exit(1);
+        }   
+    case ANT_KIND_NEW:
+        printf("FOURMIS TYPE ANT_KIND_NEW NO FEEDBACK\n");
         exit(1);
-    }   
+    default:
+        printf("FOURMIS TYPE ANT_KIND_NEW NO FEEDBACK\n");
+        exit(1);
+    }
 }
 
 fourmi_retour fourmi_act(fourmi_etat *etat, const salle *salle) {
