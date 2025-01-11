@@ -18,9 +18,9 @@ uint8_t no_more_id(fourmi_etat *etat) {
 }
 
 
-void scout_loads(fourmi_etat* etat, pile_t* pile, size_t size, uint32_t id) {
+void scout_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size, uint32_t id) {
     assert(id > 0);
-    commun_loads(etat, pile, size);
+    commun_loads(etat, team_id, pile, size);
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
     mem->comportement = FOLLOWLEAD;
     mem->id = id;

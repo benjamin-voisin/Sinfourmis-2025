@@ -13,9 +13,10 @@ void stats_loads(fourmi_etat* etat) {
     mem->vie = etat->vie;
 }
 
-void commun_loads(fourmi_etat* etat, pile_t* pile, size_t size) {
+void commun_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     pile_loads(etat->memoire, pile, size);
+    mem->team_id = team_id;
     mem->type = ANT_KIND_COMMON;
     mem->comportement = AUCUN;
     stats_loads(etat);

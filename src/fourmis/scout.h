@@ -30,7 +30,7 @@ typedef struct memoire_scout_s {
     uint8_t tile_counter; // 3 bit integer
 } memoire_scout_t;
 
-void scout_loads(fourmi_etat* etat, pile_t* pile, size_t size, uint32_t id);
+void scout_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size, uint32_t id);
 
 fourmi_retour scout_action(fourmi_etat *etat, const salle *salle);
 void scout_postaction(fourmi_etat *etat, const salle *salle);
