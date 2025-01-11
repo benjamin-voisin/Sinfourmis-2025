@@ -1,39 +1,10 @@
 #include "sinfourmis.h"
-#include "thread_queue.h"
+#include "queen/queen.hpp"
 
 #include <iostream>
 #include <optional>
-#include <thread>
 #include <vector>
 
-std::thread* queen_thread = nullptr;
-
-typedef struct {
-    std::vector<fourmi_etat> forumis_miam_miam;
-    const reine_etat* state;
-    const salle* node;
-} reine_input_t;
-
-ThreadQueue<reine_input_t> to_reine;
-ThreadQueue<reine_retour> from_reine;
-
-void reine_thread() {
-    int called = 0;
-    // La reine elle travaille totu le temps pour slay les ennemis
-    while (true) {
-        // On attends l'input de la lib
-        auto input = to_reine.try_receive_message();
-        if (!input.has_value()) {
-            continue;
-        }
-
-        std::cout << "Yay, on m'a donné des infos, et c'est déjà la " << called << " ième fois" << std::endl;
-        called += 1;
-
-        // Et on renvoit notre retour qu'on veut, voilà
-        from_reine.send_message({ .action = REINE_PASSE, .arg = called });
-    }
-}
 
 reine_retour cpp_reine_activation(fourmi_etat fourmis[], const unsigned int nb_fourmis,
                                   const reine_etat *etat, const salle *salle) {
