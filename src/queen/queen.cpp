@@ -3,6 +3,7 @@
 #include "../graph.hpp"
 #include "read_scout.hpp"
 #include "thread_queue.h"
+#include "../fourmis/scout.h"
 #include <algorithm>
 #include <cstdint>
 #include <thread>
@@ -73,6 +74,10 @@ void reine_thread() {
             arg = friendly_ants_present;
         } else if (!input.forumis_miam_miam.empty()) {
             // Sinon, on vide un peu le stockage
+			// On initialise la mémoire de totute les fourmis
+			for (fourmi_etat fourmis : input.forumis_miam_miam) {
+				scout_loads(&fourmis, input.state->team_id, {0}, 0, 1);
+			}
             action = ENVOYER_FOURMI;
             arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
         } else {
