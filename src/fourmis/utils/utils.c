@@ -4,7 +4,7 @@
 
 uint8_t random_dir(fourmi_etat *etat, const salle *salle) {
     int r = rand();
-    uint8_t dir = r % (salle->degre - 1);
+    uint8_t dir = r % (salle->degre);
     return dir;
 }
 

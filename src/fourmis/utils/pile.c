@@ -1,5 +1,6 @@
 #include "pile.h"
 
+#include "../../sinfourmis.h"
 #include "b_constants.h"
 
 #include <assert.h>
