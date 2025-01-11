@@ -1,9 +1,10 @@
 #pragma once
 
-#include "path.hpp"
 #include <cstdint>
 #include <vector>
 #include <optional>
+
+class Path;
 
 typedef enum node_type_e {
 	WATER,
