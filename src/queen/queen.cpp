@@ -59,11 +59,6 @@ void reine_thread() {
         auto action = REINE_PASSE;
         auto arg = 0;
 
-		if (queen_state.ticks() == 1) {
-			action = CREER_FOURMI;
-			arg = 1;
-		}
-
         // Vérifie si il y a des fourmis sur la case
         std::vector<fourmis_compteur> ants_present(input.node->compteurs_fourmis, input.node->compteurs_fourmis + input.node->taille_liste);
         uint32_t friendly_ants_present = 0;
@@ -84,12 +79,18 @@ void reine_thread() {
             // Sinon, on vide un peu le stockage
         		// On initialise la mémoire de totute les fourmis
         		for (fourmi_etat* fourmis : input.forumis_miam_miam) {
-					std::cerr << "[QUEEN] gaslight ant\n";
+    					std::cerr << "[QUEEN] gaslight ant\n";
         			scout_loads(fourmis, input.state->team_id, NULL, 0, 1);
         		}
             action = ENVOYER_FOURMI;
             arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
             std::cerr << "[QUEEN] Sent " << arg << " ants from garage" << std::endl;
+        } else if (queen_state.produced_ants() < 5 && input.state->nourriture > 40) {
+            // On créé des potites froumis si on a de la bouffe et qu'on en a moins de 5
+            action = CREER_FOURMI;
+            arg = std::min((input.state->max_nourriture - 10) / 10, input.state->max_production);
+            queen_state.produce_ants(arg);
+            std::cerr << "[QUEEN] Created " << arg << " ants" << std::endl;
         }
 
         // Et on renvoit notre retour qu'on veut, voilà
@@ -127,8 +128,16 @@ void Queen::update_tick_counter(reine_action action) {
         case AMELIORE_RAMASSAGE:
         case AMELIORE_VIE:
         case AMELIORE_EAU:
-        case AMELIORE_DEGATS: ticks = 10;
+        case AMELIORE_DEGATS: 
+            ticks = 10; 
+            break;
         default: ticks = 1;
     }
     _ticks += ticks;
+}
+uint32_t Queen::produced_ants() {
+    return this->_produced_ants;
+}
+void Queen::produce_ants(uint32_t amount) {
+    this->_produced_ants += amount;
 }
