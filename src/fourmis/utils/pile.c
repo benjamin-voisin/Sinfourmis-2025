@@ -87,8 +87,10 @@ void pile_loads(char* memoire, pile_t* pile, size_t size) {
     pilemetadata_t* met = pilemetadata(memoire);
     met->taillepile = 0;
     met->taillepilemax = size;
-    pile_t* p = pile_dumps_last(memoire);
-    memcpy(p, pile, size * sizeof(pile_t));
+    if (met->taillepilemax > 0) {
+        pile_t* p = pile_dumps_last(memoire);
+        memcpy(p, pile, size * sizeof(pile_t));
+    }
 }
 
 uint32_t water2base(char* memoire) {
