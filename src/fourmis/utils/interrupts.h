@@ -4,6 +4,7 @@
 
 enum fourminterrupt_e {
   AUCUN_INTERRUPT,
+  INTERRUPT_WATER,
   INTERRUPT_ENNEMY
 }; 
 

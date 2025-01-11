@@ -80,7 +80,12 @@ fourmi_retour fourmi_interrupt(fourmi_etat *etat, const salle *salle, enum fourm
 	memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
 	switch (inter)
 	{
+	case INTERRUPT_WATER:
+		printf("INTERRUPT WATER\n");
+		return commun_action_versbase(etat, salle);
+	
 	case INTERRUPT_ENNEMY:
+		printf("INTERRUPT ENNEMY\n");
 		for (size_t i=0; i<salle->taille_liste; ++i) {
 			fourmis_compteur compt = salle->compteurs_fourmis[i];
 			if (compt.equipe != mem->team_id)
