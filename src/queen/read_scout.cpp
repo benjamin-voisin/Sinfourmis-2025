@@ -7,6 +7,14 @@
 
 node_type_t type_to_node_type(uint8_t type) {
 	switch (type) {
+		case VIDE:
+			return EMPTY;
+		case EAU:
+			return WATER;
+		case NOURRITURE:
+			return FOOD;
+		case REINE:
+			return YAS_QUEEN;
 		default:
 			std::cerr << "Type non reconnu" << std::endl;
 			assert(false);
