@@ -56,6 +56,7 @@ void reine_thread() {
 
         // Update les infos par les scouts
         queen_state.read_scouts(input.forumis_miam_miam);
+		queen_state.graph()->to_dot("graph.dot");
 
         // Cherche la prochaine action à faire
         auto action = REINE_PASSE;

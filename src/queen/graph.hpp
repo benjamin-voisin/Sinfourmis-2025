@@ -1,8 +1,10 @@
 #pragma once
 
 #include <cstdint>
+#include <cstdio>
 #include <vector>
 #include <optional>
+#include <string>
 
 class Path;
 
@@ -61,6 +63,6 @@ class Graph {
 		void remove_edge(node_id node1, node_id node2);
 
 		std::vector<Path> compute_shortest_paths(node_id source);
-
+		void to_dot(std::string file);
 		Graph();
 };
