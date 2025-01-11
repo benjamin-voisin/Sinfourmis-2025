@@ -8,5 +8,5 @@ void Path::extend(Node node, Edge edge) {
   }
 
   _time_cost += edge.cost;
-  _edges_to_take.push_back(edge.degree_entrant);
+  _edges_to_take.push_back(edge.index_sortant);
 }
