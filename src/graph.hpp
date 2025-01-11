@@ -58,5 +58,6 @@ class Graph {
 		void add_node(node_type_t tag, node_data_t data, node_id id);
 		void add_edge(node_id node1, node_id node2, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant);
 		void remove_edge(node_id node1, node_id node2);
+
 		Graph();
 };
