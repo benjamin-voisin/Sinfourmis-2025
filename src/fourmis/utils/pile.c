@@ -32,6 +32,12 @@ pile_t* head(char* memoire) {
     return pile_get(memoire, met->taillepile - 1);
 }
 
+void false_empiler(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    assert(met->taillepile < met->taillepilemax);
+    met->taillepile += 1;
+}
+
 void empiler(char* memoire, pile_t e) {
     pilemetadata_t* met = pilemetadata(memoire);
     met->taillepile += 1;
