@@ -100,7 +100,7 @@ void simplipile(char* memoire) {
             uint8_t delta = met->taillepilemax-met->taillepile;
             for (size_t j=0; j<delta; ++j) {
                 pile_t* psrc = pile_get(memoire, met->taillepile+j);
-                pile_t* pdst = pile_get(memoire, i+j);
+                pile_t* pdst = pile_get(memoire, i+j+1);
                 pile_copy(psrc, pdst);
             }
             met->taillepile = i + 1;
