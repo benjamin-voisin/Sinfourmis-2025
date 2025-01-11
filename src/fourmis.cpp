@@ -24,7 +24,6 @@ reine_retour cpp_reine_activation(fourmi_etat fourmis[], const unsigned int nb_f
     while (!queen_return.has_value()) {
         queen_return = from_reine.try_receive_message();
     }
-    std::cout << "La reine m'a renvoyé un arg: " << queen_return.value().arg << std::endl;
     
     return queen_return.value();
 }
