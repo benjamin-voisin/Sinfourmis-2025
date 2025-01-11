@@ -47,6 +47,8 @@ fourmi_retour commun_action_verslead(fourmi_etat* etat, const salle *salle);
 
 fourmi_retour commun_action_versbase(fourmi_etat* etat, const salle *salle);
 
+fourmi_retour commun_action_attendre_phero(pheromone_type pheromone_type, uint8_t pheromone);
+
 fourmi_retour commun_action_attendre();
 
 #endif

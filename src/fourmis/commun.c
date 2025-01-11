@@ -42,13 +42,17 @@ fourmi_retour commun_action_verslead(fourmi_etat* etat, const salle *salle) {
     return commun_action_versdirection(etat, salle, p->degree_sortant, NO_PHEROMONE, 0);
 }
 
-fourmi_retour commun_action_attendre() {
+fourmi_retour commun_action_attendre_phero(pheromone_type pheromone_type, uint8_t pheromone) {
     fourmi_retour ret;
     ret.action = FOURMI_PASSE;
     ret.arg = 0;
-    ret.depose_pheromone = NO_PHEROMONE;
-    ret.pheromone = 0;
+    ret.depose_pheromone = pheromone_type;
+    ret.pheromone = pheromone;
     return ret;
+}
+
+fourmi_retour commun_action_attendre() {
+    return commun_action_attendre_phero(NO_PHEROMONE, 0);
 }
 
 void commun_feedback_deplacement(fourmi_etat* etat, const salle *salle) {
