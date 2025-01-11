@@ -37,7 +37,8 @@ void empiler(char* memoire, pile_t e) {
     met->taillepile += 1;
     pile_t* hd = head(memoire);
     hd->direction = e.direction;
-    hd->id_noeud = e.id_noeud;
+    hd->degree_entrant = e.degree_entrant;
+    hd->degree_sortant = e.degree_sortant;
     hd->poid = e.poid;
     hd->type = e.type;
     if (met->taillepilemax < met->taillepile) {

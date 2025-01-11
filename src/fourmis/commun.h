@@ -8,7 +8,8 @@
 
 enum communcomportement_e {
   VERSBASE,
-  DEPUISBASE
+  DEPUISBASE,
+  AUCUN
 }; 
 
 /*
