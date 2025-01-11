@@ -1,7 +1,6 @@
 #include "queen.hpp"
 #include "../sinfourmis.h"
 #include "thread_queue.h"
-#include <iostream>
 #include <thread>
 
 std::thread* queen_thread = nullptr;
@@ -18,7 +17,6 @@ void reine_thread() {
             continue;
         }
 
-        std::cout << "Yay, on m'a donné des infos, et c'est déjà la " << called << " ième fois" << std::endl;
         called += 1;
 
         // Et on renvoit notre retour qu'on veut, voilà
