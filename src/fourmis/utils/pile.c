@@ -72,7 +72,7 @@ void pile_pp(FILE* f, char* memoire) {
         pile_pp_part(f, p);
     }
     fprintf(f, "\033[32m");
-    for (size_t i=met->taillepile+1; i<met->taillepilemax; ++i) {
+    for (size_t i=met->taillepile; i<met->taillepilemax; ++i) {
         pile_t* p = pile_get(memoire, i);
         pile_pp_part(f, p);
     }
