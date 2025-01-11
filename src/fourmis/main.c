@@ -3,6 +3,9 @@
 #include "scout.h"
 #include "utils/b_constants.h"
 
+#include <stdio.h>
+#include <assert.h>
+
 void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     switch (mem->ret.action) {
@@ -32,7 +35,7 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
     }   
 }
 
-fourmi_retour fourmi_action(fourmi_etat *etat, const salle *salle) {
+fourmi_retour fourmi_act(fourmi_etat *etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     switch (mem->type) {
     case ANT_KIND_SCOUT:
@@ -46,7 +49,7 @@ fourmi_retour fourmi_action(fourmi_etat *etat, const salle *salle) {
     }
 }
 
-fourmi_retour fourmi_postaction(fourmi_retour ret, fourmi_etat *etat, const salle *salle) {
+void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     switch (mem->type) {
     case ANT_KIND_SCOUT:
@@ -63,7 +66,7 @@ fourmi_retour fourmi_postaction(fourmi_retour ret, fourmi_etat *etat, const sall
 
 fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
     fourmi_feedback(etat, salle);
-    fourmi_retour ret = fourmi_action(etat, salle);
+    fourmi_retour ret = fourmi_act(etat, salle);
     fourmi_postaction(ret, etat, salle);
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     mem->ret = ret;

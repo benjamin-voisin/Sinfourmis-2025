@@ -2,6 +2,7 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include <assert.h>
 
 void commun_postaction(fourmi_etat* etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
