@@ -70,11 +70,23 @@ void pile_edit_id(char* memoire, uint8_t id) {
     hd->id = id;
 }
 
+pile_t* pile_dumps_last(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    return pile_get(memoire, met->taillepilemax - 1);
+}
 pile_t* pile_dumps(char* memoire, size_t* size) {
     pilemetadata_t* met = pilemetadata(memoire);
     *size = met->taillepilemax;
-    return pile_get(memoire, met->taillepilemax - 1);
+    return pile_dumps_last(memoire);
 } 
+#include <string.h>
+void pile_loads(char* memoire, pile_t* pile, size_t size) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    met->taillepile = 0;
+    met->taillepilemax = size;
+    pile_t* p = pile_dumps_last(memoire);
+    memcpy(p, pile, size * sizeof(pile_t));
+}
 
 uint32_t water2base(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);

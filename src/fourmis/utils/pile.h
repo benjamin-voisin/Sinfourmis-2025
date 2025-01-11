@@ -21,7 +21,6 @@ typedef struct pile_s {
 typedef struct pilemetadata_s { 
     uint8_t taillepilemax;
     uint8_t taillepile;
-    uint8_t pointeurpile;
 } pilemetadata_t;
 
 
