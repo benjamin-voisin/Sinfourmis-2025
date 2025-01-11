@@ -103,6 +103,7 @@ fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
     fourmi_postaction(ret, etat, salle);
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     mem->ret = ret;
+    retour_pp(stdout, ret);
     return ret;
 }
 
