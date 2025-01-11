@@ -22,7 +22,7 @@ void pilemetadata_pp_body(FILE* f, char* memoire) {
 
 bool pile_vide(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    return met->taillepile > 0; 
+    return met->taillepile == 0; 
 }
 bool pile_complete(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
