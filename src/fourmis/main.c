@@ -5,6 +5,7 @@
 #include "food.h"
 #include "utils/b_constants.h"
 #include "utils/utils.h"
+#include "utils/interrupts.h"
 
 #include <assert.h>
 
@@ -75,6 +76,30 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
   }
 }
 
+fourmi_retour fourmi_interrupt(fourmi_etat *etat, const salle *salle, enum fourminterrupt_e inter) {
+	memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
+	switch (inter)
+	{
+	case INTERRUPT_ENNEMY:
+		for (size_t i=0; i<salle->taille_liste; ++i) {
+			fourmis_compteur compt = salle->compteurs_fourmis[i];
+			if (compt.equipe != mem->team_id)
+				return commun_action_attaque(compt.equipe);
+		}
+
+		printf("INTERRUPT ENNEMY: NO ENNEMY\n");
+    	exit(1);
+
+	case AUCUN_INTERRUPT:
+		printf("NO INTERRUPT\n");
+    	exit(1);
+	
+	default:
+		printf("UNKNOWN INTERRUPT\n");
+    	exit(1);
+	}
+}
+
 fourmi_retour fourmi_act(fourmi_etat *etat, const salle *salle) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   switch (mem->type) {
@@ -113,8 +138,14 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat,
 fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
   fourmi_feedback(etat, salle);
   fourmi_pp(stdout, etat);
-  fourmi_retour ret = fourmi_act(etat, salle);
+  enum fourminterrupt_e inter = interrupt(etat, salle);
+  fourmi_retour ret;
+  if (inter != AUCUN_INTERRUPT)
+    ret = fourmi_interrupt(etat, salle, inter);
+  else
+	ret = fourmi_act(etat, salle);
   fourmi_postaction(ret, etat, salle);
+  
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   mem->ret = ret;
   retour_pp(stdout, ret);
