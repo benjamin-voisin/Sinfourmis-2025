@@ -7,7 +7,8 @@
 typedef struct pile_s {
     uint8_t direction;
     uint8_t poid;
-    uint8_t id_noeud;
+    uint8_t degree_entrant;
+    uint8_t degree_sortant;
     uint8_t type;
 } pile_t;
 
