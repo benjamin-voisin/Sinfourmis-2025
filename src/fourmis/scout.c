@@ -16,6 +16,15 @@ uint8_t no_more_id(fourmi_etat *etat) {
     return (mem->tile_counter == COUNTER_MASK);
 }
 
+
+void scout_loads(fourmi_etat* etat, pile_t* pile, size_t size, uint32_t id) {
+    commun_loads(etat, pile, size);
+    memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
+    mem->comportement = FOLLOWLEAD;
+    mem->id = id;
+    mem->tile_counter = 0;
+}
+
 fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
     uint8_t id;
