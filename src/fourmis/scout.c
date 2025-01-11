@@ -53,6 +53,8 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
                 return commun_action_ramasse_phero(PRIVE, id);
             return commun_action_attendre_phero(PRIVE, id);
         }
+        if (salle->type == NOURRITURE)
+            return commun_action_ramasse_phero(PRIVE, id);
         return scout_action(etat, salle);
         
     case SCOUTING:
