@@ -92,15 +92,16 @@ void reine_thread() {
         } else if (queen_state.produced_ants() < 5 && input.state->nourriture > 15) {
             // On créé des potites froumis si on a de la bouffe et qu'on en a moins de 5
             /* action = CREER_FOURMI; */
-            arg = std::min((input.state->max_nourriture - 10) / 10, input.state->max_production);
-            queen_state.produce_ants(arg);
-            std::cerr << "[QUEEN] Created " << arg << " ants" << std::endl;
+            /* arg = std::min((input.state->max_nourriture - 10) / 10, input.state->max_production); */
+            /* queen_state.produce_ants(arg); */
+            /* std::cerr << "[QUEEN] Created " << arg << " ants" << std::endl; */
         }
 
 		if (queen_state.ticks() == 1) {
 			action = CREER_FOURMI;
 			arg = 1;
             queen_state.produce_ants(arg);
+            std::cerr << "[QUEEN] Created " << arg << " ants" << std::endl;
 		}
         // Et on renvoit notre retour qu'on veut, voilà
         from_reine.send_message({ .action = action, .arg = arg });
