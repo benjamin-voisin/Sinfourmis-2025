@@ -104,7 +104,7 @@ void Graph::to_dot(std::string file) {
 			output << "\t" << id << ";\n";
 			// On dessine les arrêtes
 			for (Edge edge: _adjacency[id]) {
-				output << id << " -> " << edge.get_target() << ";\n";
+				output << "\t" << id << " -> " << edge.get_target() << ";\n";
 			}
 		}
 	}
