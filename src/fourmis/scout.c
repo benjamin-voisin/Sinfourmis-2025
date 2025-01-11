@@ -20,11 +20,13 @@ uint8_t no_more_id(fourmi_etat *etat) {
 
 void scout_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size, uint32_t id) {
     assert(id > 0);
+    static uint8_t fresh_id = 0;
+    assert(fresh_id < 0b111111);
     commun_loads(etat, team_id, pile, size);
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
     mem->comm.type = ANT_KIND_SCOUT;
     mem->comportement = FOLLOWLEAD;
-    mem->id = id;
+    mem->id = (++fresh_id) << 2;
     mem->tile_counter = 0;
 }
 
@@ -65,7 +67,7 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
         } */
 
         direction = salle->public_pheromone % salle->degre;
-        
+
         mem->comportement = SCOUTING_NEW_TILE;
         return commun_action_versdirection(etat, salle, direction, PUBLIC, salle->public_pheromone+1);
 
