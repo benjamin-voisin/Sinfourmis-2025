@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstddef>
 #include <cstdint>
 #include <vector>
 
@@ -8,6 +7,7 @@ typedef enum node_tag_e {
   WATER,
   FOOD,
   YAS_QUEEN,
+  EMPTY,
 } node_tag_t;
 
 typedef union node_data_u {
@@ -34,19 +34,12 @@ typedef struct edge_s {
   uint8_t life;
 } edge_t;
 
-typedef struct graph_s {
+class Graph {
   private:
     std::vector<std::vector<edge_t>> adjacency;
     std::vector<node_t> nodes;
-} graph_t;
-
-void add_node(node_tag_t tag, node_data_t data) {
-  
-}
-void add_edge(size_t node1, size_t node2) {
-  
-}
-void remove_edge(size_t node1, size_t node2) {
-  
-}
-
+  public:
+	void add_node(node_tag_t tag, node_data_t data);
+	void add_edge(size_t node1, size_t node2);
+	void remove_edge(size_t node1, size_t node2);
+};
