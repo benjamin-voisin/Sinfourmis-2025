@@ -1,6 +1,5 @@
 #include "pile.h"
 
-#include "../../sinfourmis.h"
 #include "b_constants.h"
 
 #include <assert.h>
@@ -28,13 +27,37 @@ void pilemetadata_pp_body(FILE* f, char* memoire) {
     fprintf(f, "    taillemax  = %u\n", met->taillepilemax);
 }
 
+void pile_pp_saletype(FILE* f, enum salle_type t) {
+    switch (t)
+    {
+    case VIDE:
+        fprintf(f, "VIDE");
+        break;
+    case EAU:
+        fprintf(f, "EAU");
+        break;
+    case NOURRITURE:
+        fprintf(f, "NOURRITURE");
+        break;
+    case REINE:
+        fprintf(f, "REINE");
+        break;
+    default:
+        fprintf(f, "UNKNOWN");
+        break;
+    }
+
+}
+
 void pile_pp_part(FILE* f, pile_t* p) {
     fprintf(f, "NOEUDPILE [\n");
     fprintf(f, "    id         = %u\n", p->id);
     fprintf(f, "    d_entrant  = %u\n", p->degree_entrant);
     fprintf(f, "    d_sortant  = %u\n", p->degree_sortant);
     fprintf(f, "    poid       = %u\n", p->poid);
-    fprintf(f, "    type       = %u\n", p->type);
+    fprintf(f, "    type       = ");
+    pile_pp_saletype(f, p->type);
+    fprintf(f, "\n");
     fprintf(f, "]\n");
 }
 

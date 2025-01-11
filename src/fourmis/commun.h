@@ -60,6 +60,8 @@ fourmi_retour commun_action_attendre();
 
 fourmi_retour commun_action_attaque(uint8_t team_id);
 
+fourmi_retour commun_action_ramasse_phero(pheromone_type pheromone_type, uint8_t pheromone);
+
 void commun_pp(FILE* f, fourmi_etat* etat);
 
 void commun_body_pp(FILE* f, fourmi_etat* etat);

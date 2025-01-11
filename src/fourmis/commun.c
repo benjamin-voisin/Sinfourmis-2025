@@ -81,6 +81,16 @@ fourmi_retour commun_action_attendre_phero(pheromone_type pheromone_type,
   return ret;
 }
 
+fourmi_retour commun_action_ramasse_phero(pheromone_type pheromone_type,
+                                          uint8_t pheromone) {
+  fourmi_retour ret;
+  ret.action = RAMASSE_NOURRITURE;
+  ret.arg = 0;
+  ret.depose_pheromone = pheromone_type;
+  ret.pheromone = pheromone;
+  return ret;
+}
+
 fourmi_retour commun_action_attendre() {
   return commun_action_attendre_phero(NO_PHEROMONE, 0);
 }

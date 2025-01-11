@@ -100,9 +100,8 @@ void Graph::to_dot(std::string file) {
 		if (node.has_value()) {
 			auto value = node.value();
 			int id = value.get_id();
-			std::cout << id << "\n";
 			// On dessine le nœud dans tous les cas
-			output << "\t" << "0" << ";\n";
+			output << "\t" << id << ";\n";
 			// On dessine les arrêtes
 			for (Edge edge: _adjacency[id]) {
 				output << id << " -> " << edge.get_target() << ";\n";

@@ -1,5 +1,7 @@
 Sinfourmis
 fourmis.so
-output.json
+output*
 build
 *.o
+*.dot
+.sinfourmis_temp
