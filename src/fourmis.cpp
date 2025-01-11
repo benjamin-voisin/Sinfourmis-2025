@@ -31,8 +31,4 @@ reine_retour reine_activation(fourmi_etat fourmis[], const unsigned int nb_fourm
                               const reine_etat *etat, const salle *salle) {
     return cpp_reine_activation(fourmis, nb_fourmis, etat, salle);
 }
-
-fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
-    return cpp_fourmi_activation(etat, salle);
-}
 }
