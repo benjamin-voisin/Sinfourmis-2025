@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 typedef struct pile_s {
     uint8_t id;
@@ -23,6 +24,7 @@ typedef struct pilemetadata_s {
     uint8_t taillepile;
 } pilemetadata_t;
 
+void pilemetadata_pp_body(FILE* f, char* memoire);
 
 pile_t* head(char* memoire);
 

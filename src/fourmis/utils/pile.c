@@ -13,6 +13,13 @@ pilemetadata_t* pilemetadata(char* memoire) {
     return (pilemetadata_t*) memoire;
 }
 
+void pilemetadata_pp_body(FILE* f, char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    fprintf(f, "PILEMETADATA:\n");
+    fprintf(f, "    taille     = %u\n", met->taillepile);
+    fprintf(f, "    taillemax  = %u\n", met->taillepilemax);
+}
+
 bool pile_vide(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     return met->taillepile > 0; 
