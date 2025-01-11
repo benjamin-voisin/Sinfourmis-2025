@@ -1,6 +1,8 @@
 CXX ?= g++
 CC ?= g++
 
+CXXFLAGS = -fPIC
+
 NAME = fourmis.so
 
 SRC_DIR = ./src
