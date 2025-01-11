@@ -10,6 +10,27 @@ std::thread* queen_thread = nullptr;
 ThreadQueue<reine_input_t> to_reine;
 ThreadQueue<reine_retour> from_reine;
 
+reine_retour give_args_to_thread(
+    fourmi_etat fourmis[],
+    const unsigned int nb_fourmis,
+    const reine_etat *etat, const salle *salle
+) {
+  // Lance le thread si c'est pas déjà le cas oh non.
+  if (queen_thread == nullptr) {
+    queen_thread = new std::thread(reine_thread);
+  }
+
+  std::vector<fourmi_etat> ouvrieres(fourmis, fourmis + nb_fourmis);
+
+  // Send info to the queen thread
+  to_reine.send_message(
+      {.forumis_miam_miam = ouvrieres, .state = etat, .node = salle});
+
+  // Wait for return from the queen thread
+  return from_reine.wait_message();
+    
+}
+
 void reine_thread() {
     Queen queen_state;
     // La reine elle travaille totu le temps pour slay les ennemis
