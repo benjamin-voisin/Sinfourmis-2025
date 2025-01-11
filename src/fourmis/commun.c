@@ -95,17 +95,22 @@ fourmi_retour commun_action_ramasse() {
   return commun_action_ramasse_phero(NO_PHEROMONE, 0);
 }
 
-fourmi_retour commun_action_attendre() {
-  return commun_action_attendre_phero(NO_PHEROMONE, 0);
-}
-
-fourmi_retour commun_action_attaque(uint8_t team_id) {
+fourmi_retour commun_action_attaque_phero(pheromone_type pheromone_type,
+                                          uint8_t pheromone, uint8_t ennemy) {
   fourmi_retour ret;
   ret.action = ATTAQUE;
-  ret.arg = team_id;
-  ret.depose_pheromone = NO_PHEROMONE;
-  ret.pheromone = 0;
+  ret.arg = ennemy;
+  ret.depose_pheromone = pheromone_type;
+  ret.pheromone = pheromone;
   return ret;
+}
+
+fourmi_retour commun_action_attaque(uint8_t ennemy) {
+  return commun_action_attaque_phero(NO_PHEROMONE, 0, ennemy);
+}
+
+fourmi_retour commun_action_attendre() {
+  return commun_action_attendre_phero(NO_PHEROMONE, 0);
 }
 
 void commun_feedback_deplacement(fourmi_etat *etat, const salle *salle) {
