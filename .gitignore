@@ -4,3 +4,4 @@ output.json
 build
 *.o
 *.dot
+.sinfourmis_temp
