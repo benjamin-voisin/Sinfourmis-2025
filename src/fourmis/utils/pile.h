@@ -29,9 +29,12 @@ pile_t* head(char* memoire);
 
 // Savoir si on est bien revenus sur la reine
 bool pile_vide(char* memoire);
+bool pile_complete(char* memoire);
 
 // Pour empiler un bout de chemin
 void empiler(char* memoire, pile_t e);
+
+void false_empiler(char* memoire);
 
 // Pour dépiler un bout de chemin
 pile_t* depiler(char* memoire);

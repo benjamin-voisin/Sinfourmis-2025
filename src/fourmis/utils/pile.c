@@ -17,6 +17,10 @@ bool pile_vide(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     return met->taillepile > 0; 
 }
+bool pile_complete(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    return met->taillepile >= met->taillepilemax; 
+}
 
 pile_t* pile_get(char* memoire, size_t i) {
     pilemetadata_t* met = pilemetadata(memoire);
@@ -30,6 +34,12 @@ pile_t* head(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     assert(!pile_vide(memoire));
     return pile_get(memoire, met->taillepile - 1);
+}
+
+void false_empiler(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    assert(!(pile_complete(memoire)));
+    met->taillepile += 1;
 }
 
 void empiler(char* memoire, pile_t e) {
