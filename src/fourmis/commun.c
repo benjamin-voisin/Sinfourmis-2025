@@ -1,14 +1,29 @@
 #include "commun.h"
 
+#include "utils/b_constants.h"
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <assert.h>
 
-void commun_postaction(fourmi_etat* etat, const salle *salle) {
+void stats_loads(fourmi_etat* etat) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     mem->eau = etat->eau;
     mem->nourriture = etat->nourriture;
     mem->vie = etat->vie;
+}
+
+void commun_loads(fourmi_etat* etat, pile_t* pile, size_t size) {
+    memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
+    pile_loads(etat->memoire, pile, size);
+    mem->type = ANT_KIND_COMMON;
+    mem->comportement = AUCUN;
+    stats_loads(etat);
+    fourmi_retour ret = {0};
+}
+
+void commun_postaction(fourmi_etat* etat, const salle *salle) {
+    stats_loads(etat);
 }
 
 fourmi_retour commun_action_versdirection_(fourmi_etat* etat, const salle *salle,
