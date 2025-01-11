@@ -9,6 +9,16 @@ enum communcomportement_e {
   DEPUISBASE
 }; 
 
+/*
+SCHEMA MEMOIRE D'UNE FOURMIS
+
+********************************************************
+* MEMOIRE  * MEMOIRE     * TAS SPE              PILE   *
+* COMMMUNE * SPECIALISEE *  ----->             <-----  *
+*          *             *                    COMMUNE  *
+********************************************************
+*/
+
 typedef struct memoire_commun_s {
     uint8_t type;
     enum communcomportement_e comportement;
@@ -17,6 +27,7 @@ typedef struct memoire_commun_s {
     int32_t nourriture;
     fourmi_action action;
     uint32_t allies;
+    uint32_t SP;
 } memoire_commun_t;
 
 void commun_postaction(fourmi_retour ret, fourmi_etat* etat, const salle *salle);
