@@ -9,6 +9,8 @@ enum scoutcomportement_e {
   SCOUTING,
   SCOUTING_NEW_TILE,
   BACK,
+  BACKWATER,
+  WAITWATER,
   WAITBASE
 }; 
 

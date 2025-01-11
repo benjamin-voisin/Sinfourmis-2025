@@ -10,7 +10,7 @@ enum communcomportement_e {
   VERSBASE,
   DEPUISBASE,
   AUCUN
-}; 
+};
 
 /*
 SCHEMA MEMOIRE D'UNE FOURMIS
