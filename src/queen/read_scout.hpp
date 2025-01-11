@@ -4,4 +4,4 @@
 #include "../sinfourmis.h"
 
 
-void read_scout(Graph *graph, fourmi_etat *fourmi);
+void read_scout(Graph *graph, fourmi_etat fourmi);

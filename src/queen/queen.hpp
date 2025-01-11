@@ -8,9 +8,18 @@
 class Queen {
 	private:
 		Graph _graph;
+		reine_etat _last_state;
+		uint32_t _ticks;
 	public:
-		Queen(): _graph() {};
-		Graph* get_graph();
+		Queen(): _graph(), _last_state(), _ticks(0) {};
+		Graph* graph();
+
+		reine_etat last_state();
+		void register_last_state(reine_etat state);
+		uint32_t ticks();
+		void update_tick_counter(reine_action action);
+
+		void read_scouts(const std::vector<fourmi_etat>& states);
 };
 
 extern std::thread* queen_thread;
