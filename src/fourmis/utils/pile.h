@@ -1,6 +1,8 @@
 #ifndef ANT_PILE
 #define ANT_PILE
 
+#include "../../sinfourmis.h"
+
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -11,7 +13,7 @@ typedef struct pile_s {
     uint8_t poid;
     uint8_t degree_entrant;
     uint8_t degree_sortant;
-    uint8_t type;
+    enum salle_type type;
 } pile_t;
 
 
