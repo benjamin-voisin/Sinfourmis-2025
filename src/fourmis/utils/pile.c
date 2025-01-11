@@ -64,6 +64,12 @@ pile_t* depiler(char* memoire) {
     return hd;
 }
 
+void pile_edit_id(char* memoire, uint8_t id) {
+    assert(!pile_vide(memoire));
+    pile_t* hd = head(memoire);
+    hd->id = id;
+}
+
 pile_t* pile_dumps(char* memoire, size_t* size) {
     pilemetadata_t* met = pilemetadata(memoire);
     *size = met->taillepilemax;
