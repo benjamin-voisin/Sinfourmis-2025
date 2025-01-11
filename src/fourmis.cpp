@@ -2,7 +2,6 @@
 #include "queen/queen.hpp"
 
 #include <iostream>
-#include <optional>
 #include <vector>
 
 
@@ -10,7 +9,6 @@ reine_retour cpp_reine_activation(fourmi_etat fourmis[], const unsigned int nb_f
                                   const reine_etat *etat, const salle *salle) {
     // Lance le thread si c'est pas déjà le cas oh non.
     if (queen_thread == nullptr) {
-        std::cout << "G lancé la reine" << std::endl;
         queen_thread = new std::thread(reine_thread);
     }
 
@@ -20,12 +18,7 @@ reine_retour cpp_reine_activation(fourmi_etat fourmis[], const unsigned int nb_f
     to_reine.send_message({.forumis_miam_miam = ouvrieres, .state = etat, .node = salle });
 
     // Wait for return from the queen thread
-    std::optional<reine_retour> queen_return = std::nullopt;
-    while (!queen_return.has_value()) {
-        queen_return = from_reine.try_receive_message();
-    }
-    
-    return queen_return.value();
+    return from_reine.wait_message();
 }
 
 fourmi_retour cpp_fourmi_activation(fourmi_etat *etat, const salle *salle) {
