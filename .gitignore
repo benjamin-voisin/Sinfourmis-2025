@@ -3,3 +3,4 @@ fourmis.so
 output.json
 build
 *.o
+*.dot
