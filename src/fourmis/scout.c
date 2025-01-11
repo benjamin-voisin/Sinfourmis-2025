@@ -2,7 +2,7 @@
 #include "utils/b_constants.h"
 
 fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
-
+    
 }
 
 
