@@ -59,4 +59,6 @@ fourmi_retour commun_action_attendre();
 
 void commun_pp(FILE* f, fourmi_etat* etat);
 
+void commun_body_pp(FILE* f, fourmi_etat* etat);
+
 #endif

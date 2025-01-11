@@ -3,7 +3,9 @@
 #include "../graph.hpp"
 #include "read_scout.hpp"
 #include "thread_queue.h"
+#include "../fourmis/main.h"
 #include "../fourmis/scout.h"
+
 #include <algorithm>
 #include <cstdint>
 #include <iostream>
@@ -79,6 +81,7 @@ void reine_thread() {
             // Sinon, on vide un peu le stockage
         		// On initialise la mémoire de totute les fourmis
         		for (fourmi_etat* fourmis : input.forumis_miam_miam) {
+        			fourmi_pp(stdout, fourmis);
     					std::cerr << "[QUEEN] gaslight ant\n";
         			scout_loads(fourmis, input.state->team_id, NULL, 0, 1);
         		}

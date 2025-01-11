@@ -77,7 +77,7 @@ fourmi_retour commun_action_attendre() {
 
 void commun_feedback_deplacement(fourmi_etat* etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
-    if (etat->result > 0) {
+    if (etat->result >= 0) {
         switch (mem->comportement) {
             case VERSBASE:
                 depiler(etat->memoire);
