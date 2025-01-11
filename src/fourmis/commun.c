@@ -1,13 +1,13 @@
 #include "commun.h"
 
-#include "stdbool.h"
+#include <stdbool.h>
+#include <stdio.h>
 
-void commun_postaction(fourmi_retour ret, fourmi_etat* etat, const salle *salle) {
+void commun_postaction(fourmi_etat* etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     mem->eau = etat->eau;
     mem->nourriture = etat->nourriture;
     mem->vie = etat->vie;
-    mem->action = ret.action;
 }
 
 fourmi_retour commun_action_versdirection_(fourmi_etat* etat, const salle *salle,
@@ -33,12 +33,31 @@ fourmi_retour commun_action_versdirection(fourmi_etat* etat, const salle *salle,
 
 fourmi_retour commun_action_versbase(fourmi_etat* etat, const salle *salle) {
     pile_t* hd = head(etat->memoire);
-    commun_action_versdirection_(etat, salle, VERSBASE, hd->direction, NO_PHEROMONE, 0);
+    commun_action_versdirection_(etat, salle, VERSBASE, hd->degree_sortant, NO_PHEROMONE, 0);
 }
 
 void commun_feedback_deplacement(fourmi_etat* etat, const salle *salle) {
-    printf("Failwith todo %s\n", "commun_feedback_deplacement");
-    exit(1);
+    memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
+    if (etat->result > 0) {
+        switch (mem->comportement) {
+            case VERSBASE:
+                depiler(etat->memoire);
+            case DEPUISBASE:
+                pile_t hd;
+                hd.degree_sortant = etat->result;
+                hd.degree_entrant = mem->ret.arg;
+                hd.id = salle->pheromone;
+                hd.type = salle->type;
+                hd.poid = mem->eau - etat->eau;
+                empiler(etat->memoire, hd);
+            case AUCUN:
+                printf("ERREUR COMPORTEMENT DE DEPLACEMENT INDEFINI");
+                exit(1);
+        }
+    } else {
+        printf("Failwith todo %s\n", "commun_feedback_deplacement FAILURE");
+        exit(1);
+    }
 }
 
 void commun_feedback_commence_construction(fourmi_etat* etat, const salle *salle) {
