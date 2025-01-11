@@ -64,9 +64,10 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
             return scout_action(etat, salle);
         } */
 
-        direction = random_other_dir(etat, salle);
+        direction = salle->public_pheromone % salle->degre;
+        
         mem->comportement = SCOUTING_NEW_TILE;
-        return commun_action_versdirection(etat, salle, direction, NO_PHEROMONE, 0);
+        return commun_action_versdirection(etat, salle, direction, PUBLIC, salle->public_pheromone+1);
 
     case BACKWATER:
         if (!pile_vide(etat->memoire) && (salle->type != EAU))
