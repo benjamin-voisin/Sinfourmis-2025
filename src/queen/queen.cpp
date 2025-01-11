@@ -84,7 +84,7 @@ void reine_thread() {
         		for (fourmi_etat* fourmis : input.forumis_miam_miam) {
         			fourmi_pp(stdout, fourmis);
     					std::cerr << "[QUEEN] gaslight ant\n";
-        			scout_loads(fourmis, input.state->team_id, NULL, 0, queen_state.produced_ants());
+        			scout_loads(fourmis, input.state->team_id, NULL, 0, queen_state.produced_ants() << 3);
         		}
             action = ENVOYER_FOURMI;
             arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
@@ -100,6 +100,7 @@ void reine_thread() {
 		if (queen_state.ticks() == 1) {
 			action = CREER_FOURMI;
 			arg = 1;
+            queen_state.produce_ants(arg);
 		}
         // Et on renvoit notre retour qu'on veut, voilà
         from_reine.send_message({ .action = action, .arg = arg });
