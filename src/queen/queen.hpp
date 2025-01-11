@@ -9,7 +9,7 @@ class Queen {
 	private:
 		Graph _graph;
 	public:
-		Queen();
+		Queen(): _graph() {};
 		Graph* get_graph();
 };
 

@@ -16,6 +16,10 @@ node_id Edge::get_target() {
 
 Graph::Graph() : _n_nodes{0}  {}
 
+const bool Graph::is_empty() {
+	return _n_nodes == 0;
+}
+
 void Graph::add_node(node_type_t type, node_data_t data, node_id id) {
 	_nodes[id] = Node(type, data, id);
 }
