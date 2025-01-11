@@ -1,7 +1,7 @@
 #ifndef ANT_SCOUT_H
 #define ANT_SCOUT_H
 
-#include "stdint.h"
+#include <stdint.h>
 #include "commun.h"
 
 enum scoutcomportement_e {

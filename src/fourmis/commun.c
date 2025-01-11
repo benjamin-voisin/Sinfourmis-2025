@@ -91,6 +91,10 @@ fourmi_retour commun_action_ramasse_phero(pheromone_type pheromone_type,
   return ret;
 }
 
+fourmi_retour commun_action_ramasse() {
+  return commun_action_ramasse_phero(NO_PHEROMONE, 0);
+}
+
 fourmi_retour commun_action_attendre() {
   return commun_action_attendre_phero(NO_PHEROMONE, 0);
 }

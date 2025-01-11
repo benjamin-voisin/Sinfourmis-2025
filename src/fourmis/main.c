@@ -2,6 +2,7 @@
 #include "../sinfourmis.h"
 #include "commun.h"
 #include "scout.h"
+#include "food.h"
 #include "utils/b_constants.h"
 #include "utils/utils.h"
 
@@ -16,6 +17,9 @@ void new_pp(FILE *f, fourmi_etat *etat) {
 void fourmi_pp(FILE *f, fourmi_etat *etat) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   switch (mem->type) {
+  case ANT_KIND_FOOD:
+    food_pp(f, etat);
+    break;
   case ANT_KIND_SCOUT:
     scout_pp(f, etat);
     break;
@@ -35,6 +39,7 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   switch (mem->type) {
   case ANT_KIND_SCOUT:
+  case ANT_KIND_FOOD:
     switch (mem->ret.action) {
     case DEPLACEMENT:
       commun_feedback_deplacement(etat, salle);
@@ -73,6 +78,8 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
 fourmi_retour fourmi_act(fourmi_etat *etat, const salle *salle) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   switch (mem->type) {
+  case ANT_KIND_FOOD:
+    return food_action(etat, salle);
   case ANT_KIND_SCOUT:
     return scout_action(etat, salle);
   case ANT_KIND_NEW:
@@ -88,6 +95,8 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat,
                        const salle *salle) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   switch (mem->type) {
+  case ANT_KIND_FOOD:
+    break;
   case ANT_KIND_SCOUT:
     scout_postaction(etat, salle);
     break;
