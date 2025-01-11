@@ -3,7 +3,16 @@
 #include "graph.hpp"
 #include "../sinfourmis.h"
 #include "thread_queue.h"
+#include "../fourmis/utils/pile.h"
+
 #include <thread>
+
+enum next_action {
+	SPAWN_MANGER,
+	GASLIGHT_MANGER,
+	SPAWN_SCOUT,
+	GASLIGHT_SCOUT,
+};
 
 class Queen {
 	private:
@@ -11,7 +20,12 @@ class Queen {
 		reine_etat _last_state;
 		uint32_t _ticks;
 		uint32_t _produced_ants;
+
 	public:
+		std::vector<pile_t> path_to_node[256];
+		next_action _next_action;
+		node_id _next_manger_target;
+
 		Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {};
 		Graph* graph();
 
