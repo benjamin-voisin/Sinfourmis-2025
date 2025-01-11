@@ -39,6 +39,8 @@ void false_empiler(char* memoire);
 // Pour dépiler un bout de chemin
 pile_t* depiler(char* memoire);
 
+void pile_edit_id(char* memoire, uint8_t id);
+
 // Pour que la reine puisse retrouver le trajet d'une fourmisse
 pile_t* pile_dumps(char* memoire, size_t* size);
 void pile_loads(char* memoire, pile_t* pile, size_t size);

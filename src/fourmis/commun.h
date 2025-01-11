@@ -10,7 +10,7 @@ enum communcomportement_e {
   VERSBASE,
   DEPUISBASE,
   AUCUN
-}; 
+};
 
 /*
 SCHEMA MEMOIRE D'UNE FOURMIS
@@ -46,5 +46,11 @@ void commun_feedback_attaque_tunnel(fourmi_etat* etat, const salle *salle);
 fourmi_retour commun_action_verslead(fourmi_etat* etat, const salle *salle);
 
 fourmi_retour commun_action_versbase(fourmi_etat* etat, const salle *salle);
+
+fourmi_retour commun_action_versdirection(fourmi_etat* etat, const salle *salle, uint8_t direction, pheromone_type pheromone_type, uint8_t pheromone);
+
+fourmi_retour commun_action_attendre_phero(pheromone_type pheromone_type, uint8_t pheromone);
+
+fourmi_retour commun_action_attendre();
 
 #endif

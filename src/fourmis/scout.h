@@ -5,15 +5,23 @@
 #include "commun.h"
 
 enum scoutcomportement_e {
+  FOLLOWLEAD,
   SCOUTING,
-  BACK2BASE
+  SCOUTING_NEW_TILE,
+  BACK,
+  BACKWATER,
+  WAITWATER,
+  WAITBASE
 }; 
+
+#define ID_MASK 0b11111000
+#define COUNTER_MASK 0b00000111
 
 typedef struct memoire_scout_s {
     memoire_commun_t comm;
 
     // Représente le comportement du scout
-    enum scoutcomportement_e state;
+    enum scoutcomportement_e comportement;
 
     // Représente l'identifiant unique du scout
     uint8_t id; // 5 bit integer
