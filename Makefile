@@ -33,10 +33,10 @@ simulateur:
 	cp ./sinfourmis2025/Sinfourmis ./
 
 simule: simulateur $(NAME)
-	./Sinfourmis -t dummy -t dummy -t dummy -t ./$(NAME) -d 50 ./sinfourmis2025/maps/spiral.json
+	./Sinfourmis -t dummy -t ./$(NAME) -d 50 ./sinfourmis2025/maps/test.json
 
 simule_full: simulateur $(NAME)
-	./Sinfourmis -t dummy -t dummy -t dummy -t ./$(NAME) ./sinfourmis2025/maps/spiral.json
+	./Sinfourmis -t dummy -t ./$(NAME) ./sinfourmis2025/maps/test.json
 
 
 animateur:
