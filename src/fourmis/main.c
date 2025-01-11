@@ -102,8 +102,8 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat,
 }
 
 fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
-  fourmi_pp(stdout, etat);
   fourmi_feedback(etat, salle);
+  fourmi_pp(stdout, etat);
   fourmi_retour ret = fourmi_act(etat, salle);
   fourmi_postaction(ret, etat, salle);
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
