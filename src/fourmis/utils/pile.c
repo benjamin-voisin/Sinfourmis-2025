@@ -20,6 +20,16 @@ void pilemetadata_pp_body(FILE* f, char* memoire) {
     fprintf(f, "    taillemax  = %u\n", met->taillepilemax);
 }
 
+void pile_pp(FILE* f, pile_t* p) {
+    fprintf(f, "NOEUDPILE [\n");
+    fprintf(f, "    id         = %u\n", p->id);
+    fprintf(f, "    d_entrant  = %u\n", p->degree_entrant);
+    fprintf(f, "    d_sortant  = %u\n", p->degree_sortant);
+    fprintf(f, "    poid       = %u\n", p->poid);
+    fprintf(f, "    type       = %u\n", p->type);
+    fprintf(f, "]\n");
+}
+
 bool pile_vide(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     return met->taillepile == 0; 
