@@ -6,6 +6,26 @@
 #include <stdio.h>
 #include <assert.h>
 
+void new_pp(FILE* f, fourmi_etat* etat) {
+    fprintf(f, "NEW_ANT {\n");
+    commun_body_pp(f, etat);
+    fprintf(f, "}\n");
+}
+
+void fourmi_pp(FILE* f, fourmi_etat* etat) {
+    memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
+    switch (mem->type) {
+    case ANT_KIND_SCOUT:
+        scout_pp(f, etat);
+    case ANT_KIND_COMMON:
+        commun_pp(f, etat);
+    case ANT_KIND_NEW:
+        new_pp(f, etat);
+    default:
+        fprintf(f, "UNKNOWN_ANT\n");
+    }
+}
+
 void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     switch (mem->type) {
@@ -74,7 +94,7 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat, const salle *salle)
 }
 
 fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
-    commun_pp(stdout, etat);
+    fourmi_pp(stdout, etat);
     fourmi_feedback(etat, salle);
     fourmi_retour ret = fourmi_act(etat, salle);
     fourmi_postaction(ret, etat, salle);
@@ -83,23 +103,5 @@ fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
     return ret;
 }
 
-void new_pp(FILE* f, fourmi_etat* etat) {
-    fprintf(f, "NEW_ANT {\n");
-    commun_body_pp(f, etat);
-    fprintf(f, "}\n");
-}
 
-void fourmi_pp(FILE* f, fourmi_etat* etat) {
-    memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
-    switch (mem->type) {
-    case ANT_KIND_SCOUT:
-        scout_pp(f, etat);
-    case ANT_KIND_COMMON:
-        commun_pp(f, etat);
-    case ANT_KIND_NEW:
-        new_pp(f, etat);
-    default:
-        fprintf(f, "UNKNOWN_ANT\n");
-    }
-}
 
