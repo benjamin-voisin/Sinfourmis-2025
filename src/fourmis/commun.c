@@ -59,6 +59,10 @@ fourmi_retour commun_action_versdirection(fourmi_etat *etat, const salle *salle,
 }
 
 fourmi_retour commun_action_versbase(fourmi_etat *etat, const salle *salle) {
+  printf("SIMPLIPILE\n");
+  pile_pp(stdout, etat->memoire);
+  simplipile(etat->memoire);
+  pile_pp(stdout, etat->memoire);
   pile_t *hd = head(etat->memoire);
   return commun_action_versdirection_(etat, salle, VERSBASE, hd->degree_sortant,
                                       NO_PHEROMONE, 0);

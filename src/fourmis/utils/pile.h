@@ -31,6 +31,7 @@ void pile_pp(FILE* f, char* memoire);
 
 pile_t* head(char* memoire);
 
+void simplipile(char* memoire);
 // Savoir si on est bien revenus sur la reine
 bool pile_vide(char* memoire);
 bool pile_complete(char* memoire);

@@ -79,6 +79,34 @@ void pile_pp(FILE* f, char* memoire) {
     fprintf(f, "\033[0m");
 }
 
+void pile_copy(pile_t* psrc, pile_t* pdst) {
+    pdst->degree_entrant = psrc->degree_entrant;
+    pdst->degree_sortant = psrc->degree_sortant;
+    pdst->id = psrc->id;
+    pdst->poid = psrc->poid;
+    pdst->type = psrc->type;
+}
+
+void simplipile(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    pile_t* p_base = pile_get(memoire, met->taillepile-1);
+    for (size_t i=0; i<met->taillepile-1; ++i) {
+        pile_t* p = pile_get(memoire, i);
+        if (p_base->id == p->id) {
+            uint8_t delta = met->taillepilemax-met->taillepile;
+            for (size_t j=0; j<delta; ++j) {
+                pile_t* psrc = pile_get(memoire, met->taillepile+j);
+                pile_t* pdst = pile_get(memoire, i+j);
+                pile_copy(psrc, pdst);
+            }
+            met->taillepile = i;
+            met->taillepilemax = i + delta;
+            return;
+        }
+    }
+
+}
+
 bool pile_vide(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     return met->taillepile == 0; 
@@ -110,11 +138,7 @@ void empiler(char* memoire, pile_t e) {
         met->taillepilemax = met->taillepile;
     }
     pile_t* hd = head(memoire);
-    hd->id = e.id;
-    hd->degree_entrant = e.degree_entrant;
-    hd->degree_sortant = e.degree_sortant;
-    hd->poid = e.poid;
-    hd->type = e.type;
+    pile_copy(&e, hd);
 }
 
 pile_t* depiler(char* memoire) {
