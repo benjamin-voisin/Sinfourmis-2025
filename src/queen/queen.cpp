@@ -6,6 +6,7 @@
 #include "../fourmis/main.h"
 #include "../fourmis/scout.h"
 #include "../fourmis/food.h"
+#include "../fourmis/utils/b_constants.h"
 
 #include <algorithm>
 #include <cstdint>
@@ -61,8 +62,8 @@ void reine_thread() {
         }
 
         // Update les infos par les scouts
-        /* queen_state.read_scouts(input.forumis_miam_miam); */
-		/* queen_state.graph()->to_dot("graph.dot"); */
+        queen_state.read_scouts(input.forumis_miam_miam);
+		queen_state.graph()->to_dot("graph.dot");
         std::vector<fourmis_compteur> ants_present(input.node->compteurs_fourmis, input.node->compteurs_fourmis + input.node->taille_liste);
         uint32_t friendly_ants_present = 0;
         for (auto compteur : ants_present) {
@@ -82,6 +83,7 @@ void reine_thread() {
 			case (SPAWN_MANGER):
 				action = CREER_FOURMI;
 				arg = (input.state->nourriture - 10) / 2;
+				queen_state._next_action = DEFAULT;
 				break;
 			case (GASLIGHT_MANGER):
 				std::cout << "On essaie de gaslight\n";
@@ -91,11 +93,16 @@ void reine_thread() {
 				std::cout << "On a réussi à gaslight\n";
 				action = ENVOYER_FOURMI;
 				arg = 10;
+				queen_state._next_action = DEFAULT;
 				break;
 			case (SPAWN_SCOUT):
+				queen_state._next_action = DEFAULT;
 				break;
 			case (GASLIGHT_SCOUT):
+				queen_state._next_action = DEFAULT;
 				break;
+
+			case (DEFAULT):
 			default:
 				// Vérifie si il y a des fourmis sur la case
 				if (storage_space >= friendly_ants_present && friendly_ants_present > 0) {
@@ -133,7 +140,9 @@ void reine_thread() {
 					for (fourmi_etat* fourmis : input.forumis_miam_miam) {
 						fourmi_pp(stdout, fourmis);
 						std::cerr << "[QUEEN] gaslight ant\n";
-						scout_loads(fourmis, input.state->team_id, NULL, 0, queen_state.produced_ants() << 3);
+						if (fourmi_kind(fourmis) == ANT_KIND_SCOUT || fourmi_kind(fourmis) == ANT_KIND_NEW) {
+							scout_loads(fourmis, input.state->team_id, NULL, 0, ++(queen_state.next_scout) << 2);
+						}
 					}
 					action = ENVOYER_FOURMI;
 					arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);

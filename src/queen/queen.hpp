@@ -12,6 +12,7 @@ enum next_action {
 	GASLIGHT_MANGER,
 	SPAWN_SCOUT,
 	GASLIGHT_SCOUT,
+	DEFAULT,
 };
 
 class Queen {
@@ -25,6 +26,7 @@ class Queen {
 		std::vector<pile_t> path_to_node[256];
 		next_action _next_action;
 		node_id _next_manger_target;
+		uint8_t next_scout = 1;
 
 		Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {};
 		Graph* graph();
