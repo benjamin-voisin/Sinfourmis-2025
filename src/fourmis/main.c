@@ -59,6 +59,7 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
             printf("FOURMIS ACTION UNKNOWN\n");
             exit(1);
         }   
+        break;
     case ANT_KIND_NEW:
         printf("FOURMIS TYPE ANT_KIND_NEW NO FEEDBACK\n");
         exit(1);
