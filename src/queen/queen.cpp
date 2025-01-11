@@ -3,6 +3,8 @@
 #include "../graph.hpp"
 #include "read_scout.hpp"
 #include "thread_queue.h"
+#include <algorithm>
+#include <cstdint>
 #include <thread>
 #include <vector>
 
@@ -20,11 +22,13 @@ reine_retour give_args_to_thread(
     queen_thread = new std::thread(reine_thread);
   }
 
-  std::vector<fourmi_etat> ouvrieres(fourmis, fourmis + nb_fourmis);
+  std::vector<fourmi_etat> ouvrieres_garage(fourmis, fourmis + nb_fourmis);
+
+  
 
   // Send info to the queen thread
   to_reine.send_message(
-      {.forumis_miam_miam = ouvrieres, .state = etat, .node = salle});
+      {.forumis_miam_miam = ouvrieres_garage, .state = etat, .node = salle});
 
   // Wait for return from the queen thread
   return from_reine.wait_message();
@@ -46,14 +50,43 @@ void reine_thread() {
             queen_state.graph()->add_node(YAS_QUEEN, data, 0);
         }
 
+        // Update les infos par les scouts
         queen_state.read_scouts(input.forumis_miam_miam);
 
-        // Et on renvoit notre retour qu'on veut, voilà
+        // Cherche la prochaine action à faire
         auto action = REINE_PASSE;
-        from_reine.send_message({ .action = action, .arg = 0 });
+        auto arg = 0;
+
+        // Vérifie si il y a des fourmis sur la case
+        std::vector<fourmis_compteur> ants_present(input.node->compteurs_fourmis, input.node->compteurs_fourmis + input.node->taille_liste);
+        uint32_t friendly_ants_present = 0;
+        for (auto compteur : ants_present) {
+            if (compteur.equipe == input.state->team_id) {
+                friendly_ants_present = compteur.nombre;
+                break;
+            }
+        }
+        // On rappel les fourmis si on a la place et totu
+        auto storage_space = input.state->max_stockage - input.forumis_miam_miam.size();
+        if (storage_space <= friendly_ants_present) {
+            action = RECUPERER_FOURMI;
+            arg = friendly_ants_present;
+        } else if (!input.forumis_miam_miam.empty()) {
+            // Sinon, on vide un peu le stockage
+            action = ENVOYER_FOURMI;
+            arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
+        } else {
+            // Sinon on fabrique totu les forumis ahah forumi go brrrrrrrrrrrrrrrrrrrrr
+            action = CREER_FOURMI;
+            arg = input.state->max_production;
+        }
+
+        // Et on renvoit notre retour qu'on veut, voilà
+        from_reine.send_message({ .action = action, .arg = arg });
         queen_state.update_tick_counter(action);
     }
 }
+
 
 // Met à jour le graph de la reine selon l'état des fourmis présentes.
 void Queen::read_scouts(const std::vector<fourmi_etat>& states) {
