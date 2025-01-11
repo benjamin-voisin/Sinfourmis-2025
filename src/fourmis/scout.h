@@ -14,8 +14,8 @@ enum scoutcomportement_e {
   WAITBASE
 }; 
 
-#define ID_MASK 0b11111000
-#define COUNTER_MASK 0b00000111
+#define ID_MASK 0b11111100
+#define COUNTER_MASK 0b00000011
 
 typedef struct memoire_scout_s {
     memoire_commun_t comm;
