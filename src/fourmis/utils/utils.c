@@ -17,12 +17,16 @@ uint8_t random_other_dir(fourmi_etat *etat, const salle *salle) {
     }
     return dir;
 }
-
-void retour_pp(FILE* f, fourmi_retour ret) {
-    fprintf(f, "ACTION {\n", ret.action);
+void retour_pp_body(FILE* f, fourmi_retour ret) {
+    fprintf(f, "RET:%u\n");
     fprintf(f, "    action     = %u\n", ret.action);
     fprintf(f, "    arg        = %u\n", ret.arg);
     fprintf(f, "    fero_type  = %u\n", ret.depose_pheromone);
     fprintf(f, "    fero       = %u\n", ret.pheromone);
-    fprintf(f, "}\n", ret.action);
+}
+
+void retour_pp(FILE* f, fourmi_retour ret) {
+    fprintf(f, "ACTION {\n");
+    retour_pp_body(f, ret);
+    fprintf(f, "}\n");
 }

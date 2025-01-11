@@ -142,6 +142,7 @@ void commun_body_pp(FILE* f, fourmi_etat* etat) {
     fprintf(f, "    vie        = %u\n", mem->vie);
     fprintf(f, "    eau        = %u\n", mem->eau);
     fprintf(f, "    nourriture = %u\n", mem->nourriture);
+    retour_pp_body(f, mem->ret);
 }
 
 void commun_pp(FILE* f, fourmi_etat* etat) {
