@@ -8,7 +8,7 @@ node_id Node::get_id() {
 	return _id;
 }
 
-Edge::Edge(node_id target, size_t cost) : _cost{cost}, _target_id{target}, _life{1} {}
+Edge::Edge(node_id target, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant) : _cost{cost}, _target_id{target}, _life{1} {}
 
 node_id Edge::get_target() {
 	return _target_id;
@@ -20,7 +20,7 @@ void Graph::add_node(node_type_t type, node_data_t data, node_id id) {
 	_nodes[id] = Node(type, data, id);
 }
 
-void Graph::add_edge(node_id node1, node_id node2, size_t cost) {
+void Graph::add_edge(node_id node1, node_id node2, size_t cost, uint8_t degree_entrant, uint8_t degree_sortant) {
 	// D’abord on regarde si cette arrête existe pas déjà
 	bool exists_e1_2 = false;
 	for (Edge edge : _adjacency[node1]) {
@@ -37,8 +37,8 @@ void Graph::add_edge(node_id node1, node_id node2, size_t cost) {
 	// Si l’arrête existe pas déjà
 	if (!exists_e1_2 && !exists_e2_1) {
 		// On ajoute l’arrête dans les listes d’adjacences des deux nœuds
-		_adjacency[node1].push_back(Edge(node2, cost));
-		_adjacency[node2].push_back(Edge(node1, cost));
+		_adjacency[node1].push_back(Edge(node2, cost, degree_entrant, degree_sortant));
+		_adjacency[node2].push_back(Edge(node1, cost, degree_entrant, degree_sortant));
 	}
 
 }
