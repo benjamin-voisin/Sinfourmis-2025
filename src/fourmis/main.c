@@ -3,7 +3,6 @@
 #include "scout.h"
 #include "utils/b_constants.h"
 
-#include <stdio.h>
 #include <assert.h>
 
 void new_pp(FILE* f, fourmi_etat* etat) {
