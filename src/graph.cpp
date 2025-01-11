@@ -2,9 +2,17 @@
 
 #include <iostream>
 
-Node::Node(node_type_t type, node_data_t data, node_id id) : type{type}, data{data}, id{id}	{}
+Node::Node(node_type_t type, node_data_t data, node_id id) : _type{type}, _data{data}, _id{id}	{}
 
-Edge::Edge(node_id target, size_t cost) : cost{cost}, target_id{target}, life{1} {}
+node_id Node::get_id() {
+	return _id;
+}
+
+Edge::Edge(node_id target, size_t cost) : _cost{cost}, _target_id{target}, _life{1} {}
+
+node_id Edge::get_target() {
+	return _target_id;
+}
 
 Graph::Graph() : _n_nodes{0}  {}
 
@@ -16,11 +24,11 @@ void Graph::add_edge(node_id node1, node_id node2, size_t cost) {
 	// D’abord on regarde si cette arrête existe pas déjà
 	bool exists_e1_2 = false;
 	for (Edge edge : _adjacency[node1]) {
-		if (edge.target_id == node2) exists_e1_2 = true;
+		if (edge.get_target() == node2) exists_e1_2 = true;
 	}
 	bool exists_e2_1 = false;
 	for (Edge edge : _adjacency[node2]) {
-		if (edge.target_id == node2) exists_e2_1 = true;
+		if (edge.get_target() == node2) exists_e2_1 = true;
 	}
 	if (exists_e1_2 != exists_e2_1) {
 		std::cerr << "Error in the graph" << std::endl;
@@ -39,7 +47,7 @@ void Graph::remove_edge(node_id node1, node_id node2) {
 	// On cherche l’addresse de l’edge n1 -> n2
 	size_t index = -1;
 	for (size_t i = 0; i < _adjacency[node1].size(); i++) {
-		if (_adjacency[node1][i].target_id == node2) { // On a trouvé l’arrête
+		if (_adjacency[node1][i].get_target() == node2) { // On a trouvé l’arrête
 			index = i;
 			break;
 		}
@@ -53,7 +61,7 @@ void Graph::remove_edge(node_id node1, node_id node2) {
 	// On cherche l’addresse de l’edge n2 -> n1
 	index = -1;
 	for (size_t i = 0; i < _adjacency[node2].size(); i++) {
-		if (_adjacency[node2][i].target_id == node1) { // On a trouvé l’arrête
+		if (_adjacency[node2][i].get_target() == node1) { // On a trouvé l’arrête
 			index = i;
 			break;
 		}
