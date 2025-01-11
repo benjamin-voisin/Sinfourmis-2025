@@ -74,16 +74,12 @@ void reine_thread() {
             arg = friendly_ants_present;
         } else if (!input.forumis_miam_miam.empty()) {
             // Sinon, on vide un peu le stockage
-			// On initialise la mémoire de totute les fourmis
-			for (fourmi_etat fourmis : input.forumis_miam_miam) {
-				scout_loads(&fourmis, input.state->team_id, {0}, 0, 1);
-			}
+        		// On initialise la mémoire de totute les fourmis
+        		for (fourmi_etat fourmis : input.forumis_miam_miam) {
+        			scout_loads(&fourmis, input.state->team_id, {0}, 0, 1);
+        		}
             action = ENVOYER_FOURMI;
             arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
-        } else {
-            // Sinon on fabrique totu les forumis ahah forumi go brrrrrrrrrrrrrrrrrrrrr
-            action = CREER_FOURMI;
-            arg = input.state->max_production;
         }
 
         // Et on renvoit notre retour qu'on veut, voilà
