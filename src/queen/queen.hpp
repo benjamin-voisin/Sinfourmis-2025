@@ -33,5 +33,10 @@ typedef struct {
 extern ThreadQueue<reine_input_t> to_reine;
 extern ThreadQueue<reine_retour> from_reine;
 
+reine_retour give_args_to_thread(
+  fourmi_etat fourmis[],
+  const unsigned int nb_fourmis,
+  const reine_etat *etat, const salle *salle
+);
 void reine_thread();
 
