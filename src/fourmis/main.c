@@ -2,6 +2,7 @@
 #include "commun.h"
 #include "scout.h"
 #include "utils/b_constants.h"
+#include "utils/utils.h"
 
 #include <assert.h>
 
