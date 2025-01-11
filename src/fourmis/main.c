@@ -36,6 +36,11 @@ void fourmi_pp(FILE *f, fourmi_etat *etat) {
   }
 }
 
+uint8_t	fourmi_kind(fourmi_etat* etat) {
+	memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
+	return mem->type;
+}
+
 void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   switch (mem->type) {
