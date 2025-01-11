@@ -47,4 +47,6 @@ fourmi_retour commun_action_verslead(fourmi_etat* etat, const salle *salle);
 
 fourmi_retour commun_action_versbase(fourmi_etat* etat, const salle *salle);
 
+fourmi_retour commun_action_attendre();
+
 #endif

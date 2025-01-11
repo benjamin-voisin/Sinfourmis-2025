@@ -42,6 +42,15 @@ fourmi_retour commun_action_verslead(fourmi_etat* etat, const salle *salle) {
     return commun_action_versdirection(etat, salle, p->degree_sortant, NO_PHEROMONE, 0);
 }
 
+fourmi_retour commun_action_attendre() {
+    fourmi_retour ret;
+    ret.action = FOURMI_PASSE;
+    ret.arg = 0;
+    ret.depose_pheromone = NO_PHEROMONE;
+    ret.pheromone = 0;
+    return ret;
+}
+
 void commun_feedback_deplacement(fourmi_etat* etat, const salle *salle) {
     memoire_commun_t* mem = (memoire_commun_t*) etat->memoire;
     if (etat->result > 0) {
