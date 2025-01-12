@@ -8,6 +8,7 @@
 #include "scheduler.hpp"
 
 #include <thread>
+#include <optional>
 
 class Queen {
 	private:
@@ -19,7 +20,7 @@ class Queen {
 	public:
 		Scheduler _scheduler;
 
-		std::vector<pile_t> path_to_node[256];
+		std::optional<std::vector<pile_t>> path_to_node[256];
 		node_id _next_manger_target;
 		uint8_t next_scout = 1;
 

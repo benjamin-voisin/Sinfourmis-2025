@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <memory>
 #include <thread>
 #include <vector>
 
@@ -15,6 +16,9 @@ ThreadQueue<reine_input_t> to_reine;
 ThreadQueue<reine_retour> from_reine;
 
 Queen::Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {
+	for (int i = 0; i < 256; i++) {
+		path_to_node[i] = std::nullopt;
+	}
 	arg_t arg = {0};
 	arg.amount = 1;
 	_scheduler.add_task(Task(CREER_SCOUT, arg ));
@@ -81,11 +85,39 @@ void reine_thread() {
         // On rappel les fourmis si on a la place et totu
         auto storage_space = input.state->max_stockage - input.forumis_miam_miam.size();
 
+		// On update nos chemins
+		for (fourmi_etat *fourmis : input.forumis_miam_miam) {
+			size_t pile_size;
+			pile_t *pile = pile_dumps(fourmis->memoire, &pile_size);
+			if (pile != NULL) {
+				// Si le chemin est plus court que ce qu’on conanit
+				if (!queen_state.path_to_node[pile->id].has_value() || queen_state.path_to_node[pile->id].value().size() > pile_size) {
+					std::cout << "Trouvé un chemi plu court\n";
+					std::vector<pile_t> v;
+					for (size_t i = 0; i < pile_size; i++) {
+						v.push_back(*(pile+i));
+					}
+					queen_state.path_to_node[pile->id] = v;
+					if (pile->type == NOURRITURE) {
+						// On va spawn une fourmi manger
+						std::cout << "MANGER\n";
+						arg_t arg = {0};
+						arg.manger_target = pile->id;
+						queen_state._scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
+						queen_state._scheduler.add_task(Task(SEND_FORUMIS, {1}));
+						queen_state._scheduler.add_task(Task(CREER_MANGER, arg));
+						queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
+						queen_state._scheduler.add_task(Task(SEND_FORUMIS, arg));
+					}
+				}
+			}
+		}
+
         // Cherche la prochaine action à faire
         reine_action action;
         int arg;
 
-		queen_state._scheduler.execute_tasks(&action, &arg, &input, friendly_ants_present);
+		queen_state._scheduler.execute_tasks(&action, &arg, &input, friendly_ants_present, queen_state.path_to_node);
 		
         // Et on renvoit notre retour qu'on veut, voilà
         from_reine.send_message({ .action = action, .arg = arg });
