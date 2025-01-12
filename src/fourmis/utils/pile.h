@@ -13,7 +13,7 @@ typedef struct pile_s {
     uint8_t poid;
     uint8_t degree_entrant;
     uint8_t degree_sortant;
-    enum salle_type type;
+    uint8_t type;
 } pile_t;
 
 
