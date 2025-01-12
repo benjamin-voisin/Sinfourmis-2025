@@ -9,7 +9,7 @@ enum foodcomportement_e {
   F_WAITBASE
 }; 
 
-typedef struct memoire_food_s {
+typedef struct __attribute__((__packed__)) memoire_food_s {
     memoire_commun_t comm;
 
     // Représente le comportement du food carrier

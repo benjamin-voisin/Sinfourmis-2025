@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct pile_s {
+typedef struct __attribute__((__packed__)) pile_s {
     uint8_t id;
     uint8_t poid;
     uint8_t degree_entrant;
@@ -21,7 +21,7 @@ typedef struct pile_s {
  CETTE STRUCTURE PERMET DE CALCULER LA TAILLE PRISE PAR LES METADATAS
  Elles est morallement ABSTRAITE, ne pas l'utiliser, merci <3 
 */
-typedef struct pilemetadata_s { 
+typedef struct __attribute__((__packed__)) pilemetadata_s { 
     uint8_t taillepilemax;
     uint8_t taillepile;
 } pilemetadata_t;

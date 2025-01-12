@@ -25,7 +25,7 @@ SCHEMA MEMOIRE D'UNE FOURMIS
 *******************************************************************
 */
 
-typedef struct memoire_commun_s {
+typedef struct __attribute__((__packed__)) memoire_commun_s {
     pilemetadata_t pilemetadata;
     uint8_t type;
     enum communcomportement_e comportement;
