@@ -4,16 +4,10 @@
 #include "../sinfourmis.h"
 #include "thread_queue.h"
 #include "../fourmis/utils/pile.h"
+#include "reine_input.hpp"
+#include "scheduler.hpp"
 
 #include <thread>
-
-enum next_action {
-	SPAWN_MANGER,
-	GASLIGHT_MANGER,
-	SPAWN_SCOUT,
-	GASLIGHT_SCOUT,
-	DEFAULT,
-};
 
 class Queen {
 	private:
@@ -23,12 +17,13 @@ class Queen {
 		uint32_t _produced_ants;
 
 	public:
+		Scheduler _scheduler;
+
 		std::vector<pile_t> path_to_node[256];
-		next_action _next_action;
 		node_id _next_manger_target;
 		uint8_t next_scout = 1;
 
-		Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {};
+		Queen();
 		Graph* graph();
 
 		reine_etat last_state();
@@ -42,12 +37,6 @@ class Queen {
 };
 
 extern std::thread* queen_thread;
-
-typedef struct {
-    std::vector<fourmi_etat*> forumis_miam_miam;
-    const reine_etat* state;
-    const salle* node;
-} reine_input_t;
 
 extern ThreadQueue<reine_input_t> to_reine;
 extern ThreadQueue<reine_retour> from_reine;
