@@ -65,14 +65,17 @@ void pile_pp(logcat_t cat, loglevel_t level, char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     pilemetadata_pp_body(cat, level, memoire);
     Log(cat, level, "PILE:\n");
+    log_set_color(COLOR_GREEN);
     for (size_t i=0; i<met->taillepile; ++i) {
         pile_t* p = pile_get(memoire, i);
         pile_pp_part(cat, level, p);
     }
+    log_set_color(COLOR_YELLOW);
     for (size_t i=met->taillepile; i<met->taillepilemax; ++i) {
         pile_t* p = pile_get(memoire, i);
         pile_pp_part(cat, level, p);
     }
+    log_reset_color();
 }
 
 void pile_copy(pile_t* psrc, pile_t* pdst) {
