@@ -2,6 +2,7 @@
 #include "../sinfourmis.h"
 #include "graph.hpp"
 #include "read_scout.hpp"
+#include "scheduler.hpp"
 #include "thread_queue.h"
 
 #include <cstdint>
@@ -14,10 +15,12 @@ ThreadQueue<reine_input_t> to_reine;
 ThreadQueue<reine_retour> from_reine;
 
 Queen::Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {
-	_scheduler.add_task(Task(CREER_SCOUT, {1}));
-	_scheduler.add_task(Task(GASLIGHT_SCOUT, {0}));
-	_scheduler.add_task(Task(SEND_FORUMIS, {1}));
-	_scheduler.add_task(Task(PASS, {0}));
+	arg_t arg = {0};
+	arg.amount = 1;
+	_scheduler.add_task(Task(CREER_SCOUT, arg ));
+	_scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
+	_scheduler.add_task(Task(SEND_FORUMIS, arg));
+	_scheduler.add_task(Task(PASS, arg));
 };
 
 reine_retour give_args_to_thread(
