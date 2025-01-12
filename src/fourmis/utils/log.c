@@ -6,16 +6,6 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#define ANSI_RESET "\033[0m"
-#define ANSI_COLOR_RED "\033[31m"
-#define ANSI_COLOR_RED_BOLD "\033[1;31m"
-#define ANSI_COLOR_GREEN "\033[32m"
-#define ANSI_COLOR_YELLOW "\033[33m"
-#define ANSI_COLOR_MAGENTA "\033[35m"
-#define ANSI_COLOR_MAGENTA_BOLD "\033[1;35m"
-#define ANSI_COLOR_CYAN "\033[36m"
-#define ANSI_COLOR_LIGHT_GRAY "\033[37m"
-
 const char* str_of_cat(logcat_t cat) {
     switch (cat) {
     case CAT_MAIN:
