@@ -6,6 +6,7 @@
 #include "../sinfourmis.h"
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "utils/log.h"
 
 enum communcomportement_e {
@@ -32,6 +33,7 @@ typedef struct memoire_commun_s {
     uint8_t vie;
     int32_t eau;
     int32_t nourriture;
+    bool prevent_prehemption;
     fourmi_retour ret;
 } memoire_commun_t;
 

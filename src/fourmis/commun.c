@@ -26,6 +26,8 @@ void ret_loads(fourmi_etat* etat) {
 void commun_reloads(fourmi_etat* etat) {
     stats_loads(etat);
     ret_loads(etat);
+    memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
+    mem->prevent_prehemption = false;
 }
 
 void commun_loads(fourmi_etat *etat, uint32_t team_id, pile_t *pile,
@@ -35,6 +37,7 @@ void commun_loads(fourmi_etat *etat, uint32_t team_id, pile_t *pile,
   mem->team_id = team_id;
   mem->type = ANT_KIND_COMMON;
   mem->comportement = AUCUN;
+  mem->prevent_prehemption = false;
   stats_loads(etat);
   ret_loads(etat);
   

@@ -146,17 +146,19 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat,
 }
 
 fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
+  memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
+
   fourmi_feedback(etat, salle);
-  fourmi_pp(CAT_OTHER, LOG_DEBUG, etat);
+  fourmi_pp(CAT_OTHER, LOG_INFO, etat);
   enum fourminterrupt_e inter = interrupt(etat, salle);
   fourmi_retour ret;
-  if (inter != AUCUN_INTERRUPT)
+  if ((inter != AUCUN_INTERRUPT) && (!(mem->prevent_prehemption)))
     ret = fourmi_interrupt(etat, salle, inter);
   else
 	ret = fourmi_act(etat, salle);
   fourmi_postaction(ret, etat, salle);
   
-  memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
+  
   mem->ret = ret;
   retour_pp(CAT_OTHER, LOG_DEBUG, ret);
   return ret;
