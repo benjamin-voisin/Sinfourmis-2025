@@ -10,7 +10,7 @@ enum guardcomportement_e {
   G_WAITBASE
 }; 
 
-typedef struct memoire_guard_s {
+typedef struct __attribute__((__packed__)) memoire_guard_s {
     memoire_commun_t comm;
 
     enum guardcomportement_e comportement;

@@ -17,7 +17,7 @@ enum scoutcomportement_e {
 #define ID_MASK 0b11111100
 #define COUNTER_MASK 0b00000011
 
-typedef struct memoire_scout_s {
+typedef struct __attribute__((__packed__)) memoire_scout_s {
     memoire_commun_t comm;
 
     // Représente le comportement du scout

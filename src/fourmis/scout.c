@@ -51,8 +51,6 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
     case SCOUTING_NEW_TILE:
         mem->comm.prevent_prehemption = false;
         mem->comportement = SCOUTING;
-        if (pile_size(etat->memoire) > 11)
-            simplipile(etat->memoire);
         if (salle->pheromone == 0) {
             // Il faut attribuer un ID au nouveau noeud
             id = freshid(etat);
