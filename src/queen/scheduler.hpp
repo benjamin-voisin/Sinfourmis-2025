@@ -16,6 +16,7 @@ typedef enum taks_e {
 	SEND_FORUMIS,
 	SEND_MANGER,
 	EAT_FORUMIS,
+	UPDGRADE_WATER,
 	PASS,
 } task_t;
 

@@ -156,6 +156,11 @@ void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t 
 		case (SEND_MANGER):
 			send_manger(action, arg, _arg.amount, input, path_to_node[_arg.manger_target].value());
 			break;
+		case (UPDGRADE_WATER):
+			std::cout << "UPGRADE WATER\n";
+			*action = AMELIORE_EAU;
+			*arg = 1;
+			break;
 		case (PASS):
 			std::cout << "FAIS RIEN\n";
 			*action = REINE_PASSE;
