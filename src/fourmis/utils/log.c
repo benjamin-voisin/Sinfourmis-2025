@@ -95,6 +95,7 @@ static void log_vimpl(logcat_t cat, loglevel_t level, const char *format, va_lis
   fprintf(stdio_of_level(level), ANSI_COLOR_LIGHT_GRAY "%s" ANSI_RESET " %s[%s](%s) " ANSI_RESET,
           time_buffer, color_of_level(level), str_of_level(level), str_of_cat(cat));
   vfprintf(stdio_of_level(level), format, args);
+  fprintf(stdio_of_level(level), "\n");
 }
 
 void Log(logcat_t cat, loglevel_t level, const char *format, ...) {
