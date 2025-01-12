@@ -5,16 +5,9 @@
 #include "thread_queue.h"
 #include "../fourmis/utils/pile.h"
 #include "reine_input.hpp"
+#include "scheduler.hpp"
 
 #include <thread>
-
-enum next_action {
-	SPAWN_MANGER,
-	GASLIGHT_MANGER,
-	SPAWN_SCOUT,
-	GASLIGHT_SCOUT,
-	DEFAULT,
-};
 
 class Queen {
 	private:
@@ -24,12 +17,13 @@ class Queen {
 		uint32_t _produced_ants;
 
 	public:
+		Scheduler _scheduler;
+
 		std::vector<pile_t> path_to_node[256];
-		next_action _next_action;
 		node_id _next_manger_target;
 		uint8_t next_scout = 1;
 
-		Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {};
+		Queen();
 		Graph* graph();
 
 		reine_etat last_state();

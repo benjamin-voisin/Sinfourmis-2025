@@ -2,7 +2,6 @@
 #include "../fourmis/utils/pile.h"
 
 #include <cstdint>
-#include <iostream>
 #include <assert.h>
 
 node_type_t type_to_node_type(uint8_t type) {
@@ -16,8 +15,7 @@ node_type_t type_to_node_type(uint8_t type) {
 		case REINE:
 			return YAS_QUEEN;
 		default:
-			std::cerr << "Type non reconnu" << std::endl;
-			assert(false);
+			return EMPTY;
 	}
 }
 

@@ -18,6 +18,12 @@ std::thread* queen_thread = nullptr;
 ThreadQueue<reine_input_t> to_reine;
 ThreadQueue<reine_retour> from_reine;
 
+Queen::Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {
+	_scheduler.add_task(Task(CREER_SCOUT, {1}));
+	_scheduler.add_task(Task(GASLIGHT_SCOUT, {0}));
+	_scheduler.add_task(Task(SEND_FORUMIS, {1}));
+};
+
 reine_retour give_args_to_thread(
     fourmi_etat* fourmis,
     const unsigned int nb_fourmis,
@@ -62,7 +68,7 @@ void reine_thread() {
         }
 
         // Update les infos par les scouts
-        queen_state.read_scouts(input.forumis_miam_miam);
+        /* queen_state.read_scouts(input.forumis_miam_miam); */
 		queen_state.graph()->to_dot("graph.dot");
         std::vector<fourmis_compteur> ants_present(input.node->compteurs_fourmis, input.node->compteurs_fourmis + input.node->taille_liste);
         uint32_t friendly_ants_present = 0;
@@ -79,91 +85,9 @@ void reine_thread() {
         // Cherche la prochaine action à faire
         auto action = REINE_PASSE;
         auto arg = 0;
-		switch (queen_state._next_action) {
-			case (SPAWN_MANGER):
-				action = CREER_FOURMI;
-				arg = (input.state->nourriture - 10) / 2;
-				queen_state._next_action = DEFAULT;
-				break;
-			case (GASLIGHT_MANGER):
-				std::cout << "On essaie de gaslight\n";
-				for (fourmi_etat* fourmis : input.forumis_miam_miam) {
-					food_loads(fourmis, input.state->team_id, &queen_state.path_to_node[queen_state._next_manger_target][0], queen_state.path_to_node[queen_state._next_manger_target].size());
-				}
-				std::cout << "On a réussi à gaslight\n";
-				action = ENVOYER_FOURMI;
-				arg = 10;
-				queen_state._next_action = DEFAULT;
-				break;
-			case (SPAWN_SCOUT):
-				queen_state._next_action = DEFAULT;
-				break;
-			case (GASLIGHT_SCOUT):
-				queen_state._next_action = DEFAULT;
-				break;
 
-			case (DEFAULT):
-			default:
-				// Vérifie si il y a des fourmis sur la case
-				if (storage_space >= friendly_ants_present && friendly_ants_present > 0) {
-					action = RECUPERER_FOURMI;
-					arg = friendly_ants_present;
-					std::cerr << "[QUEEN] Calling back " << arg << " ants in garage" << std::endl;
-				} else if (!input.forumis_miam_miam.empty()) {
-					// Sinon, on vide un peu le stockage
-					// On récupère les informations des fourmis qu’on a
-					for (fourmi_etat* fourmis : input.forumis_miam_miam) {
-						size_t path_length;
-						pile_t *pile = pile_dumps(fourmis->memoire, &path_length);
-						if (pile != NULL) {
-							std::cout << pile->id << std::endl;
-							if ((queen_state.path_to_node[pile->id].size() > 0 && queen_state.path_to_node[pile->id].size() < path_length) ||
-									(queen_state.path_to_node[pile->id].size() == 0)) {
-								std::cout << "On a trouvé un meilleur chemi !\n";
-								std::vector<pile_t> v;
-								for (size_t i = 0; i < path_length; i++) {
-									v.push_back(*(pile++));
-								}
-								queen_state.path_to_node[pile->id] = v;
-								if (pile->type == NOURRITURE) {
-									std::cout << "MANGER\n";
-									action = CREER_FOURMI;
-									arg = (input.state->nourriture - 10) / 2;
-									queen_state._next_action = GASLIGHT_MANGER;
-									queen_state._next_manger_target = pile->id;
-									goto fin_reine;
-								}
-							}
-						}
-					}
-					// On initialise la mémoire de totute les fourmis
-					for (fourmi_etat* fourmis : input.forumis_miam_miam) {
-						fourmi_pp(stdout, fourmis);
-						std::cerr << "[QUEEN] gaslight ant\n";
-						if (fourmi_kind(fourmis) == ANT_KIND_SCOUT || fourmi_kind(fourmis) == ANT_KIND_NEW) {
-							scout_loads(fourmis, input.state->team_id, NULL, 0, ++(queen_state.next_scout) << 2);
-						}
-					}
-					action = ENVOYER_FOURMI;
-					arg = std::min((uint32_t)input.forumis_miam_miam.size(), input.state->max_envoi);
-					std::cerr << "[QUEEN] Sent " << arg << " ants from garage" << std::endl;
-				} else if (queen_state.produced_ants() < 5 && input.state->nourriture > 15) {
-					// On créé des potites froumis si on a de la bouffe et qu'on en a moins de 5
-					/* action = CREER_FOURMI; */
-					/* arg = std::min((input.state->max_nourriture - 10) / 10, input.state->max_production); */
-					/* queen_state.produce_ants(arg); */
-					/* std::cerr << "[QUEEN] Created " << arg << " ants" << std::endl; */
-				}
-
-				if (queen_state.ticks() == 1) {
-					action = CREER_FOURMI;
-					arg = 1;
-					queen_state.produce_ants(arg);
-					std::cerr << "[QUEEN] Created " << arg << " ants" << std::endl;
-				}
-				break;
-		}
-fin_reine:
+		queen_state._scheduler.execute_tasks(&action, &arg, &input);
+		
         // Et on renvoit notre retour qu'on veut, voilà
         from_reine.send_message({ .action = action, .arg = arg });
         queen_state.update_tick_counter(action);
