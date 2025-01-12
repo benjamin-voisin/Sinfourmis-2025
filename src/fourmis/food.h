@@ -16,8 +16,8 @@ typedef struct __attribute__((__packed__)) memoire_food_s {
     enum foodcomportement_e comportement;
 } memoire_food_t;
 
-void food_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size);
-void food_reloads(fourmi_etat* etat);
+void food_loads(fourmi_etat* etat, stats_t stats, uint32_t team_id, pile_t* pile, size_t size);
+void food_reloads(fourmi_etat* etat, stats_t stats);
 
 fourmi_retour food_action(fourmi_etat *etat, const salle *salle);
 

@@ -23,15 +23,16 @@ void ret_loads(fourmi_etat* etat) {
     mem->ret.arg = 0;
 }
 
-void commun_reloads(fourmi_etat* etat) {
+void commun_reloads(fourmi_etat* etat, stats_t stats) {
     stats_loads(etat);
     ret_loads(etat);
     pile_reloads(etat->memoire);
     memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
+    stats_copy(&mem->stats, stats);
     mem->prevent_prehemption = false;
 }
 
-void commun_loads(fourmi_etat *etat, uint32_t team_id, pile_t *pile,
+void commun_loads(fourmi_etat *etat, stats_t stats, uint32_t team_id, pile_t *pile,
                   size_t size) {
   static uint32_t id = 0;
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
@@ -41,9 +42,9 @@ void commun_loads(fourmi_etat *etat, uint32_t team_id, pile_t *pile,
   mem->type = ANT_KIND_COMMON;
   mem->comportement = AUCUN;
   mem->prevent_prehemption = false;
+  stats_copy(&mem->stats, stats);
   stats_loads(etat);
   ret_loads(etat);
-  
 }
 
 void commun_postaction(fourmi_etat *etat, const salle *salle) {

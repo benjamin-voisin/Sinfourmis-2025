@@ -2,9 +2,11 @@
 #include "pile.h"
 #include "log.h"
 #include "../../constants.hpp"
+#include "../commun.h"
 
 enum fourminterrupt_e interrupt(fourmi_etat *etat, const salle *salle) {
-    if ((etat->eau < 17) && !(pile_vide(etat->memoire))) {
+    memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
+    if ((etat->eau < mem->stats.max_eau / 2 + 7) && !(pile_vide(etat->memoire))) {
         Log_info(CAT_FOURMIS, "INTERRUPT_WATER DETECTEE\n");
         return INTERRUPT_WATER;
     }

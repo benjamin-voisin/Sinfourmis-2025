@@ -17,17 +17,17 @@ uint8_t no_more_id(fourmi_etat *etat) {
     return (mem->tile_counter == COUNTER_MASK);
 }
 
-void scout_reloads(fourmi_etat* etat) {
-    commun_reloads(etat);
+void scout_reloads(fourmi_etat* etat, stats_t stats) {
+    commun_reloads(etat, stats);
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
     mem->comportement = FOLLOWLEAD;
     pile_reduceloads(etat->memoire);
 }
 
-void scout_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size, uint32_t id) {
+void scout_loads(fourmi_etat* etat, stats_t stats, uint32_t team_id, pile_t* pile, size_t size, uint32_t id) {
     static uint8_t fresh_id = 0;
     Assert(CAT_FOURMIS, fresh_id < 0b111111, "Scout ID Overflow\n");
-    commun_loads(etat, team_id, pile, size);
+    commun_loads(etat, stats, team_id, pile, size);
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
     mem->comm.type = ANT_KIND_SCOUT;
     mem->comportement = FOLLOWLEAD;
@@ -57,7 +57,7 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
             pile_edit_id(etat->memoire, id);
             if (no_more_id(etat))
                 mem->comportement = BACK;
-            if (salle->type != VIDE)
+            if (salle->type == NOURRITURE)// (salle->type != VIDE)
                 mem->comportement = BACK;
             if (salle->type == NOURRITURE)
                 return commun_action_ramasse_phero(PRIVE, id);
