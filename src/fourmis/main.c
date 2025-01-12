@@ -63,7 +63,8 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
       commun_feedback_termine_construction(etat, salle);
       break;
     case ATTAQUE:
-      Assert(CAT_MAIN, etat->result > 0, "Feedback Fail Attaque\n");
+      if (etat->result <= 0)
+      Log_warning(CAT_MAIN, "Feedback Fail Attaque\n");
       break;
     case ATTAQUE_TUNNEL:
       commun_feedback_attaque_tunnel(etat, salle);
