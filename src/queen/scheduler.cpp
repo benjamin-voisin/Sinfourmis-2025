@@ -51,19 +51,38 @@ void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_i
 		if ( fourmi_kind(fourmis) == ANT_KIND_NEW) {
 			std::cout << "GASLIGHT D’UNE FOURMI FOOD\n";
 			food_loads(fourmis, input->state->team_id, &(path)[0], path.size());
+			fourmi_pp(CAT_OTHER, LOG_INFO, fourmis);
 		}
 		// Si elles sont de type "scout", on les gaslight en scout
 		if (fourmi_kind(fourmis) == ANT_KIND_FOOD) {
 			std::cout << "GASLIGHT D’UNE FOURMI FOOD\n";
 			food_loads(fourmis, input->state->team_id, &(path)[0], path.size());
+			fourmi_pp(CAT_OTHER, LOG_INFO, fourmis);
 		}
 	}
 	*action = ENVOYER_FOURMI;
 	*arg = 1;
 }
 
-void send_forumis(reine_action *action, int *arg, size_t n_send) {
+void send_forumis(reine_action *action, int *arg, size_t n_send, reine_input_t *input) {
 	std::cout << "ENVOI DES FOURMIS\n";
+	// On gaslight totute les fourmis en elle même mais reset
+	for (fourmi_etat *fourmis : input->forumis_miam_miam) {
+		size_t pile_size;
+		pile_t *pile;
+		switch (fourmi_kind(fourmis)) {
+			case (ANT_KIND_SCOUT):
+				scout_loads(fourmis, input->state->team_id, NULL, 0, 1);
+				break;
+			case (ANT_KIND_FOOD) :
+				pile = pile_dumps(fourmis->memoire, &pile_size);
+				food_loads(fourmis, input->state->team_id, pile, pile_size);
+				break;
+			default :
+				scout_loads(fourmis, input->state->team_id, NULL, 0, 1);
+				break;
+		}
+	}
 	*action = ENVOYER_FOURMI;
 	*arg = (int) n_send;
 }
@@ -122,7 +141,7 @@ void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t 
 			gaslight_manger(action, arg, _arg.amount, input, path_to_node[_arg.manger_target].value());
 			break;
 		case (SEND_FORUMIS):
-			send_forumis(action, arg, _arg.amount);
+			send_forumis(action, arg, _arg.amount, input);
 			break;
 		case (EAT_FORUMIS):
 			manger_forumis(action, arg, _arg.amount);
