@@ -62,16 +62,16 @@ void reine_thread() {
         auto input = to_reine.wait_message();
         queen_state.register_last_state(*input.state);
 
-        std::cerr << "[QUEEN] Woke up on tick " << queen_state.ticks() << std::endl;
+        /* std::cerr << "[QUEEN] Woke up on tick " << queen_state.ticks() << std::endl; */
 
         if (queen_state.ticks() % 20 == 0) {
-            std::cerr << "[QUEEN] Wrote graph to ./graph.dot" << std::endl;
+            /* std::cerr << "[QUEEN] Wrote graph to ./graph.dot" << std::endl; */
             queen_state.graph()->to_dot("graph.dot");
         }
 
         // Ajoute le noeud originel si jamais y'en a po
         if (queen_state.graph()->is_empty()) {
-            std::cerr << "[QUEEN] Init graph" << std::endl;
+            /* std::cerr << "[QUEEN] Init graph" << std::endl; */
             node_data_t data;
             data.queen = {.friendly = true, .tag = 0};
             queen_state.graph()->add_node(YAS_QUEEN, data, 0);
@@ -88,7 +88,7 @@ void reine_thread() {
                 break;
             }
         }
-        std::cerr << "[QUEEN] Friendly ants in node: " << friendly_ants_present << ", ants in garage: " << input.forumis_miam_miam.size() << std::endl;
+        /* std::cerr << "[QUEEN] Friendly ants in node: " << friendly_ants_present << ", ants in garage: " << input.forumis_miam_miam.size() << std::endl; */
         // On rappel les fourmis si on a la place et totu
         auto storage_space = input.state->max_stockage - input.forumis_miam_miam.size();
 
@@ -99,7 +99,7 @@ void reine_thread() {
 			if (pile != NULL && fourmi_kind(fourmis) == ANT_KIND_SCOUT) {
 				// Si le chemin est plus court que ce qu’on conanit
 				if (!queen_state.path_to_node[pile->id].has_value() || queen_state.path_to_node[pile->id].value().size() > pile_size) {
-					std::cout << "Trouvé un chemi plu court\n";
+					/* std::cout << "Trouvé un chemi plu court\n"; */
 					std::vector<pile_t> v;
 					for (size_t i = 0; i < pile_size; i++) {
 						v.push_back(*(pile+i));
@@ -131,7 +131,36 @@ void reine_thread() {
         reine_action action;
         int arg = 0;
 
-		queen_state._scheduler.execute_tasks(&action, &arg, &input, friendly_ants_present, queen_state.path_to_node, queen_state.stat);
+		if (friendly_ants_present == 0 && input.forumis_miam_miam.size() == 0 && input.state->nourriture > queen_state.ticks()) {
+			switch (queen_state.to_update) {
+				case (0):
+					action = AMELIORE_RAMASSAGE;
+					queen_state.to_update++;
+					queen_state.stat.max_food++;
+					break;
+				case (1):
+					action = AMELIORE_DEGATS;
+					queen_state.to_update++;
+					queen_state.stat.max_degats += 1;
+					break;
+				case (2):
+					action = AMELIORE_EAU;
+					queen_state.stat.max_eau += 5;
+					queen_state.to_update++;
+					break;
+				case (3):
+					action = AMELIORE_EAU;
+					queen_state.to_update++;
+					break;
+				default:
+					action = AMELIORE_RAMASSAGE;
+					queen_state.stat.max_food++;
+					break;
+			}
+			arg = 1;
+		} else {
+			queen_state._scheduler.execute_tasks(&action, &arg, &input, friendly_ants_present, queen_state.path_to_node, queen_state.stat);
+		}
 		
         // Et on renvoit notre retour qu'on veut, voilà
         from_reine.send_message({ .action = action, .arg = arg });

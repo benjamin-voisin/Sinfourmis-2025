@@ -1,7 +1,7 @@
 CXX ?= g++
 CC ?= g++
 
-CXXFLAGS = -fPIC
+CXXFLAGS = -fPIC -D RELEASE
 
 NAME = fourmis.so
 

@@ -21,6 +21,7 @@ class Queen {
 	public:
 		Scheduler _scheduler;
 		stats_t stat;
+		int to_update = 0;
 
 		std::optional<std::vector<pile_t>> path_to_node[256];
 		node_id _next_manger_target;

@@ -8,20 +8,20 @@
 #include <iostream>
 
 void creer_scout(reine_action *action, int *arg, size_t n_to_create) {
-	std::cout << "CRÉATION D’UNE FOURMI SCOUT\n";
+	/* std::cout << "CRÉATION D’UNE FOURMI SCOUT\n"; */
 	*action = CREER_FOURMI;
 	*arg = (int) n_to_create;
 	*arg = 1;
 }
 void creer_manger(reine_action *action, int *arg, size_t n_to_create) {
-	std::cout << "CRÉATION D’UNE FOURMI FOOD\n";
+	/* std::cout << "CRÉATION D’UNE FOURMI FOOD\n"; */
 	*action = CREER_FOURMI;
 	*arg = (int) n_to_create;
 	*arg = 1;
 }
 
 void creer_guarde(reine_action *action, int *arg, size_t n_to_create) {
-	std::cout << "CRÉATION D’UNE FOURMI GUARDE\n";
+	/* std::cout << "CRÉATION D’UNE FOURMI GUARDE\n"; */
 	*action = CREER_FOURMI;
 	*arg = (int) n_to_create;
 	*arg = 1;
@@ -32,7 +32,7 @@ void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_in
 	for (fourmi_etat *fourmis : input->forumis_miam_miam) {
 		// Si elles sont de type "scout", on les gaslight en scout
 		if (fourmi_kind(fourmis) == ANT_KIND_SCOUT) {
-			std::cout << "GASLIGHT D’UNE FOURMI SCOUT\n";
+			/* std::cout << "GASLIGHT D’UNE FOURMI SCOUT\n"; */
 			memoire_scout_t* mem = (memoire_scout_t*) fourmis->memoire;
 			if (mem->tile_counter < COUNTER_MASK) {
 				scout_reloads(fourmis, stat);
@@ -42,7 +42,7 @@ void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_in
 		}
 		// Si elles sont de type "new", on les gaslight en scout
 		else  { //if ( fourmi_kind(fourmis) == ANT_KIND_NEW) {
-			std::cout << "GASLIGHT D’UNE FOURMI SCOUT\n";
+			/* std::cout << "GASLIGHT D’UNE FOURMI SCOUT\n"; */
 			scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
 		}
 	}
@@ -75,7 +75,7 @@ void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_i
 			Log_warning(CAT_OTHER, "GERR TYPE FOURMIS INCONNU\n");
 			common_kind_pp(CAT_OTHER, LOG_FATAL, fourmi_kind(fourmis));
 		}
-		fourmi_pp(CAT_OTHER, LOG_WARNING, fourmis);
+		fourmi_pp(CAT_OTHER, LOG_INFO, fourmis);
 	}
 	*action = ENVOYER_FOURMI;
 	*arg = 1;
@@ -89,7 +89,7 @@ void send_manger(reine_action *action, int *arg, size_t n_to_create, reine_input
 }
 
 void send_forumis(reine_action *action, int *arg, size_t n_send, reine_input_t *input, stats_t stat) {
-	std::cout << "ENVOI DES FOURMIS\n";
+	/* std::cout << "ENVOI DES FOURMIS\n"; */
 	// On gaslight totute les fourmis en elle même mais reset
 	for (fourmi_etat *fourmis : input->forumis_miam_miam) {
 		size_t pile_size;
@@ -118,7 +118,7 @@ void send_forumis(reine_action *action, int *arg, size_t n_send, reine_input_t *
 }
 
 void manger_forumis(reine_action *action, int *arg, size_t n_send) {
-	std::cout << "MANGAGE DES FOURMIS\n";
+	/* std::cout << "MANGAGE DES FOURMIS\n"; */
 	*action = RECUPERER_FOURMI;
 	*arg = (int) n_send;
 }
@@ -127,7 +127,7 @@ Task::Task(task_t type, arg_t arg) : _task_type{type}, _arg{arg} {}
 
 void default_cmp(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present, stats_t stat) {
 	if (input->forumis_miam_miam.size() > 0) {
-		std::cerr << "ENVOYER FORUMI\n";
+		/* std::cerr << "ENVOYER FORUMI\n"; */
 		*action = ENVOYER_FOURMI;
 		*arg = input->forumis_miam_miam.size();
 		// On re-gaslight totu le monde en scout
@@ -148,7 +148,7 @@ void default_cmp(reine_action *action, int *arg, reine_input_t *input, size_t fr
 		}
 		//
 	} else if (friendly_ants_present > 0) {
-		std::cerr << "RÉCUPER FOURMI\n";
+		/* std::cerr << "RÉCUPER FOURMI\n"; */
 		*action = RECUPERER_FOURMI;
 		*arg = friendly_ants_present;
 	} else {
@@ -159,7 +159,7 @@ void default_cmp(reine_action *action, int *arg, reine_input_t *input, size_t fr
 
 void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present,
 		std::optional<std::vector<pile_t>> *path_to_node, stats_t stat) {
-	std::cerr << "EXECUTE" << _task_type << "\n";
+	/* std::cerr << "EXECUTE" << _task_type << "\n"; */
 	switch (_task_type) {
 		case (CREER_SCOUT):
 			creer_scout(action, arg, _arg.amount);
@@ -186,12 +186,12 @@ void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t 
 			send_manger(action, arg, _arg.amount, input, path_to_node[_arg.manger_target].value(), stat);
 			break;
 		case (UPDGRADE_WATER):
-			std::cout << "UPGRADE WATER\n";
+			/* std::cout << "UPGRADE WATER\n"; */
 			*action = AMELIORE_EAU;
 			*arg = 1;
 			break;
 		case (PASS):
-			std::cout << "FAIS RIEN\n";
+			/* std::cout << "FAIS RIEN\n"; */
 			*action = REINE_PASSE;
 			*arg = 0;
 			break;
