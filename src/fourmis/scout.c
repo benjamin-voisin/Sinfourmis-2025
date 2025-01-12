@@ -1,10 +1,10 @@
 #include "scout.h"
 #include "utils/b_constants.h"
 #include "utils/utils.h"
+#include "utils/log.h"
 #include "../constants.hpp"
 
 #include <stdio.h>
-#include <assert.h>
 
 uint8_t freshid(fourmi_etat *etat) {
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
@@ -25,15 +25,16 @@ void scout_reloads(fourmi_etat* etat) {
 }
 
 void scout_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size, uint32_t id) {
-    assert(id > 0);
     static uint8_t fresh_id = 0;
-    assert(fresh_id < 0b111111);
+    Assert(CAT_FOURMIS, fresh_id < 0b111111, "Scout ID Overflow");
     commun_loads(etat, team_id, pile, size);
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
     mem->comm.type = ANT_KIND_SCOUT;
     mem->comportement = FOLLOWLEAD;
-    mem->id = (++fresh_id) << 2;
+    mem->id = (fresh_id++) << 2;
     mem->tile_counter = 0;
+    if (mem->id == 0)
+        mem->tile_counter++;
 }
 
 fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
@@ -99,9 +100,10 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
         return scout_action(etat, salle);
 
     default:
-        printf("SCOUT ACTION UNDEFINED\n");
-        exit(1);
-        break;
+        Log_warning(CAT_FOURMIS, "SCOUT ACTION UNDEFINED");
+        Log_warning(CAT_FOURMIS, "Fallback BACK");
+        mem->comportement = BACK;
+        return scout_action(etat, salle);
     }
 }
 
