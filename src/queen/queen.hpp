@@ -6,6 +6,7 @@
 #include "../fourmis/utils/pile.h"
 #include "reine_input.hpp"
 #include "scheduler.hpp"
+#include "../fourmis/utils/stats.h"
 
 #include <thread>
 #include <optional>
@@ -19,6 +20,7 @@ class Queen {
 
 	public:
 		Scheduler _scheduler;
+		stats_t stat;
 
 		std::optional<std::vector<pile_t>> path_to_node[256];
 		node_id _next_manger_target;

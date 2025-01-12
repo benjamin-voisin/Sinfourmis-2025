@@ -4,6 +4,7 @@
 #include "graph.hpp"
 #include "reine_input.hpp"
 #include "../fourmis/utils/pile.h"
+#include "../fourmis/utils/stats.h"
 
 #include <queue>
 
@@ -30,7 +31,7 @@ class Task {
 		task_t _task_type;
 		arg_t _arg;
 	public:
-		void execute(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present, std::optional<std::vector<pile_t>> *path_to_node);
+		void execute(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present, std::optional<std::vector<pile_t>> *path_to_node, stats_t stat);
 		Task(task_t type, arg_t arg);
 		
 };
@@ -39,7 +40,7 @@ class Scheduler {
 	private:
 		std::queue<Task> _tasks;
 	public:
-		void execute_tasks(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present, std::optional<std::vector<pile_t>> *path_to_node);
+		void execute_tasks(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present, std::optional<std::vector<pile_t>> *path_to_node, stats_t stat);
 		void add_task(Task task);
 
 };
