@@ -78,4 +78,6 @@ void commun_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat);
 
 void commun_body_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat);
 
+void common_kind_pp(logcat_t cat, loglevel_t level, uint8_t type);
+
 #endif

@@ -1,6 +1,7 @@
 #include "scheduler.hpp"
 #include "../fourmis/main.h"
 #include "../fourmis/utils/b_constants.h"
+#include "../fourmis/utils/log.h"
 #include "../fourmis/scout.h"
 #include "../fourmis/food.h"
 
@@ -40,7 +41,7 @@ void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_in
 			}
 		}
 		// Si elles sont de type "new", on les gaslight en scout
-		if ( fourmi_kind(fourmis) == ANT_KIND_NEW) {
+		else  { //if ( fourmi_kind(fourmis) == ANT_KIND_NEW) {
 			std::cout << "GASLIGHT D’UNE FOURMI SCOUT\n";
 			scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
 		}
@@ -54,16 +55,27 @@ void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_i
 	for (fourmi_etat *fourmis : input->forumis_miam_miam) {
 		// Si elles sont de type "new", on les gaslight en scout
 		if ( fourmi_kind(fourmis) == ANT_KIND_NEW) {
-			std::cout << "GASLIGHT D’UNE FOURMI FOOD\n";
+			Log_warning(CAT_OTHER, "GASLIGHT D’UNE FOURMI FOOD\n");
 			food_loads(fourmis, stat, input->state->team_id, &(path)[0], path.size());
-			fourmi_pp(CAT_OTHER, LOG_INFO, fourmis);
 		}
 		// Si elles sont de type "scout", on les gaslight en scout
-		if (fourmi_kind(fourmis) == ANT_KIND_FOOD) {
-			std::cout << "GASLIGHT D’UNE FOURMI FOOD\n";
+		else if (fourmi_kind(fourmis) == ANT_KIND_FOOD) {
+			Log_warning(CAT_OTHER, "GASLIGHT D’UNE FOURMI FOOD\n");
 			food_loads(fourmis, stat, input->state->team_id, &(path)[0], path.size());
-			fourmi_pp(CAT_OTHER, LOG_INFO, fourmis);
 		}
+		else if (fourmi_kind(fourmis) == ANT_KIND_SCOUT) {
+			Log_warning(CAT_OTHER, "GASLIGHT D’UNE FOURMI SCOUT\n");
+			memoire_scout_t* mem = (memoire_scout_t*) fourmis->memoire;
+			if (mem->tile_counter < COUNTER_MASK) {
+				scout_reloads(fourmis, stat);
+			} else {
+				scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
+			}
+		} else { 
+			Log_warning(CAT_OTHER, "GERR TYPE FOURMIS INCONNU\n");
+			common_kind_pp(CAT_OTHER, LOG_FATAL, fourmi_kind(fourmis));
+		}
+		fourmi_pp(CAT_OTHER, LOG_WARNING, fourmis);
 	}
 	*action = ENVOYER_FOURMI;
 	*arg = 1;
@@ -147,6 +159,7 @@ void default_cmp(reine_action *action, int *arg, reine_input_t *input, size_t fr
 
 void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present,
 		std::optional<std::vector<pile_t>> *path_to_node, stats_t stat) {
+	std::cerr << "EXECUTE" << _task_type << "\n";
 	switch (_task_type) {
 		case (CREER_SCOUT):
 			creer_scout(action, arg, _arg.amount);
