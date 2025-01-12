@@ -2,7 +2,6 @@
 
 #include "../../sinfourmis.h"
 #include "b_constants.h"
-#include "log.h"
 
 
 pile_t* pile(char* memoire) {
@@ -15,68 +14,65 @@ pilemetadata_t* pilemetadata(char* memoire) {
 
 pile_t* pile_get(char* memoire, size_t i) {
     pilemetadata_t* met = pilemetadata(memoire);
-    Assert(CAT_PILE, met->taillepilemax > 0, "Get sur pile de taille 0");
-    Assert(CAT_PILE, i < met->taillepilemax, "Indice de get trop grand !");
+    Assert(CAT_PILE, met->taillepilemax > 0, "Get sur pile de taille 0\n");
+    Assert(CAT_PILE, i < met->taillepilemax, "Indice de get trop grand !\n");
     pile_t* p = pile(memoire);
     return p - i - 1;
 }
 
-void pilemetadata_pp_body(FILE* f, char* memoire) {
+void pilemetadata_pp_body(logcat_t cat, loglevel_t level, char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    fprintf(f, "PILEMETADATA:\n");
-    fprintf(f, "    taille     = %u\n", met->taillepile);
-    fprintf(f, "    taillemax  = %u\n", met->taillepilemax);
+    Log(cat, level, "PILEMETADATA:\n");
+    Log(cat, level, "    taille     = %u\n", met->taillepile);
+    Log(cat, level, "    taillemax  = %u\n", met->taillepilemax);
 }
 
-void pile_pp_saletype(FILE* f, enum salle_type t) {
+void pile_pp_saletype(logcat_t cat, loglevel_t level, enum salle_type t) {
     switch (t)
     {
     case VIDE:
-        fprintf(f, "VIDE");
+        Log(cat, level, "VIDE");
         break;
     case EAU:
-        fprintf(f, "EAU");
+        Log(cat, level, "EAU");
         break;
     case NOURRITURE:
-        fprintf(f, "NOURRITURE");
+        Log(cat, level, "NOURRITURE");
         break;
     case REINE:
-        fprintf(f, "REINE");
+        Log(cat, level, "REINE");
         break;
     default:
-        fprintf(f, "UNKNOWN");
+        Log(cat, level, "UNKNOWN");
         break;
     }
 
 }
 
-void pile_pp_part(FILE* f, pile_t* p) {
-    fprintf(f, "NOEUDPILE [\n");
-    fprintf(f, "    id         = %u\n", p->id);
-    fprintf(f, "    d_entrant  = %u\n", p->degree_entrant);
-    fprintf(f, "    d_sortant  = %u\n", p->degree_sortant);
-    fprintf(f, "    poid       = %u\n", p->poid);
-    fprintf(f, "    type       = ");
-    pile_pp_saletype(f, p->type);
-    fprintf(f, "\n");
-    fprintf(f, "]\n");
+void pile_pp_part(logcat_t cat, loglevel_t level, pile_t* p) {
+    Log(cat, level, "NOEUDPILE [\n");
+    Log(cat, level, "    id         = %u\n", p->id);
+    Log(cat, level, "    d_entrant  = %u\n", p->degree_entrant);
+    Log(cat, level, "    d_sortant  = %u\n", p->degree_sortant);
+    Log(cat, level, "    poid       = %u\n", p->poid);
+    Log(cat, level, "    type       = ");
+    pile_pp_saletype(CAT_NOBLOAT, level, p->type);
+    Log(CAT_NOBLOAT, level, "\n");
+    Log(cat, level, "]\n");
 }
 
-void pile_pp(FILE* f, char* memoire) {
+void pile_pp(logcat_t cat, loglevel_t level, char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    pilemetadata_pp_body(f, memoire);
-    fprintf(f, "PILE:\n");
-    fprintf(f, "\033[32m");
+    pilemetadata_pp_body(cat, level, memoire);
+    Log(cat, level, "PILE:\n");
     for (size_t i=0; i<met->taillepile; ++i) {
         pile_t* p = pile_get(memoire, i);
-        pile_pp_part(f, p);
+        pile_pp_part(cat, level, p);
     }
-    fprintf(f, "\033[33m");
     for (size_t i=met->taillepile; i<met->taillepilemax; ++i) {
         pile_t* p = pile_get(memoire, i);
-        pile_pp_part(f, p);
+        pile_pp_part(cat, level, p);
     }
-    fprintf(f, "\033[0m");
 }
 
 void pile_copy(pile_t* psrc, pile_t* pdst) {
@@ -94,9 +90,7 @@ void simplipile(char* memoire) {
     for (size_t i=0; i<met->taillepile-1; ++i) {
         pile_t* p = pile_get(memoire, i);
         if (p_base->id == p->id) {
-            printf("SIMPLIFY i=%d\n", i);
-            pile_pp_part(stdout, p);
-            printf("---------------\n");
+            pile_pp_part(CAT_PILE, LOG_DEBUG, p);
             uint8_t delta = met->taillepilemax-met->taillepile;
             for (size_t j=0; j<delta; ++j) {
                 pile_t* psrc = pile_get(memoire, met->taillepile+j);
@@ -122,13 +116,13 @@ bool pile_complete(char* memoire) {
 
 pile_t* head(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    Assert(CAT_PILE, !pile_vide(memoire), "Head sur pile vide");
+    Assert(CAT_PILE, !pile_vide(memoire), "Head sur pile vide\n");
     return pile_get(memoire, met->taillepile - 1);
 }
 
 void false_empiler(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    Assert(CAT_PILE, !(pile_complete(memoire)), "Déjà au bout de la pile");
+    Assert(CAT_PILE, !(pile_complete(memoire)), "Déjà au bout de la pile\n");
     met->taillepile += 1;
     if (met->taillepilemax < met->taillepile) {
         met->taillepilemax = met->taillepile;
@@ -147,21 +141,21 @@ void empiler(char* memoire, pile_t e) {
 
 pile_t* depiler(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    Assert(CAT_PILE, !pile_vide(memoire), "Dépiler sur pile vide");
+    Assert(CAT_PILE, !pile_vide(memoire), "Dépiler sur pile vide\n");
     pile_t* hd = head(memoire);
     met->taillepile -= 1;
     return hd;
 }
 
 void pile_edit_id(char* memoire, uint8_t id) {
-    Assert(CAT_PILE, !pile_vide(memoire), "Edit sur pile vide");
+    Assert(CAT_PILE, !pile_vide(memoire), "Edit sur pile vide\n");
     pile_t* hd = head(memoire);
     hd->id = id;
 }
 
 pile_t* pile_dumps_last(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    Assert(CAT_PILE, met->taillepilemax > 0, "Recherche dernier noeud sur pile de taille 0");
+    Assert(CAT_PILE, met->taillepilemax > 0, "Recherche dernier noeud sur pile de taille 0\n");
     return pile_get(memoire, met->taillepilemax - 1);
 }
 pile_t* pile_dumps(char* memoire, size_t* size) {
@@ -184,7 +178,7 @@ void pile_loads(char* memoire, pile_t* pile, size_t size) {
 
 void pile_reduceloads(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    Assert(CAT_PILE, met->taillepile == 0, "Réduire pile vide");
+    Assert(CAT_PILE, met->taillepile == 0, "Réduire pile vide\n");
     met->taillepilemax = 0;
 }
 

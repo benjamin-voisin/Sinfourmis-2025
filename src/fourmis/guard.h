@@ -21,4 +21,4 @@ void guard_reloads(fourmi_etat* etat);
 
 fourmi_retour guard_action(fourmi_etat *etat, const salle *salle);
 
-void guard_pp(FILE* f, fourmi_etat* etat);
+void guard_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat);

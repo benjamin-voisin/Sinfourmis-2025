@@ -2,8 +2,8 @@
 
 #include "utils/b_constants.h"
 #include "utils/utils.h"
+#include "utils/log.h"
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -48,7 +48,11 @@ fourmi_retour
 commun_action_versdirection_(fourmi_etat *etat, const salle *salle,
                              enum communcomportement_e comp, uint8_t dir,
                              pheromone_type pheromone_type, uint8_t pheromone) {
-  assert(dir < salle->degre);
+  if (!(dir < salle->degre)) {
+      Log_warning(CAT_FOURMIS, "Direction supérieure au degré\n");
+      Log_warning(CAT_FOURMIS, "Selecting random dir\n");
+      dir = random_other_dir(etat, salle);
+  }
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   mem->comportement = comp;
 
@@ -70,12 +74,7 @@ fourmi_retour commun_action_versdirection(fourmi_etat *etat, const salle *salle,
 }
 
 fourmi_retour commun_action_versbase(fourmi_etat *etat, const salle *salle) {
-  printf("\n\n\n");
-  printf("SIMPLIPILE\n");
-  pile_pp(stdout, etat->memoire);
   simplipile(etat->memoire);
-  pile_pp(stdout, etat->memoire);
-  printf("\n\n\n");
   pile_t *hd = head(etat->memoire);
   return commun_action_versdirection_(etat, salle, VERSBASE, hd->degree_sortant,
                                       NO_PHEROMONE, 0);
@@ -147,65 +146,60 @@ void commun_feedback_deplacement(fourmi_etat *etat, const salle *salle) {
       empiler(etat->memoire, hd);
       break;
     case AUCUN:
-      printf("ERREUR COMPORTEMENT DE DEPLACEMENT INDEFINI");
-      exit(1);
+      Error(CAT_MAIN, "ERREUR COMPORTEMENT DE DEPLACEMENT INDEFINI\n");
     }
   } else {
-    printf("Failwith todo %s\n", "commun_feedback_deplacement FAILURE");
-    exit(1);
+    Error(CAT_TODO, "TODO: commun_feedback_deplacement\n");
   }
 }
 
 void commun_feedback_commence_construction(fourmi_etat *etat,
                                            const salle *salle) {
-  printf("Failwith todo %s\n", "commun_feedback_commence_construction");
-  exit(1);
+  Error(CAT_TODO, "TODO: commun_feedback_commence_construction\n");
 }
 
 void commun_feedback_termine_construction(fourmi_etat *etat,
                                           const salle *salle) {
-  printf("Failwith todo %s\n", "commun_feedback_termine_construction");
-  exit(1);
+  Error(CAT_TODO, "TODO: commun_feedback_termine_construction\n");
 }
 
 void commun_feedback_attaque_tunnel(fourmi_etat *etat, const salle *salle) {
-  printf("Failwith todo %s\n", "commun_feedback_attaque_tunnel");
-  exit(1);
+  Error(CAT_TODO, "TODO: commun_feedback_attaque_tunnel\n");
 }
 
-void common_kind_pp(FILE *f, uint8_t type) {
+void common_kind_pp(logcat_t cat, loglevel_t level, uint8_t type) {
   switch (type) {
   case ANT_KIND_NEW:
-    fprintf(f, "ANT_KIND_NEW");
+    Log(cat, level, "ANT_KIND_NEW");
     break;
   case ANT_KIND_COMMON:
-    fprintf(f, "ANT_KIND_COMMON");
+    Log(cat, level, "ANT_KIND_COMMON");
     break;
   case ANT_KIND_SCOUT:
-    fprintf(f, "ANT_KIND_SCOUT");
+    Log(cat, level, "ANT_KIND_SCOUT");
     break;
   default:
-    fprintf(f, "ANT_KIND_UNKNOWN");
+    Log(cat, level, "ANT_KIND_UNKNOWN");
     break;
   }
 }
 
-void commun_body_pp(FILE *f, fourmi_etat *etat) {
+void commun_body_pp(logcat_t cat, loglevel_t level, fourmi_etat *etat) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
-  fprintf(f, "COMMON BODY:\n");
-  fprintf(f, "    kind       = ");
-  common_kind_pp(f, mem->type);
-  fprintf(f, "\n");
-  fprintf(f, "    team_id    = %u\n", mem->team_id);
-  fprintf(f, "    vie        = %u\n", mem->vie);
-  fprintf(f, "    eau        = %u\n", mem->eau);
-  fprintf(f, "    nourriture = %u\n", mem->nourriture);
-  retour_pp_body(f, mem->ret);
-  pile_pp(f, etat->memoire);
+  Log(cat, level, "COMMON BODY:\n");
+  Log(cat, level, "    kind       = ");
+  common_kind_pp(CAT_NOBLOAT, level, mem->type);
+  Log(CAT_NOBLOAT, level, "\n");
+  Log(cat, level, "    team_id    = %u\n", mem->team_id);
+  Log(cat, level, "    vie        = %u\n", mem->vie);
+  Log(cat, level, "    eau        = %u\n", mem->eau);
+  Log(cat, level, "    nourriture = %u\n", mem->nourriture);
+  retour_pp_body(cat, level, mem->ret);
+  pile_pp(cat, level, etat->memoire);
 }
 
-void commun_pp(FILE *f, fourmi_etat *etat) {
-  fprintf(f, "COMMON_ANT {\n");
-  commun_body_pp(f, etat);
-  fprintf(f, "}\n");
+void commun_pp(logcat_t cat, loglevel_t level, fourmi_etat *etat) {
+  Log(cat, level, "COMMON_ANT {\n");
+  commun_body_pp(cat, level, etat);
+  Log(cat, level, "}\n");
 }

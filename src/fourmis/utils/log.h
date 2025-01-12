@@ -21,7 +21,9 @@ typedef enum logcat_e {
     CAT_OTHER,
     CAT_MAIN,
     CAT_PILE,
-    CAT_FOURMIS
+    CAT_FOURMIS,
+    CAT_TODO,
+    CAT_NOBLOAT,
 } logcat_t;
 
 

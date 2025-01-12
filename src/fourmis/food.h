@@ -21,4 +21,4 @@ void food_reloads(fourmi_etat* etat);
 
 fourmi_retour food_action(fourmi_etat *etat, const salle *salle);
 
-void food_pp(FILE* f, fourmi_etat* etat);
+void food_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat);
