@@ -18,10 +18,10 @@ void fourmi_pp(logcat_t cat, loglevel_t level, fourmi_etat *etat) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   switch (mem->type) {
   case ANT_KIND_FOOD:
-    food_pp(cat, level, etat);
+    food_pp(cat, LOG_INFO, etat);
     break;
   case ANT_KIND_SCOUT:
-    scout_pp(cat, level, etat);
+    scout_pp(cat, LOG_DEBUG, etat);
     break;
   case ANT_KIND_COMMON:
     commun_pp(cat, level, etat);

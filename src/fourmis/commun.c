@@ -152,7 +152,7 @@ void commun_feedback_deplacement(fourmi_etat *etat, const salle *salle) {
       Error(CAT_MAIN, "ERREUR COMPORTEMENT DE DEPLACEMENT INDEFINI\n");
     }
   } else {
-    Error(CAT_TODO, "TODO: commun_feedback_deplacement\n");
+    Error(CAT_TODO, "TODO: commun_feedback_deplacement res=%d\n", etat->result);
   }
 }
 
