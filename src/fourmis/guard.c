@@ -5,15 +5,15 @@
 
 #include <stdio.h>
 
-void guard_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size) {
-    commun_loads(etat, team_id, pile, size);
+void guard_loads(fourmi_etat* etat, stats_t stats, uint32_t team_id, pile_t* pile, size_t size) {
+    commun_loads(etat, stats, team_id, pile, size);
     memoire_guard_t* mem = (memoire_guard_t*) etat->memoire;
     mem->comm.type = ANT_KIND_GUARD;
     mem->comportement = G_FOLLOWLEAD;
 }
 
-void guard_reloads(fourmi_etat* etat) {
-    commun_reloads(etat);
+void guard_reloads(fourmi_etat* etat, stats_t stats) {
+    commun_reloads(etat, stats);
     memoire_guard_t* mem = (memoire_guard_t*) etat->memoire;
     mem->comportement = G_FOLLOWLEAD;
 }
