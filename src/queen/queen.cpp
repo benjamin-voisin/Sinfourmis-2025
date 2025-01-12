@@ -23,7 +23,6 @@ Queen::Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {
 	arg.amount = 1;
 	_scheduler.add_task(Task(CREER_SCOUT, arg ));
 	_scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
-	_scheduler.add_task(Task(SEND_FORUMIS, arg));
 	_scheduler.add_task(Task(PASS, arg));
 };
 
@@ -104,10 +103,8 @@ void reine_thread() {
 						arg_t arg = {0};
 						arg.manger_target = pile->id;
 						queen_state._scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
-						queen_state._scheduler.add_task(Task(SEND_FORUMIS, {1}));
 						queen_state._scheduler.add_task(Task(CREER_MANGER, arg));
 						queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
-						queen_state._scheduler.add_task(Task(SEND_FORUMIS, arg));
 					}
 				}
 			}
@@ -115,7 +112,7 @@ void reine_thread() {
 
         // Cherche la prochaine action à faire
         reine_action action;
-        int arg;
+        int arg = 0;
 
 		queen_state._scheduler.execute_tasks(&action, &arg, &input, friendly_ants_present, queen_state.path_to_node);
 		

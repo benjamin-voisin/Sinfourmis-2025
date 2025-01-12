@@ -10,6 +10,7 @@ void creer_scout(reine_action *action, int *arg, size_t n_to_create) {
 	std::cout << "CRÉATION D’UNE FOURMI SCOUT\n";
 	*action = CREER_FOURMI;
 	*arg = (int) n_to_create;
+	*arg = 1;
 }
 void creer_manger(reine_action *action, int *arg, size_t n_to_create) {
 	std::cout << "CRÉATION D’UNE FOURMI FOOD\n";
@@ -39,8 +40,8 @@ void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_in
 			scout_loads(fourmis, input->state->team_id, NULL, 0, 1);
 		}
 	}
-	*action = REINE_PASSE;
-	*arg = input->forumis_miam_miam.size();
+	*action = ENVOYER_FOURMI;
+	*arg = 1;
 }
 
 void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_input_t *input, std::vector<pile_t> path) {
@@ -57,6 +58,8 @@ void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_i
 			food_loads(fourmis, input->state->team_id, &(path)[0], path.size());
 		}
 	}
+	*action = ENVOYER_FOURMI;
+	*arg = 1;
 }
 
 void send_forumis(reine_action *action, int *arg, size_t n_send) {
