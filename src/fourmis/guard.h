@@ -17,6 +17,7 @@ typedef struct memoire_guard_s {
 } memoire_guard_t;
 
 void guard_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size);
+void guard_reloads(fourmi_etat* etat);
 
 fourmi_retour guard_action(fourmi_etat *etat, const salle *salle);
 

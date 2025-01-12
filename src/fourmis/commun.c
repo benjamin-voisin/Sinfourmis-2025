@@ -14,6 +14,20 @@ void stats_loads(fourmi_etat *etat) {
   mem->vie = etat->vie;
 }
 
+void ret_loads(fourmi_etat* etat) {
+    memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
+
+    mem->ret.pheromone = 0;
+    mem->ret.depose_pheromone = NO_PHEROMONE;
+    mem->ret.action = FOURMI_PASSE;
+    mem->ret.arg = 0;
+}
+
+void commun_reloads(fourmi_etat* etat) {
+    stats_loads(etat);
+    ret_loads(etat);
+}
+
 void commun_loads(fourmi_etat *etat, uint32_t team_id, pile_t *pile,
                   size_t size) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
@@ -22,11 +36,8 @@ void commun_loads(fourmi_etat *etat, uint32_t team_id, pile_t *pile,
   mem->type = ANT_KIND_COMMON;
   mem->comportement = AUCUN;
   stats_loads(etat);
-
-  mem->ret.pheromone = 0;
-  mem->ret.depose_pheromone = NO_PHEROMONE;
-  mem->ret.action = FOURMI_PASSE;
-  mem->ret.arg = 0;
+  ret_loads(etat);
+  
 }
 
 void commun_postaction(fourmi_etat *etat, const salle *salle) {

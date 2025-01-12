@@ -182,6 +182,12 @@ void pile_loads(char* memoire, pile_t* pile, size_t size) {
     }
 }
 
+void pile_reduceloads(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    assert(met->taillepile == 0);
+    met->taillepilemax = 0;
+}
+
 uint32_t water2base(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     uint32_t water = 0;

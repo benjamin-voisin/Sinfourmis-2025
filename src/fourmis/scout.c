@@ -17,6 +17,12 @@ uint8_t no_more_id(fourmi_etat *etat) {
     return (mem->tile_counter == COUNTER_MASK);
 }
 
+void scout_reloads(fourmi_etat* etat) {
+    commun_reloads(etat);
+    memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
+    mem->comportement = FOLLOWLEAD;
+    pile_reduceloads(etat->memoire);
+}
 
 void scout_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size, uint32_t id) {
     assert(id > 0);

@@ -12,6 +12,12 @@ void guard_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size)
     mem->comportement = G_FOLLOWLEAD;
 }
 
+void guard_reloads(fourmi_etat* etat) {
+    commun_reloads(etat);
+    memoire_guard_t* mem = (memoire_guard_t*) etat->memoire;
+    mem->comportement = G_FOLLOWLEAD;
+}
+
 fourmi_retour guard_action(fourmi_etat *etat, const salle *salle) {
     memoire_guard_t* mem = (memoire_guard_t*) etat->memoire;
     uint8_t id;
