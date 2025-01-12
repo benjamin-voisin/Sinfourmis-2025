@@ -18,10 +18,10 @@ void fourmi_pp(logcat_t cat, loglevel_t level, fourmi_etat *etat) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   switch (mem->type) {
   case ANT_KIND_FOOD:
-    food_pp(cat, LOG_INFO, etat);
+    food_pp(cat, level, etat);
     break;
   case ANT_KIND_SCOUT:
-    scout_pp(cat, LOG_DEBUG, etat);
+    scout_pp(cat, level, etat);
     break;
   case ANT_KIND_COMMON:
     commun_pp(cat, level, etat);
@@ -153,7 +153,7 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat,
 fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
 
-  fourmi_pp(CAT_OTHER, LOG_INFO, etat);
+  fourmi_pp(CAT_OTHER, LOG_DEBUG, etat);
   fourmi_feedback(etat, salle);
   
   enum fourminterrupt_e inter = interrupt(etat, salle);
@@ -166,7 +166,7 @@ fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
   
   
   mem->ret = ret;
-  retour_pp(CAT_OTHER, LOG_INFO, ret);
+  retour_pp(CAT_OTHER, LOG_DEBUG, ret);
 
 
   return ret;
