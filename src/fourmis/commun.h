@@ -30,6 +30,7 @@ typedef struct __attribute__((__packed__)) memoire_commun_s {
     uint8_t type;
     enum communcomportement_e comportement;
     uint32_t team_id;
+    uint32_t fourmis_id;
     uint8_t vie;
     int32_t eau;
     int32_t nourriture;
