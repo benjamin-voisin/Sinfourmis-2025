@@ -178,6 +178,12 @@ void common_kind_pp(logcat_t cat, loglevel_t level, uint8_t type) {
   case ANT_KIND_SCOUT:
     Log(cat, level, "ANT_KIND_SCOUT");
     break;
+  case ANT_KIND_GUARD:
+    Log(cat, level, "ANT_KIND_GUARD");
+    break;
+  case ANT_KIND_FOOD:
+    Log(cat, level, "ANT_KIND_FOOD");
+    break;
   default:
     Log(cat, level, "ANT_KIND_UNKNOWN");
     break;
