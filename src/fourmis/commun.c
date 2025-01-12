@@ -33,9 +33,11 @@ void commun_reloads(fourmi_etat* etat) {
 
 void commun_loads(fourmi_etat *etat, uint32_t team_id, pile_t *pile,
                   size_t size) {
+  static uint32_t id = 0;
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   pile_loads(etat->memoire, pile, size);
   mem->team_id = team_id;
+  mem->fourmis_id = id++;
   mem->type = ANT_KIND_COMMON;
   mem->comportement = AUCUN;
   mem->prevent_prehemption = false;
@@ -201,6 +203,7 @@ void commun_body_pp(logcat_t cat, loglevel_t level, fourmi_etat *etat) {
   common_kind_pp(CAT_NOBLOAT, level, mem->type);
   Log(CAT_NOBLOAT, level, "\n");
   Log(cat, level, "    team_id    = %u\n", mem->team_id);
+  Log(cat, level, "    fourmi_id  = %u\n", mem->fourmis_id);
   Log(cat, level, "    vie        = %u\n", mem->vie);
   Log(cat, level, "    eau        = %u\n", mem->eau);
   Log(cat, level, "    nourriture = %u\n", mem->nourriture);
