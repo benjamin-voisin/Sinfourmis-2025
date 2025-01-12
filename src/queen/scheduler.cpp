@@ -74,17 +74,27 @@ void manger_forumis(reine_action *action, int *arg, size_t n_send) {
 
 Task::Task(task_t type, arg_t arg) : _task_type{type}, _arg{arg} {}
 
-void default_cmp(reine_action *action, int *arg, reine_input_t *input) {
-	if (input->forumis_miam_miam.size() > 1) {
-		*action = RECUPERER_FOURMI;
+void default_cmp(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present) {
+	if (input->forumis_miam_miam.size() > 0) {
+		std::cerr << "ENVOYER FORUMI\n";
+		*action = ENVOYER_FOURMI;
 		*arg = input->forumis_miam_miam.size();
+		// On re-gaslight totu le monde en scout
+		for (fourmi_etat *fourmis : input->forumis_miam_miam) {
+			scout_loads(fourmis, input->state->team_id, NULL, 0, 1);
+		}
+		//
+	} else if (friendly_ants_present > 0) {
+		std::cerr << "RÉCUPER FOURMI\n";
+		*action = RECUPERER_FOURMI;
+		*arg = friendly_ants_present;
 	} else {
 		*action = REINE_PASSE;
 		*arg = 0;
 	}
 }
 
-void Task::execute(reine_action *action, int *arg, reine_input_t *input) {
+void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present) {
 	switch (_task_type) {
 		case (CREER_SCOUT):
 			creer_scout(action, arg, _arg.amount);
@@ -112,18 +122,18 @@ void Task::execute(reine_action *action, int *arg, reine_input_t *input) {
 			*arg = 0;
 			break;
 		default:
-		default_cmp(action, arg, input);
+		default_cmp(action, arg, input, friendly_ants_present);
 			break;
 	}
 }
 
-void Scheduler::execute_tasks(reine_action *action, int *arg, reine_input_t *input) {
+void Scheduler::execute_tasks(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present) {
 	if (_tasks.empty()) {
 		// Si on a rien dans le scheduler, on mange une fourmis
-		default_cmp(action, arg, input);
+		default_cmp(action, arg, input, friendly_ants_present);
 	} else {
 		// Sinon, on execute la tache
-		_tasks.front().execute(action, arg, input);
+		_tasks.front().execute(action, arg, input, friendly_ants_present);
 		_tasks.pop();
 	}
 }

@@ -25,7 +25,7 @@ class Task {
 		task_t _task_type;
 		arg_t _arg;
 	public:
-		void execute(reine_action *action, int *arg, reine_input_t *input);
+		void execute(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present);
 		Task(task_t type, arg_t arg);
 };
 
@@ -33,7 +33,7 @@ class Scheduler {
 	private:
 		std::queue<Task> _tasks;
 	public:
-		void execute_tasks(reine_action *action, int *arg, reine_input_t *input);
+		void execute_tasks(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present);
 		void add_task(Task task);
 
 };

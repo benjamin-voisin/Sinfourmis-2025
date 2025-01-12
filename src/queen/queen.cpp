@@ -64,7 +64,7 @@ void reine_thread() {
         }
 
         // Update les infos par les scouts
-        /* queen_state.read_scouts(input.forumis_miam_miam); */
+        queen_state.read_scouts(input.forumis_miam_miam);
 		queen_state.graph()->to_dot("graph.dot");
         std::vector<fourmis_compteur> ants_present(input.node->compteurs_fourmis, input.node->compteurs_fourmis + input.node->taille_liste);
         uint32_t friendly_ants_present = 0;
@@ -82,7 +82,7 @@ void reine_thread() {
         reine_action action;
         int arg;
 
-		queen_state._scheduler.execute_tasks(&action, &arg, &input);
+		queen_state._scheduler.execute_tasks(&action, &arg, &input, friendly_ants_present);
 		
         // Et on renvoit notre retour qu'on veut, voilà
         from_reine.send_message({ .action = action, .arg = arg });
