@@ -7,8 +7,7 @@
 #include "utils/b_constants.h"
 #include "utils/utils.h"
 #include "utils/interrupts.h"
-
-#include <assert.h>
+#include "utils/log.h"
 
 void new_pp(FILE *f, fourmi_etat *etat) {
   fprintf(f, "NEW_ANT {\n");
@@ -35,7 +34,7 @@ void fourmi_pp(FILE *f, fourmi_etat *etat) {
     new_pp(f, etat);
     break;
   default:
-    fprintf(f, "UNKNOWN_ANT\n");
+    Log_warning(CAT_MAIN, "PP UNKNOWN_ANT");
     break;
   }
 }
@@ -54,9 +53,9 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
     switch (mem->ret.action) {
     case DEPLACEMENT:
       commun_feedback_deplacement(etat, salle);
-      break;
+      break; 
     case RAMASSE_NOURRITURE:
-      assert(etat->result >= 0);
+      Log_warning(CAT_MAIN, etat->result >= 0, "Feedback Fail RamasseNourriture");
       break;
     case COMMENCE_CONSTRUCTION:
       commun_feedback_commence_construction(etat, salle);
@@ -65,7 +64,7 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
       commun_feedback_termine_construction(etat, salle);
       break;
     case ATTAQUE:
-      assert(etat->result > 0);
+      Log_warning(CAT_MAIN, etat->result > 0, "Feedback Fail Attaque");
       break;
     case ATTAQUE_TUNNEL:
       commun_feedback_attaque_tunnel(etat, salle);
@@ -73,16 +72,14 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
     case FOURMI_PASSE:
       break;
     default:
-      printf("FOURMIS ACTION UNKNOWN\n");
-      exit(1);
+      Error(CAT_MAIN, "FOURMIS ACTION UNKNOWN");
     }
     break;
   case ANT_KIND_NEW:
-    printf("FOURMIS TYPE ANT_KIND_NEW NO FEEDBACK\n");
-    exit(1);
+    Error(CAT_MAIN, "FOURMIS TYPE ANT_KIND_NEW NO FEEDBACK");
+    break;
   default:
-    printf("FOURMIS TYPE ANT_KIND_NEW NO FEEDBACK\n");
-    exit(1);
+    Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN NO FEEDBACK");
   }
 }
 
@@ -92,27 +89,23 @@ fourmi_retour fourmi_interrupt(fourmi_etat *etat, const salle *salle, enum fourm
 	{
 	case INTERRUPT_WATER:
 	case INTERRUPT_LIFE:
-		printf("INTERRUPT WATER\n");
 		return commun_action_versbase(etat, salle);
 	
 	case INTERRUPT_ENNEMY:
-		printf("INTERRUPT ENNEMY\n");
 		for (size_t i=0; i<salle->taille_liste; ++i) {
 			fourmis_compteur compt = salle->compteurs_fourmis[i];
 			if (compt.equipe != mem->team_id)
 				return commun_action_attaque(compt.equipe);
 		}
-
-		printf("INTERRUPT ENNEMY: NO ENNEMY\n");
-    	exit(1);
+    Error(CAT_MAIN, "INTERRUPT ENNEMY: NO ENNEMY");
+    break;
 
 	case AUCUN_INTERRUPT:
-		printf("NO INTERRUPT\n");
-    	exit(1);
+    Error(CAT_MAIN, "NO INTERRUPT");
+    break;
 	
 	default:
-		printf("UNKNOWN INTERRUPT\n");
-    	exit(1);
+    Error(CAT_MAIN, "UNKNOWN INTERRUPT");
 	}
 }
 
@@ -126,11 +119,10 @@ fourmi_retour fourmi_act(fourmi_etat *etat, const salle *salle) {
   case ANT_KIND_GUARD:
     return guard_action(etat, salle);
   case ANT_KIND_NEW:
-    printf("FOURMIS TYPE ANT_KIND_NEW CHERCHE ACTION\n");
-    exit(1);
+    Error(CAT_MAIN, "FOURMIS TYPE ANT_KIND_NEW CHERCHE ACTION");
+    break;
   default:
-    printf("FOURMIS TYPE UNKNOWN CHERCHE ACTION\n");
-    exit(1);
+    Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN CHERCHE ACTION");
   }
 }
 
@@ -146,11 +138,10 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat,
     scout_postaction(etat, salle);
     break;
   case ANT_KIND_NEW:
-    printf("FOURMIS TYPE ANT_KIND_NEW CHERCHE POSTACTION\n");
+    Error(CAT_MAIN, "FOURMIS TYPE ANT_KIND_NEW CHERCHE POSTACTION");
     break;
   default:
-    printf("FOURMIS TYPE UNKNOWN CHERCHE POSTACTION\n");
-    exit(1);
+    Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN CHERCHE POSTACTION");
   }
   commun_postaction(etat, salle);
 }
