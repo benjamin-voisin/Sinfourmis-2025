@@ -20,14 +20,14 @@ typedef enum loglevel_e {
 typedef enum logcat_e {
     CAT_OTHER,
     CAT_MAIN,
-    CAT_PILE
+    CAT_PILE,
+    CAT_FOURMIS
 } logcat_t;
 
 
 #define Log_debug(cat, ...) Log(cat, LOG_DEBUG, __VA_ARGS__)
 #define Log_info(cat, ...) Log(cat, LOG_INFO, __VA_ARGS__)
 #define Log_warning(cat, ...) Log(cat, LOG_WARNING, __VA_ARGS__)
-
 
 void Log_set_level(loglevel_t level);
 
