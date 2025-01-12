@@ -113,6 +113,9 @@ void reine_thread() {
 							queen_state._scheduler.add_task(Task(PASS, arg));
 							queen_state._scheduler.add_task(Task(CREER_MANGER, arg));
 							queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
+							queen_state._scheduler.add_task(Task(PASS, arg));
+							queen_state._scheduler.add_task(Task(EAT_FORUMIS, arg));
+							queen_state._scheduler.add_task(Task(SEND_FORUMIS, arg));
 						}
 
 					}
