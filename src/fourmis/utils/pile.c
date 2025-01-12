@@ -93,7 +93,7 @@ void pile_copy(pile_t* psrc, pile_t* pdst) {
 
 void simplipile(char* memoire) {
     Log_info(CAT_PILE, "Simplipile !\n");
-    return;
+
     pilemetadata_t* met = pilemetadata(memoire);
     if (met->taillepile > 0) {
     pile_t* p_base = pile_get(memoire, met->taillepile-1);

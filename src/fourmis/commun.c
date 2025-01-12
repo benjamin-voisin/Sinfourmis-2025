@@ -86,7 +86,7 @@ fourmi_retour commun_action_versbase(fourmi_etat *etat, const salle *salle) {
 fourmi_retour commun_action_verslead(fourmi_etat *etat, const salle *salle) {
   false_empiler(etat->memoire);
   pile_t *p = head(etat->memoire);
-  return commun_action_versdirection(etat, salle, p->degree_sortant,
+  return commun_action_versdirection(etat, salle, p->degree_entrant,
                                      NO_PHEROMONE, 0);
 }
 
