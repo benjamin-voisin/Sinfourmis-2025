@@ -10,3 +10,5 @@ typedef struct stats_s {
 } stats_t;
 
 void stats_copy(stats_t* dst, stats_t src);
+
+stats_t stats_init();
