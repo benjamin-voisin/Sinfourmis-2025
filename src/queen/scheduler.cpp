@@ -43,18 +43,18 @@ void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_in
 	*arg = input->forumis_miam_miam.size();
 }
 
-void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_input_t *input) {
+void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_input_t *input, std::vector<pile_t> path) {
 	// On parcours la liste des fourmis dans notre bidou
 	for (fourmi_etat *fourmis : input->forumis_miam_miam) {
 		// Si elles sont de type "new", on les gaslight en scout
 		if ( fourmi_kind(fourmis) == ANT_KIND_NEW) {
 			std::cout << "GASLIGHT D’UNE FOURMI FOOD\n";
-			food_loads(fourmis, input->state->team_id, NULL, 0);
+			food_loads(fourmis, input->state->team_id, &(path)[0], path.size());
 		}
 		// Si elles sont de type "scout", on les gaslight en scout
 		if (fourmi_kind(fourmis) == ANT_KIND_FOOD) {
 			std::cout << "GASLIGHT D’UNE FOURMI FOOD\n";
-			food_loads(fourmis, input->state->team_id, NULL, 0);
+			food_loads(fourmis, input->state->team_id, &(path)[0], path.size());
 		}
 	}
 }
@@ -100,7 +100,8 @@ void default_cmp(reine_action *action, int *arg, reine_input_t *input, size_t fr
 	}
 }
 
-void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present) {
+void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present,
+		std::optional<std::vector<pile_t>> *path_to_node) {
 	switch (_task_type) {
 		case (CREER_SCOUT):
 			creer_scout(action, arg, _arg.amount);
@@ -115,7 +116,7 @@ void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t 
 			gaslight_scout(action, arg, _arg.amount, input);
 			break;
 		case (GASLIGHT_MANGER):
-			gaslight_manger(action, arg, _arg.amount, input);
+			gaslight_manger(action, arg, _arg.amount, input, path_to_node[_arg.manger_target].value());
 			break;
 		case (SEND_FORUMIS):
 			send_forumis(action, arg, _arg.amount);
@@ -133,13 +134,13 @@ void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t 
 	}
 }
 
-void Scheduler::execute_tasks(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present) {
+void Scheduler::execute_tasks(reine_action *action, int *arg, reine_input_t *input, size_t friendly_ants_present, std::optional<std::vector<pile_t>> *path_to_node) {
 	if (_tasks.empty()) {
 		// Si on a rien dans le scheduler, on mange une fourmis
 		default_cmp(action, arg, input, friendly_ants_present);
 	} else {
 		// Sinon, on execute la tache
-		_tasks.front().execute(action, arg, input, friendly_ants_present);
+		_tasks.front().execute(action, arg, input, friendly_ants_present, path_to_node);
 		_tasks.pop();
 	}
 }

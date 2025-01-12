@@ -7,3 +7,6 @@
 [submodule "sinfourmis2025"]
 	path = sinfourmis2025
 	url = https://github.com/ErwanTLG/sinfourmis2025/
+[submodule "sinfourmisRenderer2025"]
+	path = sinfourmisRenderer2025
+	url = https://github.com/Robotechnic/sinfourmisRenderer2025
