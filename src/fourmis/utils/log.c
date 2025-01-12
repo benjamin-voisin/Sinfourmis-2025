@@ -24,6 +24,8 @@ const char* str_of_cat(logcat_t cat) {
         return "P";
     case CAT_FOURMIS:
         return "F";
+    case CAT_TODO:
+        return "T";
     default:
         return "O";
     }

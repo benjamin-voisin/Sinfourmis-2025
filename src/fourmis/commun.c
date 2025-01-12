@@ -2,8 +2,8 @@
 
 #include "utils/b_constants.h"
 #include "utils/utils.h"
+#include "utils/log.h"
 
-#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -48,7 +48,11 @@ fourmi_retour
 commun_action_versdirection_(fourmi_etat *etat, const salle *salle,
                              enum communcomportement_e comp, uint8_t dir,
                              pheromone_type pheromone_type, uint8_t pheromone) {
-  assert(dir < salle->degre);
+  if (!(dir < salle->degre)) {
+      Log_warning(CAT_FOURMIS, "Direction supérieure au degré");
+      Log_warning(CAT_FOURMIS, "Selecting random dir");
+      dir = random_other_dir(etat, salle);
+  }
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   mem->comportement = comp;
 
@@ -147,30 +151,25 @@ void commun_feedback_deplacement(fourmi_etat *etat, const salle *salle) {
       empiler(etat->memoire, hd);
       break;
     case AUCUN:
-      printf("ERREUR COMPORTEMENT DE DEPLACEMENT INDEFINI");
-      exit(1);
+      Error(CAT_MAIN, "ERREUR COMPORTEMENT DE DEPLACEMENT INDEFINI");
     }
   } else {
-    printf("Failwith todo %s\n", "commun_feedback_deplacement FAILURE");
-    exit(1);
+    Error(CAT_TODO, "TODO: commun_feedback_deplacement");
   }
 }
 
 void commun_feedback_commence_construction(fourmi_etat *etat,
                                            const salle *salle) {
-  printf("Failwith todo %s\n", "commun_feedback_commence_construction");
-  exit(1);
+  Error(CAT_TODO, "TODO: commun_feedback_commence_construction");
 }
 
 void commun_feedback_termine_construction(fourmi_etat *etat,
                                           const salle *salle) {
-  printf("Failwith todo %s\n", "commun_feedback_termine_construction");
-  exit(1);
+  Error(CAT_TODO, "TODO: commun_feedback_termine_construction");
 }
 
 void commun_feedback_attaque_tunnel(fourmi_etat *etat, const salle *salle) {
-  printf("Failwith todo %s\n", "commun_feedback_attaque_tunnel");
-  exit(1);
+  Error(CAT_TODO, "TODO: commun_feedback_attaque_tunnel");
 }
 
 void common_kind_pp(FILE *f, uint8_t type) {
