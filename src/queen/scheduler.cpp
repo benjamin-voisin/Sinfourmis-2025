@@ -140,7 +140,7 @@ void default_cmp(reine_action *action, int *arg, reine_input_t *input, size_t fr
 					scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
 				}
 			}
-			if (fourmi_kind(fourmis) == ANT_KIND_FOOD) {
+			else if (fourmi_kind(fourmis) == ANT_KIND_FOOD) {
 				size_t pile_size;
 				pile_t *pile = pile_dumps(fourmis->memoire,&pile_size);
 				food_loads(fourmis, stat, input->state->team_id, pile, pile_size);
