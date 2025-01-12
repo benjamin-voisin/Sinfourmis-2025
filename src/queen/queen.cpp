@@ -104,14 +104,22 @@ void reine_thread() {
 						std::cout << "MANGER\n";
 						arg_t arg = {0};
 						arg.manger_target = pile->id;
+						arg.amount = 1;
 						queen_state._scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
-						size_t to_create = 5;
-						arg.amount = to_create;
+						queen_state._scheduler.add_task(Task(SEND_FORUMIS, arg));
 						queen_state._scheduler.add_task(Task(CREER_MANGER, arg));
-						for (size_t i = 0; i < to_create; i++) {
-							queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
-						}
-						queen_state._scheduler.add_task(Task(SEND_MANGER, arg));
+						queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
+						queen_state._scheduler.add_task(Task(SEND_FORUMIS, arg));
+
+						queen_state._scheduler.add_task(Task(PASS, arg));
+						queen_state._scheduler.add_task(Task(CREER_MANGER, arg));
+						queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
+						queen_state._scheduler.add_task(Task(SEND_FORUMIS, arg));
+
+						queen_state._scheduler.add_task(Task(PASS, arg));
+						queen_state._scheduler.add_task(Task(CREER_MANGER, arg));
+						queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
+						queen_state._scheduler.add_task(Task(SEND_FORUMIS, arg));
 					}
 				}
 			}

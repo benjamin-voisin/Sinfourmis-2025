@@ -16,7 +16,7 @@ void creer_manger(reine_action *action, int *arg, size_t n_to_create) {
 	std::cout << "CRÉATION D’UNE FOURMI FOOD\n";
 	*action = CREER_FOURMI;
 	*arg = (int) n_to_create;
-	*arg = 2;
+	*arg = 1;
 }
 
 void creer_guarde(reine_action *action, int *arg, size_t n_to_create) {
@@ -40,8 +40,8 @@ void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_in
 			scout_loads(fourmis, input->state->team_id, NULL, 0, 1);
 		}
 	}
-	*action = REINE_PASSE;
-	*arg = 0;
+	*action = ENVOYER_FOURMI;
+	*arg = 1;
 }
 
 void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_input_t *input, std::vector<pile_t> path) {
@@ -60,8 +60,8 @@ void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_i
 			fourmi_pp(CAT_OTHER, LOG_INFO, fourmis);
 		}
 	}
-	*action = REINE_PASSE;
-	*arg = 0;
+	*action = ENVOYER_FOURMI;
+	*arg = 1;
 }
 
 
