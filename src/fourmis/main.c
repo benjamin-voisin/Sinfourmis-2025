@@ -86,6 +86,7 @@ fourmi_retour fourmi_interrupt(fourmi_etat *etat, const salle *salle, enum fourm
 	switch (inter)
 	{
 	case INTERRUPT_WATER:
+	case INTERRUPT_LIFE:
 		printf("INTERRUPT WATER\n");
 		return commun_action_versbase(etat, salle);
 	
