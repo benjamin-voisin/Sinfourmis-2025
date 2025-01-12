@@ -32,7 +32,12 @@ void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_in
 		// Si elles sont de type "scout", on les gaslight en scout
 		if (fourmi_kind(fourmis) == ANT_KIND_SCOUT) {
 			std::cout << "GASLIGHT D’UNE FOURMI SCOUT\n";
-			scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
+			memoire_scout_t* mem = (memoire_scout_t*) fourmis->memoire;
+			if (mem->tile_counter < COUNTER_MASK) {
+				scout_reloads(fourmis, stat);
+			} else {
+				scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
+			}
 		}
 		// Si elles sont de type "new", on les gaslight en scout
 		if ( fourmi_kind(fourmis) == ANT_KIND_NEW) {
@@ -77,9 +82,15 @@ void send_forumis(reine_action *action, int *arg, size_t n_send, reine_input_t *
 	for (fourmi_etat *fourmis : input->forumis_miam_miam) {
 		size_t pile_size;
 		pile_t *pile;
+		memoire_scout_t* mem;
 		switch (fourmi_kind(fourmis)) {
 			case (ANT_KIND_SCOUT):
-				scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
+				mem = (memoire_scout_t*) fourmis->memoire;
+				if (mem->tile_counter < COUNTER_MASK) {
+					scout_reloads(fourmis, stat);
+				} else {
+					scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
+				}
 				break;
 			case (ANT_KIND_FOOD) :
 				pile = pile_dumps(fourmis->memoire, &pile_size);
@@ -110,7 +121,12 @@ void default_cmp(reine_action *action, int *arg, reine_input_t *input, size_t fr
 		// On re-gaslight totu le monde en scout
 		for (fourmi_etat *fourmis : input->forumis_miam_miam) {
 			if (fourmi_kind(fourmis) == ANT_KIND_SCOUT) {
-				scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
+				memoire_scout_t* mem = (memoire_scout_t*) fourmis->memoire;
+				if (mem->tile_counter < COUNTER_MASK) {
+					scout_reloads(fourmis, stat);
+				} else {
+					scout_loads(fourmis, stat, input->state->team_id, NULL, 0, 1);
+				}
 			}
 			if (fourmi_kind(fourmis) == ANT_KIND_FOOD) {
 				size_t pile_size;

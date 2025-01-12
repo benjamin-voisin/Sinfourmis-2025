@@ -23,8 +23,10 @@ Queen::Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {
 	}
 	arg_t arg = {0};
 	arg.amount = 1;
-	_scheduler.add_task(Task(CREER_SCOUT, arg ));
-	_scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
+	for (size_t i = 0; i < 1; i++) {
+		_scheduler.add_task(Task(CREER_SCOUT, arg ));
+		_scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
+	}
 	_scheduler.add_task(Task(PASS, arg));
 };
 
