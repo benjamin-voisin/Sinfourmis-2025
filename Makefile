@@ -32,18 +32,20 @@ simulateur:
 	$(MAKE) -C ./sinfourmis2025	
 	cp ./sinfourmis2025/Sinfourmis ./
 
-simuletest: simulateur $(NAME)
-	./Sinfourmis -t dummy -t ./$(NAME) -d 150 ./sinfourmis2025/maps/test.json
+simuletest: simulateur $(NAME) dumb.so
+	./Sinfourmis -t ./dumb.so -t ./$(NAME) -d 150 ./sinfourmis2025/maps/test.json
 
-simuletest_full: simulateur $(NAME)
-	./Sinfourmis -t dummy -t ./$(NAME) ./sinfourmis2025/maps/test.json
+simuletest_full: simulateur $(NAME) dumb.so
+	./Sinfourmis -t ./dumb.so -t ./$(NAME) ./sinfourmis2025/maps/test.json
 
-simule: simulateur $(NAME)
+simule: simulateur $(NAME) dumb.so
 	./Sinfourmis -t dummy -t dummy -t dummy -t ./$(NAME) -d 50 ./sinfourmis2025/maps/spiral.json
 
-simule_full: simulateur $(NAME)
+simule_full: simulateur $(NAME) dumb.so
 	./Sinfourmis -t dummy -t dummy -t dummy -t ./$(NAME) ./sinfourmis2025/maps/spiral.json
 
+dumb.so: dumb.c
+	gcc -fPIC -shared -o dumb.so dumb.c
 
 animateur:
 	npm --prefix SinfourmisAnimator/ i

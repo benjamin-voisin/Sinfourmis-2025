@@ -1,5 +1,5 @@
 Sinfourmis
-fourmis.so
+*.so
 output*
 build
 *.o
