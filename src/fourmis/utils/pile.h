@@ -53,6 +53,7 @@ void pile_edit_id(char* memoire, uint8_t id);
 pile_t* pile_dumps(char* memoire, size_t* size);
 void pile_loads(char* memoire, pile_t* pile, size_t size);
 void pile_reduceloads(char* memoire);
+void pile_reloads(char* memoire);
 
 uint32_t water2base(char* memoire);
 uint32_t water2dest(char* memoire);

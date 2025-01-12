@@ -26,6 +26,7 @@ void ret_loads(fourmi_etat* etat) {
 void commun_reloads(fourmi_etat* etat) {
     stats_loads(etat);
     ret_loads(etat);
+    pile_reloads(etat->memoire);
     memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
     mem->prevent_prehemption = false;
 }

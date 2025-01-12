@@ -186,6 +186,11 @@ void pile_loads(char* memoire, pile_t* pile, size_t size) {
     }
 }
 
+void pile_reloads(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    met->taillepile = 0; 
+}
+
 void pile_reduceloads(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
     Assert(CAT_PILE, met->taillepile == 0, "Réduire pile vide\n");
