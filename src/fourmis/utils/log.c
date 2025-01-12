@@ -113,7 +113,9 @@ void Assert(logcat_t cat, bool cond, const char *format, ...) {
         va_start(args, format);
         log_vimpl(cat, LOG_ASSERT, format, args);
         va_end(args);
+        #ifndef RELEASE
         assert(cond);
+        #endif
     }
 }
 
@@ -122,7 +124,9 @@ void Error(logcat_t cat, const char *format, ...) {
   va_start(args, format);
   log_vimpl(cat, LOG_ERROR, format, args);
   va_end(args);
+  #ifndef RELEASE
   exit(1);
+  #endif
 }
 
 void Fatal(logcat_t cat, const char *format, ...) {
