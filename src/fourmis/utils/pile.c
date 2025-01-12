@@ -2,8 +2,8 @@
 
 #include "../../sinfourmis.h"
 #include "b_constants.h"
+#include "log.h"
 
-#include <assert.h>
 
 pile_t* pile(char* memoire) {
     return (pile_t*) (memoire + 256);
@@ -15,8 +15,8 @@ pilemetadata_t* pilemetadata(char* memoire) {
 
 pile_t* pile_get(char* memoire, size_t i) {
     pilemetadata_t* met = pilemetadata(memoire);
-    assert(met->taillepilemax > 0);
-    assert(i < met->taillepilemax);
+    Assert(CAT_PILE, met->taillepilemax > 0, "Get sur pile de taille 0");
+    Assert(CAT_PILE, i < met->taillepilemax, "Indice de get trop grand !");
     pile_t* p = pile(memoire);
     return p - i - 1;
 }
@@ -122,13 +122,13 @@ bool pile_complete(char* memoire) {
 
 pile_t* head(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    assert(!pile_vide(memoire));
+    Assert(CAT_PILE, !pile_vide(memoire), "Head sur pile vide");
     return pile_get(memoire, met->taillepile - 1);
 }
 
 void false_empiler(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    assert(!(pile_complete(memoire)));
+    Assert(CAT_PILE, !(pile_complete(memoire)), "Déjà au bout de la pile");
     met->taillepile += 1;
     if (met->taillepilemax < met->taillepile) {
         met->taillepilemax = met->taillepile;
@@ -147,21 +147,21 @@ void empiler(char* memoire, pile_t e) {
 
 pile_t* depiler(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    assert(!pile_vide(memoire));
+    Assert(CAT_PILE, !pile_vide(memoire), "Dépiler sur pile vide");
     pile_t* hd = head(memoire);
     met->taillepile -= 1;
     return hd;
 }
 
 void pile_edit_id(char* memoire, uint8_t id) {
-    assert(!pile_vide(memoire));
+    Assert(CAT_PILE, !pile_vide(memoire), "Edit sur pile vide");
     pile_t* hd = head(memoire);
     hd->id = id;
 }
 
 pile_t* pile_dumps_last(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    assert(met->taillepilemax > 0);
+    Assert(CAT_PILE, met->taillepilemax > 0, "Recherche dernier noeud sur pile de taille 0");
     return pile_get(memoire, met->taillepilemax - 1);
 }
 pile_t* pile_dumps(char* memoire, size_t* size) {
@@ -184,7 +184,7 @@ void pile_loads(char* memoire, pile_t* pile, size_t size) {
 
 void pile_reduceloads(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
-    assert(met->taillepile == 0);
+    Assert(CAT_PILE, met->taillepile == 0, "Réduire pile vide");
     met->taillepilemax = 0;
 }
 
