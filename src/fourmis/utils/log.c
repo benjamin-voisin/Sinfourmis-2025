@@ -108,9 +108,9 @@ static logcolor_t current_log_color = LIGHT_GRAY;
 void log_set_color(logcolor_t col) { current_log_color = col; }
 void log_reset_color() { current_log_color = LIGHT_GRAY; }
 
-static loglevel_t current_log_level = LOG_INFO;
+static loglevel_t current_log_level = LOG_WARNING;
 void log_set_level(loglevel_t level) { current_log_level = level; }
-void log_reset_level() { current_log_level = LOG_INFO; }
+void log_reset_level() { current_log_level = LOG_WARNING; }
 
 
 static void log_vimpl(logcat_t cat, loglevel_t level, const char *format, va_list args) {
