@@ -1,8 +1,8 @@
 #include "food.h"
 #include "utils/b_constants.h"
+#include "utils/log.h"
 
 #include <stdio.h>
-#include <assert.h>
 
 void food_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size) {
     commun_loads(etat, team_id, pile, size);
@@ -23,11 +23,21 @@ fourmi_retour food_action(fourmi_etat *etat, const salle *salle) {
     uint8_t direction;
     switch (mem->comportement) {
     case F_FOLLOWLEAD:
+        if (salle->type == NOURRITURE) {
+            if (!pile_complete(etat->memoire))
+                Log_info(CAT_FOURMIS, "La ramasseuse à trouvé de la Bouffe avant sa destination !"); 
+        
+            mem->comportement = F_BACK;
+            return commun_action_ramasse();
+        }
+        
         if (!pile_complete(etat->memoire))
             return commun_action_verslead(etat, salle);
-        assert(salle->type == NOURRITURE);
+        Log_warning(CAT_FOURMIS, "La ramasseur n'est pas arrivée sur une case de bouffe");
+        Log_warning(CAT_FOURMIS, "Retour à la reine");
         mem->comportement = F_BACK;
-        return commun_action_ramasse();
+        return food_action(etat, salle);
+        
  
     case F_BACK:
         if (!pile_vide(etat->memoire))
@@ -39,9 +49,10 @@ fourmi_retour food_action(fourmi_etat *etat, const salle *salle) {
         return commun_action_attendre();
 
     default:
-        printf("FOOD ACTION UNDEFINED\n");
-        exit(1);
-        break;
+        Log_warning(CAT_FOURMIS, "FOOD ACTION UNDEFINED");
+        Log_warning(CAT_FOURMIS, "Fallback F_BACK");
+        mem->comportement = F_BACK;
+        return food_action(etat, salle);
     }
 }
 
