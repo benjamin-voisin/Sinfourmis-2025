@@ -1,9 +1,9 @@
 #include "guard.h"
 #include "utils/b_constants.h"
+#include "utils/log.h"
 #include "../constants.hpp"
 
 #include <stdio.h>
-#include <assert.h>
 
 void guard_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size) {
     commun_loads(etat, team_id, pile, size);
@@ -26,7 +26,13 @@ fourmi_retour guard_action(fourmi_etat *etat, const salle *salle) {
     case G_FOLLOWLEAD:
         if (!pile_complete(etat->memoire))
             return commun_action_verslead(etat, salle);
-        assert(salle->type == EAU);
+        if (salle->type != EAU) {
+            Log_warning(CAT_FOURMIS, "La gardienne n'est pas arrivée sur une case EAU");
+            Log_warning(CAT_FOURMIS, "Retour à la reine");
+            mem->comportement = G_BACK;
+            return guard_action(etat, salle);
+        }
+
         mem->comportement = G_GUARD;
         return guard_action(etat, salle);
     
@@ -47,9 +53,10 @@ fourmi_retour guard_action(fourmi_etat *etat, const salle *salle) {
         return commun_action_attendre();
 
     default:
-        printf("GUARD ACTION UNDEFINED\n");
-        exit(1);
-        break;
+        Log_warning(CAT_FOURMIS, "GUARD ACTION UNDEFINED");
+        Log_warning(CAT_FOURMIS, "Fallback G_BACK");
+        mem->comportement = G_BACK;
+        return guard_action(etat, salle);
     }
 }
 
