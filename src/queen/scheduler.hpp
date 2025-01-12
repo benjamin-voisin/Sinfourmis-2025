@@ -13,6 +13,7 @@ typedef enum taks_e {
 	GASLIGHT_SCOUT,
 	SEND_FORUMIS,
 	EAT_FORUMIS,
+	PASS,
 } task_t;
 
 typedef union arg_u {

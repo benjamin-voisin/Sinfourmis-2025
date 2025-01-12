@@ -10,17 +10,20 @@ void creer_scout(reine_action *action, int *arg, size_t n_to_create) {
 	std::cout << "CRÉATION D’UNE FOURMI SCOUT\n";
 	*action = CREER_FOURMI;
 	*arg = (int) n_to_create;
+	*arg = 1;
 }
 void creer_manger(reine_action *action, int *arg, size_t n_to_create) {
 	std::cout << "CRÉATION D’UNE FOURMI FOOD\n";
 	*action = CREER_FOURMI;
 	*arg = (int) n_to_create;
+	*arg = 1;
 }
 
 void creer_guarde(reine_action *action, int *arg, size_t n_to_create) {
 	std::cout << "CRÉATION D’UNE FOURMI GUARDE\n";
 	*action = CREER_FOURMI;
 	*arg = (int) n_to_create;
+	*arg = 1;
 }
 
 void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_input_t *input) {
@@ -37,6 +40,8 @@ void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_in
 			scout_loads(fourmis, input->state->team_id, NULL, 0, 1);
 		}
 	}
+	*action = ENVOYER_FOURMI;
+	*arg = input->forumis_miam_miam.size();
 }
 
 void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_input_t *input) {
@@ -69,6 +74,16 @@ void manger_forumis(reine_action *action, int *arg, size_t n_send) {
 
 Task::Task(task_t type, arg_t arg) : _task_type{type}, _arg{arg} {}
 
+void default_cmp(reine_action *action, int *arg, reine_input_t *input) {
+	if (input->forumis_miam_miam.size() > 1) {
+		*action = RECUPERER_FOURMI;
+		*arg = input->forumis_miam_miam.size();
+	} else {
+		*action = REINE_PASSE;
+		*arg = 0;
+	}
+}
+
 void Task::execute(reine_action *action, int *arg, reine_input_t *input) {
 	switch (_task_type) {
 		case (CREER_SCOUT):
@@ -92,16 +107,20 @@ void Task::execute(reine_action *action, int *arg, reine_input_t *input) {
 		case (EAT_FORUMIS):
 			manger_forumis(action, arg, _arg.amount);
 			break;
+		case (PASS):
+			*action = REINE_PASSE;
+			*arg = 0;
+			break;
 		default:
+		default_cmp(action, arg, input);
 			break;
 	}
 }
 
 void Scheduler::execute_tasks(reine_action *action, int *arg, reine_input_t *input) {
 	if (_tasks.empty()) {
-		// Si on a rien dans le scheduler, on fait rien
-		*action = REINE_PASSE;
-		*arg = 0;
+		// Si on a rien dans le scheduler, on mange une fourmis
+		default_cmp(action, arg, input);
 	} else {
 		// Sinon, on execute la tache
 		_tasks.front().execute(action, arg, input);

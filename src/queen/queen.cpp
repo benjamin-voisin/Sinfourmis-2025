@@ -3,12 +3,7 @@
 #include "graph.hpp"
 #include "read_scout.hpp"
 #include "thread_queue.h"
-#include "../fourmis/main.h"
-#include "../fourmis/scout.h"
-#include "../fourmis/food.h"
-#include "../fourmis/utils/b_constants.h"
 
-#include <algorithm>
 #include <cstdint>
 #include <iostream>
 #include <thread>
@@ -22,6 +17,7 @@ Queen::Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {
 	_scheduler.add_task(Task(CREER_SCOUT, {1}));
 	_scheduler.add_task(Task(GASLIGHT_SCOUT, {0}));
 	_scheduler.add_task(Task(SEND_FORUMIS, {1}));
+	_scheduler.add_task(Task(PASS, {0}));
 };
 
 reine_retour give_args_to_thread(
@@ -83,8 +79,8 @@ void reine_thread() {
         auto storage_space = input.state->max_stockage - input.forumis_miam_miam.size();
 
         // Cherche la prochaine action à faire
-        auto action = REINE_PASSE;
-        auto arg = 0;
+        reine_action action;
+        int arg;
 
 		queen_state._scheduler.execute_tasks(&action, &arg, &input);
 		
