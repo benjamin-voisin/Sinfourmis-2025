@@ -55,7 +55,7 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
       commun_feedback_deplacement(etat, salle);
       break; 
     case RAMASSE_NOURRITURE:
-      Log_warning(CAT_MAIN, etat->result >= 0, "Feedback Fail RamasseNourriture");
+      Assert(CAT_MAIN, etat->result >= 0, "Feedback Fail RamasseNourriture");
       break;
     case COMMENCE_CONSTRUCTION:
       commun_feedback_commence_construction(etat, salle);
@@ -64,7 +64,7 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
       commun_feedback_termine_construction(etat, salle);
       break;
     case ATTAQUE:
-      Log_warning(CAT_MAIN, etat->result > 0, "Feedback Fail Attaque");
+      Assert(CAT_MAIN, etat->result > 0, "Feedback Fail Attaque");
       break;
     case ATTAQUE_TUNNEL:
       commun_feedback_attaque_tunnel(etat, salle);
