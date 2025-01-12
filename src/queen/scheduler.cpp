@@ -16,7 +16,7 @@ void creer_manger(reine_action *action, int *arg, size_t n_to_create) {
 	std::cout << "CRÉATION D’UNE FOURMI FOOD\n";
 	*action = CREER_FOURMI;
 	*arg = (int) n_to_create;
-	*arg = 1;
+	*arg = 2;
 }
 
 void creer_guarde(reine_action *action, int *arg, size_t n_to_create) {
@@ -40,8 +40,8 @@ void gaslight_scout(reine_action *action, int *arg, size_t n_to_create, reine_in
 			scout_loads(fourmis, input->state->team_id, NULL, 0, 1);
 		}
 	}
-	*action = ENVOYER_FOURMI;
-	*arg = 1;
+	*action = REINE_PASSE;
+	*arg = 0;
 }
 
 void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_input_t *input, std::vector<pile_t> path) {
@@ -60,8 +60,15 @@ void gaslight_manger(reine_action *action, int *arg, size_t n_to_create, reine_i
 			fourmi_pp(CAT_OTHER, LOG_INFO, fourmis);
 		}
 	}
+	*action = REINE_PASSE;
+	*arg = 0;
+}
+
+
+void send_manger(reine_action *action, int *arg, size_t n_to_create, reine_input_t *input, std::vector<pile_t> path) {
+	gaslight_manger(action, arg, n_to_create, input, path);
 	*action = ENVOYER_FOURMI;
-	*arg = 1;
+	*arg = 10;
 }
 
 void send_forumis(reine_action *action, int *arg, size_t n_send, reine_input_t *input) {
@@ -146,7 +153,11 @@ void Task::execute(reine_action *action, int *arg, reine_input_t *input, size_t 
 		case (EAT_FORUMIS):
 			manger_forumis(action, arg, _arg.amount);
 			break;
+		case (SEND_MANGER):
+			send_manger(action, arg, _arg.amount, input, path_to_node[_arg.manger_target].value());
+			break;
 		case (PASS):
+			std::cout << "FAIS RIEN\n";
 			*action = REINE_PASSE;
 			*arg = 0;
 			break;
