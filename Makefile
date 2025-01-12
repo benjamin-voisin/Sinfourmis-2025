@@ -33,7 +33,7 @@ simulateur:
 	cp ./sinfourmis2025/Sinfourmis ./
 
 simuletest: simulateur $(NAME)
-	./Sinfourmis -t dummy -t ./$(NAME) -d 50 ./sinfourmis2025/maps/test.json
+	./Sinfourmis -t dummy -t ./$(NAME) -d 150 ./sinfourmis2025/maps/test.json
 
 simuletest_full: simulateur $(NAME)
 	./Sinfourmis -t dummy -t ./$(NAME) ./sinfourmis2025/maps/test.json

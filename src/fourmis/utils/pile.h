@@ -55,4 +55,5 @@ void pile_reduceloads(char* memoire);
 uint32_t water2base(char* memoire);
 uint32_t water2dest(char* memoire);
 
+uint8_t pile_size(char* memoire);
 #endif

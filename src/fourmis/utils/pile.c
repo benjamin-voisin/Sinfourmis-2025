@@ -12,6 +12,11 @@ pilemetadata_t* pilemetadata(char* memoire) {
     return (pilemetadata_t*) memoire;
 }
 
+uint8_t pile_size(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    return met->taillepile;
+}
+
 pile_t* pile_get(char* memoire, size_t i) {
     pilemetadata_t* met = pilemetadata(memoire);
     Assert(CAT_PILE, met->taillepilemax > 0, "Get sur pile de taille 0\n");
@@ -87,6 +92,7 @@ void pile_copy(pile_t* psrc, pile_t* pdst) {
 }
 
 void simplipile(char* memoire) {
+    Log_info(CAT_PILE, "Simplipile !\n");
     pilemetadata_t* met = pilemetadata(memoire);
     if (met->taillepile > 0) {
     pile_t* p_base = pile_get(memoire, met->taillepile-1);
