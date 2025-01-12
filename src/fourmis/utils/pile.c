@@ -61,7 +61,7 @@ void pile_pp_part(logcat_t cat, loglevel_t level, pile_t* p) {
     Log(cat, level, "    d_sortant  = %u\n", p->degree_sortant);
     Log(cat, level, "    poid       = %u\n", p->poid);
     Log(cat, level, "    type       = ");
-    pile_pp_saletype(CAT_NOBLOAT, level, p->type);
+    pile_pp_saletype(CAT_NOBLOAT, level, (enum salle_type)  p->type);
     Log(CAT_NOBLOAT, level, "\n");
     Log(cat, level, "]\n");
 }

@@ -108,6 +108,7 @@ fourmi_retour fourmi_interrupt(fourmi_etat *etat, const salle *salle, enum fourm
 	default:
     Error(CAT_MAIN, "UNKNOWN INTERRUPT\n");
 	}
+  return commun_action_attendre();
 }
 
 fourmi_retour fourmi_act(fourmi_etat *etat, const salle *salle) {
@@ -125,6 +126,7 @@ fourmi_retour fourmi_act(fourmi_etat *etat, const salle *salle) {
   default:
     Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN CHERCHE ACTION\n");
   }
+  return commun_action_attendre();
 }
 
 void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat,
