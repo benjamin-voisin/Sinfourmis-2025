@@ -131,7 +131,36 @@ void reine_thread() {
         reine_action action;
         int arg = 0;
 
-		queen_state._scheduler.execute_tasks(&action, &arg, &input, friendly_ants_present, queen_state.path_to_node, queen_state.stat);
+		if (friendly_ants_present == 0 && input.forumis_miam_miam.size() == 0 && input.state->nourriture > queen_state.ticks()) {
+			switch (queen_state.to_update) {
+				case (0):
+					action = AMELIORE_RAMASSAGE;
+					queen_state.to_update++;
+					queen_state.stat.max_food++;
+					break;
+				case (1):
+					action = AMELIORE_DEGATS;
+					queen_state.to_update++;
+					queen_state.stat.max_degats += 1;
+					break;
+				case (2):
+					action = AMELIORE_EAU;
+					queen_state.stat.max_eau += 5;
+					queen_state.to_update++;
+					break;
+				case (3):
+					action = AMELIORE_EAU;
+					queen_state.to_update++;
+					break;
+				default:
+					action = AMELIORE_RAMASSAGE;
+					queen_state.stat.max_food++;
+					break;
+			}
+			arg = 1;
+		} else {
+			queen_state._scheduler.execute_tasks(&action, &arg, &input, friendly_ants_present, queen_state.path_to_node, queen_state.stat);
+		}
 		
         // Et on renvoit notre retour qu'on veut, voilà
         from_reine.send_message({ .action = action, .arg = arg });
