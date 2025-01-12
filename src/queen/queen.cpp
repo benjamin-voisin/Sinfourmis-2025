@@ -23,10 +23,10 @@ Queen::Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {
 	}
 	arg_t arg = {0};
 	arg.amount = 1;
-	for (size_t i = 0; i < 1; i++) {
+	for (size_t i = 0; i < 5; i++) {
 		_scheduler.add_task(Task(CREER_SCOUT, arg ));
-		_scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
 	}
+	_scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
 	_scheduler.add_task(Task(PASS, arg));
 };
 
@@ -40,7 +40,11 @@ reine_retour give_args_to_thread(
     queen_thread = new std::thread(reine_thread);
   }
 
-  std::vector<fourmi_etat*> ouvrieres_garage(&fourmis, &fourmis + nb_fourmis);
+  std::vector<fourmi_etat*> ouvrieres_garage;
+  for (size_t i = 0; i < nb_fourmis; i++) {
+	  ouvrieres_garage.push_back(fourmis+i);
+  }
+
 
   // Send info to the queen thread
   to_reine.send_message(
