@@ -4,7 +4,7 @@
 #include "../../constants.hpp"
 
 enum fourminterrupt_e interrupt(fourmi_etat *etat, const salle *salle) {
-    if ((etat->eau < 15) && !(pile_vide(etat->memoire))) {
+    if ((etat->eau < 17) && !(pile_vide(etat->memoire))) {
         Log_info(CAT_FOURMIS, "INTERRUPT_WATER DETECTEE\n");
         return INTERRUPT_WATER;
     }
