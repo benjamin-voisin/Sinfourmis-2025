@@ -4,6 +4,7 @@
 #include "../sinfourmis.h"
 #include "thread_queue.h"
 #include "../fourmis/utils/pile.h"
+#include "reine_input.hpp"
 
 #include <thread>
 
@@ -42,12 +43,6 @@ class Queen {
 };
 
 extern std::thread* queen_thread;
-
-typedef struct {
-    std::vector<fourmi_etat*> forumis_miam_miam;
-    const reine_etat* state;
-    const salle* node;
-} reine_input_t;
 
 extern ThreadQueue<reine_input_t> to_reine;
 extern ThreadQueue<reine_retour> from_reine;
