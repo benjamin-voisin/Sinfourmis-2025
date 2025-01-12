@@ -116,10 +116,8 @@ void reine_thread() {
 						size_t number_of_ants = 10;
 
 						for (size_t i = 0; i < number_of_ants; i++) {
-							queen_state._scheduler.add_task(Task(PASS, arg));
 							queen_state._scheduler.add_task(Task(CREER_MANGER, arg));
 							queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
-							queen_state._scheduler.add_task(Task(PASS, arg));
 							queen_state._scheduler.add_task(Task(EAT_FORUMIS, arg));
 							queen_state._scheduler.add_task(Task(SEND_FORUMIS, arg));
 						}
