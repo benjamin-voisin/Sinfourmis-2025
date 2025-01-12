@@ -4,6 +4,8 @@
 #include "read_scout.hpp"
 #include "scheduler.hpp"
 #include "thread_queue.h"
+#include "../fourmis/main.h"
+#include "../fourmis/utils/b_constants.h"
 
 #include <cstdint>
 #include <iostream>
@@ -70,8 +72,8 @@ void reine_thread() {
         }
 
         // Update les infos par les scouts
-        queen_state.read_scouts(input.forumis_miam_miam);
-		queen_state.graph()->to_dot("graph.dot");
+        /* queen_state.read_scouts(input.forumis_miam_miam); */
+		/* queen_state.graph()->to_dot("graph.dot"); */
         std::vector<fourmis_compteur> ants_present(input.node->compteurs_fourmis, input.node->compteurs_fourmis + input.node->taille_liste);
         uint32_t friendly_ants_present = 0;
         for (auto compteur : ants_present) {
@@ -88,7 +90,7 @@ void reine_thread() {
 		for (fourmi_etat *fourmis : input.forumis_miam_miam) {
 			size_t pile_size;
 			pile_t *pile = pile_dumps(fourmis->memoire, &pile_size);
-			if (pile != NULL) {
+			if (pile != NULL && fourmi_kind(fourmis) == ANT_KIND_SCOUT) {
 				// Si le chemin est plus court que ce qu’on conanit
 				if (!queen_state.path_to_node[pile->id].has_value() || queen_state.path_to_node[pile->id].value().size() > pile_size) {
 					std::cout << "Trouvé un chemi plu court\n";
@@ -103,8 +105,13 @@ void reine_thread() {
 						arg_t arg = {0};
 						arg.manger_target = pile->id;
 						queen_state._scheduler.add_task(Task(GASLIGHT_SCOUT, arg));
+						size_t to_create = 5;
+						arg.amount = to_create;
 						queen_state._scheduler.add_task(Task(CREER_MANGER, arg));
-						queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
+						for (size_t i = 0; i < to_create; i++) {
+							queen_state._scheduler.add_task(Task(GASLIGHT_MANGER, arg));
+						}
+						queen_state._scheduler.add_task(Task(SEND_MANGER, arg));
 					}
 				}
 			}

@@ -14,11 +14,12 @@ typedef enum taks_e {
 	GASLIGHT_MANGER,
 	GASLIGHT_SCOUT,
 	SEND_FORUMIS,
+	SEND_MANGER,
 	EAT_FORUMIS,
 	PASS,
 } task_t;
 
-typedef union arg_u {
+typedef struct arg_u {
 	size_t amount;
 	node_id manger_target;
 } arg_t;
