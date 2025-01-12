@@ -7,31 +7,30 @@
 #include "utils/b_constants.h"
 #include "utils/utils.h"
 #include "utils/interrupts.h"
-#include "utils/log.h"
 
-void new_pp(FILE *f, fourmi_etat *etat) {
-  fprintf(f, "NEW_ANT {\n");
-  commun_body_pp(f, etat);
-  fprintf(f, "}\n");
+void new_pp(logcat_t cat, loglevel_t level, fourmi_etat *etat) {
+  Log(cat, level, "NEW_ANT {\n");
+  commun_body_pp(cat, level, etat);
+  Log(cat, level, "}\n");
 }
 
-void fourmi_pp(FILE *f, fourmi_etat *etat) {
+void fourmi_pp(logcat_t cat, loglevel_t level, fourmi_etat *etat) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   switch (mem->type) {
   case ANT_KIND_FOOD:
-    food_pp(f, etat);
+    food_pp(cat, level, etat);
     break;
   case ANT_KIND_SCOUT:
-    scout_pp(f, etat);
+    scout_pp(cat, level, etat);
     break;
   case ANT_KIND_COMMON:
-    commun_pp(f, etat);
+    commun_pp(cat, level, etat);
     break;
   case ANT_KIND_GUARD:
-    guard_pp(f, etat);
+    guard_pp(cat, level, etat);
     break;
   case ANT_KIND_NEW:
-    new_pp(f, etat);
+    new_pp(cat, level, etat);
     break;
   default:
     Log_warning(CAT_MAIN, "PP UNKNOWN_ANT");
@@ -55,7 +54,7 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
       commun_feedback_deplacement(etat, salle);
       break; 
     case RAMASSE_NOURRITURE:
-      Assert(CAT_MAIN, etat->result >= 0, "Feedback Fail RamasseNourriture");
+      Assert(CAT_MAIN, etat->result >= 0, "Feedback Fail RamasseNourriture\n");
       break;
     case COMMENCE_CONSTRUCTION:
       commun_feedback_commence_construction(etat, salle);
@@ -64,7 +63,7 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
       commun_feedback_termine_construction(etat, salle);
       break;
     case ATTAQUE:
-      Assert(CAT_MAIN, etat->result > 0, "Feedback Fail Attaque");
+      Assert(CAT_MAIN, etat->result > 0, "Feedback Fail Attaque\n");
       break;
     case ATTAQUE_TUNNEL:
       commun_feedback_attaque_tunnel(etat, salle);
@@ -72,14 +71,14 @@ void fourmi_feedback(fourmi_etat *etat, const salle *salle) {
     case FOURMI_PASSE:
       break;
     default:
-      Error(CAT_MAIN, "FOURMIS ACTION UNKNOWN");
+      Error(CAT_MAIN, "FOURMIS ACTION UNKNOWN\n");
     }
     break;
   case ANT_KIND_NEW:
-    Error(CAT_MAIN, "FOURMIS TYPE ANT_KIND_NEW NO FEEDBACK");
+    Error(CAT_MAIN, "FOURMIS TYPE ANT_KIND_NEW NO FEEDBACK\n");
     break;
   default:
-    Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN NO FEEDBACK");
+    Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN NO FEEDBACK\n");
   }
 }
 
@@ -97,15 +96,15 @@ fourmi_retour fourmi_interrupt(fourmi_etat *etat, const salle *salle, enum fourm
 			if (compt.equipe != mem->team_id)
 				return commun_action_attaque(compt.equipe);
 		}
-    Error(CAT_MAIN, "INTERRUPT ENNEMY: NO ENNEMY");
+    Error(CAT_MAIN, "INTERRUPT ENNEMY: NO ENNEMY\n");
     break;
 
 	case AUCUN_INTERRUPT:
-    Error(CAT_MAIN, "NO INTERRUPT");
+    Error(CAT_MAIN, "NO INTERRUPT\n");
     break;
 	
 	default:
-    Error(CAT_MAIN, "UNKNOWN INTERRUPT");
+    Error(CAT_MAIN, "UNKNOWN INTERRUPT\n");
 	}
 }
 
@@ -119,10 +118,10 @@ fourmi_retour fourmi_act(fourmi_etat *etat, const salle *salle) {
   case ANT_KIND_GUARD:
     return guard_action(etat, salle);
   case ANT_KIND_NEW:
-    Error(CAT_MAIN, "FOURMIS TYPE ANT_KIND_NEW CHERCHE ACTION");
+    Error(CAT_MAIN, "FOURMIS TYPE ANT_KIND_NEW CHERCHE ACTION\n");
     break;
   default:
-    Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN CHERCHE ACTION");
+    Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN CHERCHE ACTION\n");
   }
 }
 
@@ -138,17 +137,17 @@ void fourmi_postaction(fourmi_retour ret, fourmi_etat *etat,
     scout_postaction(etat, salle);
     break;
   case ANT_KIND_NEW:
-    Error(CAT_MAIN, "FOURMIS TYPE ANT_KIND_NEW CHERCHE POSTACTION");
+    Error(CAT_MAIN, "FOURMIS TYPE ANT_KIND_NEW CHERCHE POSTACTION\n");
     break;
   default:
-    Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN CHERCHE POSTACTION");
+    Error(CAT_MAIN, "FOURMIS TYPE UNKNOWN CHERCHE POSTACTION\n");
   }
   commun_postaction(etat, salle);
 }
 
 fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
   fourmi_feedback(etat, salle);
-  fourmi_pp(stdout, etat);
+  fourmi_pp(CAT_OTHER, LOG_DEBUG, etat);
   enum fourminterrupt_e inter = interrupt(etat, salle);
   fourmi_retour ret;
   if (inter != AUCUN_INTERRUPT)
@@ -159,6 +158,6 @@ fourmi_retour fourmi_activation(fourmi_etat *etat, const salle *salle) {
   
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
   mem->ret = ret;
-  retour_pp(stdout, ret);
+  retour_pp(CAT_OTHER, LOG_DEBUG, ret);
   return ret;
 }

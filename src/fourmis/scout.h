@@ -36,6 +36,6 @@ void scout_reloads(fourmi_etat* etat);
 fourmi_retour scout_action(fourmi_etat *etat, const salle *salle);
 void scout_postaction(fourmi_etat *etat, const salle *salle);
 
-void scout_pp(FILE* f, fourmi_etat* etat);
+void scout_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat);
 
 #endif

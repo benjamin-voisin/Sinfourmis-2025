@@ -2,11 +2,11 @@
 #define ANT_PILE
 
 #include "../../sinfourmis.h"
+#include "log.h"
 
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <stdio.h>
 
 typedef struct pile_s {
     uint8_t id;
@@ -26,9 +26,9 @@ typedef struct pilemetadata_s {
     uint8_t taillepile;
 } pilemetadata_t;
 
-void pilemetadata_pp_body(FILE* f, char* memoire);
-void pile_pp(FILE* f, char* memoire);
-void pile_pp_part(FILE* f, pile_t* p);
+void pilemetadata_pp_body(logcat_t cat, loglevel_t level, char* memoire);
+void pile_pp(logcat_t cat, loglevel_t level, char* memoire);
+void pile_pp_part(logcat_t cat, loglevel_t level, pile_t* p);
 
 pile_t* head(char* memoire);
 

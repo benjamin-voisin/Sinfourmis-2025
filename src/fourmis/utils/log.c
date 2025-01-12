@@ -96,10 +96,11 @@ static void log_vimpl(logcat_t cat, loglevel_t level, const char *format, va_lis
   time_buffer[strftime(time_buffer, sizeof(time_buffer), "%H:%M:%S",
                        local_time)] = '\0';
 
-  fprintf(stdio_of_level(level), ANSI_COLOR_LIGHT_GRAY "%s" ANSI_RESET " %s[%s](%s) " ANSI_RESET,
+  if (cat != CAT_NOBLOAT) {
+    fprintf(stdio_of_level(level), ANSI_COLOR_LIGHT_GRAY "%s" ANSI_RESET " %s[%s](%s) " ANSI_RESET,
           time_buffer, color_of_level(level), str_of_level(level), str_of_cat(cat));
+  }
   vfprintf(stdio_of_level(level), format, args);
-  fprintf(stdio_of_level(level), "\n");
 }
 
 void Log(logcat_t cat, loglevel_t level, const char *format, ...) {

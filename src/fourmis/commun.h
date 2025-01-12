@@ -6,7 +6,7 @@
 #include "../sinfourmis.h"
 
 #include <stdint.h>
-#include <stdio.h>
+#include "utils/log.h"
 
 enum communcomportement_e {
   AUCUN,
@@ -69,8 +69,8 @@ fourmi_retour commun_action_attaque_phero(pheromone_type pheromone_type, uint8_t
 
 fourmi_retour commun_action_attaque(uint8_t ennemy);
 
-void commun_pp(FILE* f, fourmi_etat* etat);
+void commun_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat);
 
-void commun_body_pp(FILE* f, fourmi_etat* etat);
+void commun_body_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat);
 
 #endif

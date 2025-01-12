@@ -27,8 +27,8 @@ fourmi_retour guard_action(fourmi_etat *etat, const salle *salle) {
         if (!pile_complete(etat->memoire))
             return commun_action_verslead(etat, salle);
         if (salle->type != EAU) {
-            Log_warning(CAT_FOURMIS, "La gardienne n'est pas arrivée sur une case EAU");
-            Log_warning(CAT_FOURMIS, "Retour à la reine");
+            Log_warning(CAT_FOURMIS, "La gardienne n'est pas arrivée sur une case EAU\n");
+            Log_warning(CAT_FOURMIS, "Retour à la reine\n");
             mem->comportement = G_BACK;
             return guard_action(etat, salle);
         }
@@ -53,42 +53,42 @@ fourmi_retour guard_action(fourmi_etat *etat, const salle *salle) {
         return commun_action_attendre();
 
     default:
-        Log_warning(CAT_FOURMIS, "GUARD ACTION UNDEFINED");
-        Log_warning(CAT_FOURMIS, "Fallback G_BACK");
+        Log_warning(CAT_FOURMIS, "GUARD ACTION UNDEFINED\n");
+        Log_warning(CAT_FOURMIS, "Fallback G_BACK\n");
         mem->comportement = G_BACK;
         return guard_action(etat, salle);
     }
 }
 
-void guard_coportement_pp(FILE* f, enum guardcomportement_e comportement) {
+void guard_coportement_pp(logcat_t cat, loglevel_t level, enum guardcomportement_e comportement) {
     switch (comportement)
     {
     case G_FOLLOWLEAD:
-        fprintf(f, "FOLLOWLEAD");
+        Log(cat, level, "FOLLOWLEAD");
         break;
     case G_GUARD:
-        fprintf(f, "BACK");
+        Log(cat, level, "BACK");
         break;
     case G_BACK:
-        fprintf(f, "WAITBASE");
+        Log(cat, level, "WAITBASE");
         break;
     default:
-        fprintf(f, "UNKNOWN");
+        Log(cat, level, "UNKNOWN");
         break;
     }
 }
 
-void guard_body_pp(FILE* f, fourmi_etat* etat) {
+void guard_body_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat) {
     memoire_guard_t* mem = (memoire_guard_t*) etat->memoire;
-    fprintf(f, "GUARD BODY:\n");
-    fprintf(f, "    status     = ");
-    guard_coportement_pp(f, mem->comportement);
-    fprintf(f, "\n");
+    Log(cat, level, "GUARD BODY:\n");
+    Log(cat, level, "    status     = ");
+    guard_coportement_pp(CAT_NOBLOAT, level, mem->comportement);
+    Log(CAT_NOBLOAT, level, "\n");
 }
 
-void guard_pp(FILE* f, fourmi_etat* etat) {
-    fprintf(f, "FOOD_ANT {\n");
-    guard_body_pp(f, etat);
-    commun_body_pp(f, etat);
-    fprintf(f, "}\n");
+void guard_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat) {
+    Log(cat, level, "FOOD_ANT {\n");
+    guard_body_pp(cat, level, etat);
+    commun_body_pp(cat, level, etat);
+    Log(cat, level, "}\n");
 }

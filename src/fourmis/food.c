@@ -25,7 +25,7 @@ fourmi_retour food_action(fourmi_etat *etat, const salle *salle) {
     case F_FOLLOWLEAD:
         if (salle->type == NOURRITURE) {
             if (!pile_complete(etat->memoire))
-                Log_info(CAT_FOURMIS, "La ramasseuse à trouvé de la Bouffe avant sa destination !"); 
+                Log_info(CAT_FOURMIS, "La ramasseuse à trouvé de la Bouffe avant sa destination !\n"); 
         
             mem->comportement = F_BACK;
             return commun_action_ramasse();
@@ -33,8 +33,8 @@ fourmi_retour food_action(fourmi_etat *etat, const salle *salle) {
         
         if (!pile_complete(etat->memoire))
             return commun_action_verslead(etat, salle);
-        Log_warning(CAT_FOURMIS, "La ramasseur n'est pas arrivée sur une case de bouffe");
-        Log_warning(CAT_FOURMIS, "Retour à la reine");
+        Log_warning(CAT_FOURMIS, "La ramasseur n'est pas arrivée sur une case de bouffe\n");
+        Log_warning(CAT_FOURMIS, "Retour à la reine\n");
         mem->comportement = F_BACK;
         return food_action(etat, salle);
         
@@ -49,42 +49,42 @@ fourmi_retour food_action(fourmi_etat *etat, const salle *salle) {
         return commun_action_attendre();
 
     default:
-        Log_warning(CAT_FOURMIS, "FOOD ACTION UNDEFINED");
-        Log_warning(CAT_FOURMIS, "Fallback F_BACK");
+        Log_warning(CAT_FOURMIS, "FOOD ACTION UNDEFINED\n");
+        Log_warning(CAT_FOURMIS, "Fallback F_BACK\n");
         mem->comportement = F_BACK;
         return food_action(etat, salle);
     }
 }
 
-void food_coportement_pp(FILE* f, enum foodcomportement_e comportement) {
+void food_coportement_pp(logcat_t cat, loglevel_t level, enum foodcomportement_e comportement) {
     switch (comportement)
     {
     case F_FOLLOWLEAD:
-        fprintf(f, "FOLLOWLEAD");
+        Log(cat, level, "FOLLOWLEAD");
         break;
     case F_BACK:
-        fprintf(f, "BACK");
+        Log(cat, level, "BACK");
         break;
     case F_WAITBASE:
-        fprintf(f, "WAITBASE");
+        Log(cat, level, "WAITBASE");
         break;
     default:
-        fprintf(f, "UNKNOWN");
+        Log(cat, level, "UNKNOWN");
         break;
     }
 }
 
-void food_body_pp(FILE* f, fourmi_etat* etat) {
+void food_body_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat) {
     memoire_food_t* mem = (memoire_food_t*) etat->memoire;
-    fprintf(f, "FOOD BODY:\n");
-    fprintf(f, "    status     = ");
-    food_coportement_pp(f, mem->comportement);
-    fprintf(f, "\n");
+    Log(cat, level, "FOOD BODY:\n");
+    Log(cat, level, "    status     = ");
+    food_coportement_pp(CAT_NOBLOAT, level, mem->comportement);
+    Log(CAT_NOBLOAT, level, "\n");
 }
 
-void food_pp(FILE* f, fourmi_etat* etat) {
-    fprintf(f, "FOOD_ANT {\n");
-    food_body_pp(f, etat);
-    commun_body_pp(f, etat);
-    fprintf(f, "}\n");
+void food_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat) {
+    Log(cat, level, "FOOD_ANT {\n");
+    food_body_pp(cat, level, etat);
+    commun_body_pp(cat, level, etat);
+    Log(cat, level, "}\n");
 }

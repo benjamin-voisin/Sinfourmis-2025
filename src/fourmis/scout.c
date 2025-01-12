@@ -26,7 +26,7 @@ void scout_reloads(fourmi_etat* etat) {
 
 void scout_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size, uint32_t id) {
     static uint8_t fresh_id = 0;
-    Assert(CAT_FOURMIS, fresh_id < 0b111111, "Scout ID Overflow");
+    Assert(CAT_FOURMIS, fresh_id < 0b111111, "Scout ID Overflow\n");
     commun_loads(etat, team_id, pile, size);
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
     mem->comm.type = ANT_KIND_SCOUT;
@@ -100,8 +100,8 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
         return scout_action(etat, salle);
 
     default:
-        Log_warning(CAT_FOURMIS, "SCOUT ACTION UNDEFINED");
-        Log_warning(CAT_FOURMIS, "Fallback BACK");
+        Log_warning(CAT_FOURMIS, "SCOUT ACTION UNDEFINED\n");
+        Log_warning(CAT_FOURMIS, "Fallback BACK\n");
         mem->comportement = BACK;
         return scout_action(etat, salle);
     }
@@ -112,49 +112,49 @@ void scout_postaction(fourmi_etat *etat, const salle *salle) {
 
 }
 
-void scout_coportement_pp(FILE* f, enum scoutcomportement_e comportement) {
+void scout_coportement_pp(logcat_t cat, loglevel_t level, enum scoutcomportement_e comportement) {
     switch (comportement)
     {
     case FOLLOWLEAD:
-        fprintf(f, "FOLLOWLEAD");
+        Log(cat, level, "FOLLOWLEAD");
         break;
     case SCOUTING:
-        fprintf(f, "SCOUTING");
+        Log(cat, level, "SCOUTING");
         break;
     case SCOUTING_NEW_TILE:
-        fprintf(f, "SCOUTING_NEW_TILE");
+        Log(cat, level, "SCOUTING_NEW_TILE");
         break;
     case BACK:
-        fprintf(f, "BACK");
+        Log(cat, level, "BACK");
         break;
     case BACKWATER:
-        fprintf(f, "BACKWATER");
+        Log(cat, level, "BACKWATER");
         break;
     case WAITWATER:
-        fprintf(f, "WAITWATER");
+        Log(cat, level, "WAITWATER");
         break;
     case WAITBASE:
-        fprintf(f, "WAITBASE");
+        Log(cat, level, "WAITBASE");
         break;
     default:
-        fprintf(f, "UNKNOWN");
+        Log(cat, level, "UNKNOWN");
         break;
     }
 }
 
-void scout_body_pp(FILE* f, fourmi_etat* etat) {
+void scout_body_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat) {
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
-    fprintf(f, "SCOUT BODY:\n");
-    fprintf(f, "    status     = ");
-    scout_coportement_pp(f, mem->comportement);
-    fprintf(f, "\n");
-    fprintf(f, "    scout_id   = %u\n", mem->id);
-    fprintf(f, "    tile_count = %u\n", mem->tile_counter);
+    Log(cat, level, "SCOUT BODY:\n");
+    Log(cat, level, "    status     = ");
+    scout_coportement_pp(CAT_NOBLOAT, level, mem->comportement);
+    Log(CAT_NOBLOAT, level, "\n");
+    Log(cat, level, "    scout_id   = %u\n", mem->id);
+    Log(cat, level, "    tile_count = %u\n", mem->tile_counter);
 }
 
-void scout_pp(FILE* f, fourmi_etat* etat) {
-    fprintf(f, "SCOUT_ANT {\n");
-    scout_body_pp(f, etat);
-    commun_body_pp(f, etat);
-    fprintf(f, "}\n");
+void scout_pp(logcat_t cat, loglevel_t level, fourmi_etat* etat) {
+    Log(cat, level, "SCOUT_ANT {\n");
+    scout_body_pp(cat, level, etat);
+    commun_body_pp(cat, level, etat);
+    Log(cat, level, "}\n");
 }
