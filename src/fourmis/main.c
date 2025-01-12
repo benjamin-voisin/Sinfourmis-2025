@@ -88,9 +88,11 @@ fourmi_retour fourmi_interrupt(fourmi_etat *etat, const salle *salle, enum fourm
 	{
 	case INTERRUPT_WATER:
 	case INTERRUPT_LIFE:
+    Log_info(CAT_FOURMIS, "INTERRUPT RESULT DIRECTION BASE\n");
 		return commun_action_versbase(etat, salle);
 	
 	case INTERRUPT_ENNEMY:
+    Log_info(CAT_FOURMIS, "INTERRUPT RESULT ATTACK\n");
 		for (size_t i=0; i<salle->taille_liste; ++i) {
 			fourmis_compteur compt = salle->compteurs_fourmis[i];
 			if (compt.equipe != mem->team_id)
