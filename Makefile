@@ -33,10 +33,10 @@ simulateur:
 	cp ./sinfourmis2025/Sinfourmis ./
 
 simuletest: simulateur $(NAME) dumb.so
-	./Sinfourmis -t ./dumb.so -t ./$(NAME) -d 150 ./sinfourmis2025/maps/test.json
+	./Sinfourmis -t dummy -t ./$(NAME) -d 150 ./sinfourmis2025/maps/test.json
 
 simuletest_full: simulateur $(NAME) dumb.so
-	./Sinfourmis -t ./dumb.so -t ./$(NAME) ./sinfourmis2025/maps/test.json
+	./Sinfourmis -t dummy -t ./$(NAME) ./sinfourmis2025/maps/test.json
 
 simule: simulateur $(NAME) dumb.so
 	./Sinfourmis -t dummy -t dummy -t dummy -t ./$(NAME) -d 50 ./sinfourmis2025/maps/spiral.json
