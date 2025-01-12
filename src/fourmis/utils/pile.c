@@ -89,22 +89,26 @@ void pile_copy(pile_t* psrc, pile_t* pdst) {
 
 void simplipile(char* memoire) {
     pilemetadata_t* met = pilemetadata(memoire);
+    if (met->taillepile > 0) {
     pile_t* p_base = pile_get(memoire, met->taillepile-1);
     for (size_t i=0; i<met->taillepile-1; ++i) {
         pile_t* p = pile_get(memoire, i);
         if (p_base->id == p->id) {
+            printf("SIMPLIFY i=%d\n", i);
+            pile_pp_part(stdout, p);
+            printf("---------------\n");
             uint8_t delta = met->taillepilemax-met->taillepile;
             for (size_t j=0; j<delta; ++j) {
                 pile_t* psrc = pile_get(memoire, met->taillepile+j);
-                pile_t* pdst = pile_get(memoire, i+j);
+                pile_t* pdst = pile_get(memoire, i+j+1);
                 pile_copy(psrc, pdst);
             }
-            met->taillepile = i;
-            met->taillepilemax = i + delta;
+            met->taillepile = i + 1;
+            met->taillepilemax = i + delta + 1;
             return;
         }
     }
-
+    }
 }
 
 bool pile_vide(char* memoire) {
@@ -176,6 +180,12 @@ void pile_loads(char* memoire, pile_t* pile, size_t size) {
         pile_t* p = pile_dumps_last(memoire);
         memcpy(p, pile, size * sizeof(pile_t));
     }
+}
+
+void pile_reduceloads(char* memoire) {
+    pilemetadata_t* met = pilemetadata(memoire);
+    assert(met->taillepile == 0);
+    met->taillepilemax = 0;
 }
 
 uint32_t water2base(char* memoire) {

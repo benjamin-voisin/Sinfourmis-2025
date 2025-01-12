@@ -17,6 +17,7 @@ typedef struct memoire_food_s {
 } memoire_food_t;
 
 void food_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size);
+void food_reloads(fourmi_etat* etat);
 
 fourmi_retour food_action(fourmi_etat *etat, const salle *salle);
 

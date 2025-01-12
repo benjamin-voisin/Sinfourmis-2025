@@ -37,6 +37,8 @@ typedef struct memoire_commun_s {
 
 void commun_loads(fourmi_etat* etat, uint32_t team_id, pile_t* pile, size_t size);
 
+void commun_reloads(fourmi_etat* etat);
+
 void commun_postaction(fourmi_etat* etat, const salle *salle);
 
 void commun_feedback_deplacement(fourmi_etat* etat, const salle *salle);
