@@ -74,8 +74,8 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
             return scout_action(etat, salle);
         } */
 
-        //direction = salle->public_pheromone % salle->degre;
-        direction = random_other_dir(etat, salle);
+        direction = salle->public_pheromone % salle->degre;
+        //direction = random_other_dir(etat, salle);
         mem->comportement = SCOUTING_NEW_TILE;
         mem->comm.prevent_prehemption = true;
         return commun_action_versdirection(etat, salle, direction, PUBLIC, salle->public_pheromone+1);
