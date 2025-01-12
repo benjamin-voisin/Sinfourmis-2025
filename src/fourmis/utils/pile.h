@@ -40,6 +40,8 @@ bool pile_complete(char* memoire);
 // Pour empiler un bout de chemin
 void empiler(char* memoire, pile_t e);
 
+pile_t* pile_get(char* memoire, size_t i);
+
 void false_empiler(char* memoire);
 
 // Pour dépiler un bout de chemin
