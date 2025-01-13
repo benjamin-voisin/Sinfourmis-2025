@@ -4,6 +4,8 @@
 #include "../../constants.hpp"
 #include "../commun.h"
 
+#include <assert.h>
+
 void interrupt_incr(fourmi_etat *etat, fourminterrupt_t inter) {
     memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
     assert(inter < NB_INTERRUPTS);
