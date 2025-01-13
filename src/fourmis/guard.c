@@ -37,7 +37,7 @@ fourmi_retour guard_action(fourmi_etat *etat, const salle *salle) {
         return guard_action(etat, salle);
     
     case G_GUARD:
-        if (etat->vie < DEFAULT_MAX_LIFE) {
+        if (etat->vie < mem->comm.stats.max_vie) {
             mem->comportement = G_BACK; 
             return guard_action(etat, salle);
         }
