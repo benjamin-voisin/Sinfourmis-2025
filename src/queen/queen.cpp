@@ -18,6 +18,7 @@ ThreadQueue<reine_input_t> to_reine;
 ThreadQueue<reine_retour> from_reine;
 
 Queen::Queen(): _graph(), _last_state(), _ticks(0), _produced_ants(0) {
+    this->stat = stats_init();
 	for (int i = 0; i < 256; i++) {
 		path_to_node[i] = std::nullopt;
 	}
@@ -131,10 +132,10 @@ void reine_thread() {
         reine_action action;
         int arg = 0;
 
-		if (friendly_ants_present == 0 && input.forumis_miam_miam.size() == 0 && input.state->nourriture > queen_state.ticks()) {
+		if (friendly_ants_present == 0 && input.forumis_miam_miam.size() == 0 && input.state->nourriture > queen_state.ticks() && queen_state.ticks() > 50) {
 			switch (queen_state.to_update) {
 				case (0):
-					action = AMELIORE_RAMASSAGE;
+					action = AMELIORE_EAU;
 					queen_state.to_update++;
 					queen_state.stat.max_food++;
 					break;
@@ -153,7 +154,7 @@ void reine_thread() {
 					queen_state.to_update++;
 					break;
 				default:
-					action = AMELIORE_RAMASSAGE;
+					action = AMELIORE_EAU;
 					queen_state.stat.max_food++;
 					break;
 			}
