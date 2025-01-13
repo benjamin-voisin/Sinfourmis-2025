@@ -2,11 +2,14 @@
 
 #include "../../sinfourmis.h"
 
-enum fourminterrupt_e {
+typedef enum fourminterrupt_e {
   AUCUN_INTERRUPT,
   INTERRUPT_WATER,
   INTERRUPT_LIFE,
-  INTERRUPT_ENNEMY
-}; 
+  INTERRUPT_ENNEMY,
+  NB_INTERRUPTS
+} fourminterrupt_t;
 
-enum fourminterrupt_e interrupt(fourmi_etat *etat, const salle *salle);
+typedef uint8_t interruptstats_t[NB_INTERRUPTS];
+
+fourminterrupt_t interrupt(fourmi_etat *etat, const salle *salle);

@@ -3,12 +3,14 @@
 
 #include "utils/pile.h"
 #include "utils/stats.h"
+#include "utils/log.h"
+#include "utils/interrupts.h"
 
 #include "../sinfourmis.h"
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "utils/log.h"
+
 
 enum communcomportement_e {
   AUCUN,
@@ -30,6 +32,7 @@ typedef struct __attribute__((__packed__)) memoire_commun_s {
     pilemetadata_t pilemetadata;
     uint8_t type;
     stats_t stats;
+    interruptstats_t interrupt_stats;
     enum communcomportement_e comportement;
     uint32_t team_id;
     uint32_t fourmis_id;
