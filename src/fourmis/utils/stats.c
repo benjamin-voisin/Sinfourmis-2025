@@ -17,3 +17,11 @@ stats_t stats_init() {
     st.max_vie = DEFAULT_MAX_LIFE;
     return st;
 }
+
+void stats_body_pp(logcat_t cat, loglevel_t level, stats_t* stats) {
+    Log(cat, level, "STATS:\n");
+    Log(cat, level, "    max_deg    = %u\n", stats->max_degats);
+    Log(cat, level, "    max_eau    = %u\n", stats->max_eau);
+    Log(cat, level, "    max_food   = %u\n", stats->max_food);
+    Log(cat, level, "    max_vie    = %u\n", stats->max_vie);
+}

@@ -199,6 +199,7 @@ void common_kind_pp(logcat_t cat, loglevel_t level, uint8_t type) {
 
 void commun_body_pp(logcat_t cat, loglevel_t level, fourmi_etat *etat) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
+  stats_body_pp(cat, level, &mem->stats);
   Log(cat, level, "COMMON BODY:\n");
   Log(cat, level, "    kind       = ");
   common_kind_pp(CAT_NOBLOAT, level, mem->type);
