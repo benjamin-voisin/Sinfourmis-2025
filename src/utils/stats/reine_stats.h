@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-#include "../../fourmis/utils/log.h"
+#include "../log.h"
 
 typedef struct reine_stats_s {
     uint8_t max_stockage;
