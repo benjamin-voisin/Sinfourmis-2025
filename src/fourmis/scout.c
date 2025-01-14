@@ -1,7 +1,7 @@
 #include "scout.h"
 #include "utils/b_constants.h"
 #include "utils/utils.h"
-#include "utils/log.h"
+#include "../utils/log.h"
 #include "../constants.hpp"
 
 #include "main.h"
@@ -19,14 +19,14 @@ uint8_t no_more_id(fourmi_etat *etat) {
     return (mem->tile_counter == COUNTER_MASK);
 }
 
-void scout_reloads(fourmi_etat* etat, stats_t stats) {
+void scout_reloads(fourmi_etat* etat, fourmi_stats_t stats) {
     commun_reloads(etat, stats);
     memoire_scout_t* mem = (memoire_scout_t*) etat->memoire;
     mem->comportement = FOLLOWLEAD;
     pile_reduceloads(etat->memoire);
 }
 
-void scout_loads(fourmi_etat* etat, stats_t stats, uint32_t team_id, pile_t* pile, size_t size, uint32_t id) {
+void scout_loads(fourmi_etat* etat, fourmi_stats_t stats, uint32_t team_id, pile_t* pile, size_t size, uint32_t id) {
     static uint8_t fresh_id = 0;
     Assert(CAT_FOURMIS, fresh_id < 0b111111, "Scout ID Overflow\n");
     commun_loads(etat, stats, team_id, pile, size);
@@ -77,7 +77,7 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
         } */
 
         direction = salle->public_pheromone % salle->degre;
-        //direction = random_other_dir(etat, salle);
+        direction = random_other_dir(etat, salle);
         mem->comportement = SCOUTING_NEW_TILE;
         mem->comm.prevent_prehemption = true;
         return commun_action_versdirection(etat, salle, direction, PUBLIC, salle->public_pheromone+1);

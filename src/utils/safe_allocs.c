@@ -1,6 +1,6 @@
 #include "safe_allocs.h"
 
-#include "../fourmis/utils/log.h"
+#include "log.h"
 
 void* Malloc(size_t size) {
     void* result = malloc(size);

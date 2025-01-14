@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../../sinfourmis.h"
-#include "log.h"
+#include "../../utils/log.h"
 
 uint8_t random_dir(fourmi_etat *etat, const salle *salle);
 

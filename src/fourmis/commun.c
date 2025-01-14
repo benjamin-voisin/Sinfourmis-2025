@@ -2,7 +2,6 @@
 
 #include "utils/b_constants.h"
 #include "utils/utils.h"
-#include "utils/log.h"
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -23,16 +22,16 @@ void ret_loads(fourmi_etat* etat) {
     mem->ret.arg = 0;
 }
 
-void commun_reloads(fourmi_etat* etat, stats_t stats) {
+void commun_reloads(fourmi_etat* etat, fourmi_stats_t stats) {
     stats_loads(etat);
     ret_loads(etat);
     pile_reloads(etat->memoire);
     memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
-    stats_copy(&mem->stats, stats);
+    fourmi_stats_copy(&mem->stats, stats);
     mem->prevent_prehemption = false;
 }
 
-void commun_loads(fourmi_etat *etat, stats_t stats, uint32_t team_id, pile_t *pile,
+void commun_loads(fourmi_etat *etat, fourmi_stats_t stats, uint32_t team_id, pile_t *pile,
                   size_t size) {
   static uint32_t id = 0;
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
@@ -42,7 +41,7 @@ void commun_loads(fourmi_etat *etat, stats_t stats, uint32_t team_id, pile_t *pi
   mem->type = ANT_KIND_COMMON;
   mem->comportement = AUCUN;
   mem->prevent_prehemption = false;
-  stats_copy(&mem->stats, stats);
+  fourmi_stats_copy(&mem->stats, stats);
   stats_loads(etat);
   ret_loads(etat);
 }
@@ -201,7 +200,7 @@ void common_kind_pp(logcat_t cat, loglevel_t level, uint8_t type) {
 
 void commun_body_pp(logcat_t cat, loglevel_t level, fourmi_etat *etat) {
   memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
-  stats_body_pp(cat, level, &mem->stats);
+  fourmi_stats_body_pp(cat, level, &mem->stats);
   Log(cat, level, "COMMON BODY:\n");
   Log(cat, level, "    kind       = ");
   common_kind_pp(CAT_NOBLOAT, level, mem->type);

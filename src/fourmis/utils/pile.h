@@ -2,7 +2,7 @@
 #define ANT_PILE
 
 #include "../../sinfourmis.h"
-#include "log.h"
+#include "../../utils/log.h"
 
 #include <stdint.h>
 #include <stdlib.h>

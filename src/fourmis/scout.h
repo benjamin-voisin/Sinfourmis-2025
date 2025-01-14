@@ -30,8 +30,8 @@ typedef struct __attribute__((__packed__)) memoire_scout_s {
     uint8_t tile_counter; // 3 bit integer
 } memoire_scout_t;
 
-void scout_loads(fourmi_etat* etat, stats_t stats, uint32_t team_id, pile_t* pile, size_t size, uint32_t id);
-void scout_reloads(fourmi_etat* etat, stats_t stats);
+void scout_loads(fourmi_etat* etat, fourmi_stats_t stats, uint32_t team_id, pile_t* pile, size_t size, uint32_t id);
+void scout_reloads(fourmi_etat* etat, fourmi_stats_t stats);
 
 fourmi_retour scout_action(fourmi_etat *etat, const salle *salle);
 void scout_postaction(fourmi_etat *etat, const salle *salle);

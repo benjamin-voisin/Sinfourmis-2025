@@ -16,8 +16,8 @@ typedef struct __attribute__((__packed__)) memoire_guard_s {
     enum guardcomportement_e comportement;
 } memoire_guard_t;
 
-void guard_loads(fourmi_etat* etat, stats_t stats, uint32_t team_id, pile_t* pile, size_t size);
-void guard_reloads(fourmi_etat* etat, stats_t stats);
+void guard_loads(fourmi_etat* etat, fourmi_stats_t stats, uint32_t team_id, pile_t* pile, size_t size);
+void guard_reloads(fourmi_etat* etat, fourmi_stats_t stats);
 
 fourmi_retour guard_action(fourmi_etat *etat, const salle *salle);
 

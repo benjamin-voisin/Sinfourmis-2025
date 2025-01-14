@@ -2,8 +2,8 @@
 #define ANT_COMMUN_H
 
 #include "utils/pile.h"
-#include "utils/stats.h"
-#include "utils/log.h"
+#include "../utils/stats/fourmi_stats.h"
+#include "../utils/log.h"
 #include "utils/interrupts.h"
 
 #include "../sinfourmis.h"
@@ -31,7 +31,7 @@ SCHEMA MEMOIRE D'UNE FOURMIS
 typedef struct __attribute__((__packed__)) memoire_commun_s {
     pilemetadata_t pilemetadata;
     uint8_t type;
-    stats_t stats;
+    fourmi_stats_t stats;
     interruptstats_t interrupt_stats;
     enum communcomportement_e comportement;
     uint32_t team_id;
@@ -43,9 +43,9 @@ typedef struct __attribute__((__packed__)) memoire_commun_s {
     fourmi_retour ret;
 } memoire_commun_t;
 
-void commun_loads(fourmi_etat* etat, stats_t stats, uint32_t team_id, pile_t* pile, size_t size);
+void commun_loads(fourmi_etat* etat, fourmi_stats_t stats, uint32_t team_id, pile_t* pile, size_t size);
 
-void commun_reloads(fourmi_etat* etat, stats_t stats);
+void commun_reloads(fourmi_etat* etat, fourmi_stats_t stats);
 
 void commun_postaction(fourmi_etat* etat, const salle *salle);
 

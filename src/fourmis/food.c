@@ -1,17 +1,17 @@
 #include "food.h"
 #include "utils/b_constants.h"
-#include "utils/log.h"
+#include "../utils/log.h"
 
 #include <stdio.h>
 
-void food_loads(fourmi_etat* etat, stats_t stats, uint32_t team_id, pile_t* pile, size_t size) {
+void food_loads(fourmi_etat* etat, fourmi_stats_t stats, uint32_t team_id, pile_t* pile, size_t size) {
     commun_loads(etat, stats, team_id, pile, size);
     memoire_food_t* mem = (memoire_food_t*) etat->memoire;
     mem->comm.type = ANT_KIND_FOOD;
     mem->comportement = F_FOLLOWLEAD;
 }
 
-void food_reloads(fourmi_etat* etat, stats_t stats) {
+void food_reloads(fourmi_etat* etat, fourmi_stats_t stats) {
     commun_reloads(etat, stats);
     memoire_food_t* mem = (memoire_food_t*) etat->memoire;
     mem->comportement = F_FOLLOWLEAD;
