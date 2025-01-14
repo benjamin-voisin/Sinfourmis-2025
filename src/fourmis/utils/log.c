@@ -38,15 +38,17 @@ const char* str_of_color(logcolor_t col) {
 const char* str_of_cat(logcat_t cat) {
     switch (cat) {
     case CAT_MAIN:
-        return "M";
+        return "M    ";
     case CAT_PILE:
-        return "P";
+        return "Pile ";
     case CAT_FOURMIS:
-        return "F";
+        return "F    ";
     case CAT_TODO:
-        return "T";
+        return "TODO ";
+    case CAT_ALLOC:
+        return "ALLOC";
     default:
-        return "O";
+        return "Other";
     }
 }
 

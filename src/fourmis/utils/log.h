@@ -34,6 +34,7 @@ typedef enum logcat_e {
     CAT_FOURMIS,
     CAT_TODO,
     CAT_NOBLOAT,
+    CAT_ALLOC,
 } logcat_t;
 
 
