@@ -12,3 +12,5 @@ typedef struct reine_s {
 reine_t* reine_alloc();
 
 void reine_free(reine_t* reine);
+
+void reine_pp(logcat_t cat, loglevel_t level, reine_t* reine);
