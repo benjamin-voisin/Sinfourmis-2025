@@ -4,6 +4,8 @@
 #include "utils/log.h"
 #include "../constants.hpp"
 
+#include "main.h"
+
 #include <stdio.h>
 
 uint8_t freshid(fourmi_etat *etat) {
@@ -57,7 +59,7 @@ fourmi_retour scout_action(fourmi_etat *etat, const salle *salle) {
             pile_edit_id(etat->memoire, id);
             if (no_more_id(etat))
                 mem->comportement = BACK;
-            if (salle->type == NOURRITURE)// (salle->type != VIDE)
+            if (salle->type != VIDE)
                 mem->comportement = BACK;
             if (salle->type == NOURRITURE)
                 return commun_action_ramasse_phero(PRIVE, id);
