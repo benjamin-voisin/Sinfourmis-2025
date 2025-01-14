@@ -15,7 +15,7 @@ void reine_update_ameliore_production(reine_t* reine) {
 }
 
 void reine_update_ameliore_envoi(reine_t* reine) {
-    Error(CAT_OTHER, "Amélioration ENVOI non documentée");
+    Error(CAT_REINE, "Amélioration ENVOI non documentée");
 }
 
 void reine_update_ameliore_vitesse_amelioration(reine_t* reine) {
@@ -68,6 +68,6 @@ void reine_update_state(reine_t* reine, reine_retour ret) {
     case REINE_PASSE:
         return reine_update_passe(reine);
     default:
-        Error(CAT_OTHER, "Action de la reine %d inconnue.", ret.action);
+        Error(CAT_REINE, "Action de la reine %d inconnue.", ret.action);
     }
 }

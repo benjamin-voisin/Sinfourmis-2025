@@ -2,9 +2,11 @@
 
 #include <assert.h>
 
+#include "../../utils/log.h"
+
 reine_retour reine_action_appel(reine_action act, uint8_t arg) {
     reine_retour ret;
-    assert(act <= REINE_PASSE);
+    Assert(CAT_REINE, act <= REINE_PASSE, "Action indéfinie !");
     ret.action = act;
     ret.arg = arg;
     return ret;

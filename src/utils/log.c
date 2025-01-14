@@ -47,6 +47,8 @@ const char* str_of_cat(logcat_t cat) {
         return "TODO ";
     case CAT_ALLOC:
         return "ALLOC";
+    case CAT_REINE:
+        return "REINE";
     default:
         return "Other";
     }
