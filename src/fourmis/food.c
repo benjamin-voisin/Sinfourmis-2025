@@ -49,7 +49,7 @@ fourmi_retour food_action(fourmi_etat *etat, const salle *salle) {
         return commun_action_attendre();
 
     default:
-        Log_warning(CAT_FOURMIS, "FOOD ACTION UNDEFINED\n");
+        Error(CAT_FOURMIS, "FOOD ACTION UNDEFINED\n");
         Log_warning(CAT_FOURMIS, "Fallback F_BACK\n");
         mem->comportement = F_BACK;
         return food_action(etat, salle);
