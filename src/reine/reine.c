@@ -6,7 +6,7 @@
 reine_t* reine_alloc() {
     reine_t* reine = (reine_t*) Malloc(sizeof(reine_t));
     reine->tick = 0;
-    stats_init(reine->stats);
+    stats_init(&reine->stats);
     return reine;
 }
 

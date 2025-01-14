@@ -8,6 +8,6 @@ typedef struct stats_s {
     reine_stats_t  reine_stats;    
 } stats_t;
 
-void stats_init(stats_t stats);
+void stats_init(stats_t* stats);
 
 void stats_body_pp(logcat_t cat, loglevel_t level, stats_t* stats);

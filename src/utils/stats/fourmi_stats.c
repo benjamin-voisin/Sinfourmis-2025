@@ -9,11 +9,11 @@ void fourmi_stats_copy(fourmi_stats_t* dst, fourmi_stats_t src) {
     dst->max_vie = src.max_vie;
 }
 
-void fourmi_stats_init(fourmi_stats_t st) {
-    st.max_degats = DEFAULT_ATTACK;
-    st.max_eau = DEFAULT_MAX_WATER;
-    st.max_food = DEFAULT_MAX_FOOD;
-    st.max_vie = DEFAULT_MAX_LIFE;
+void fourmi_stats_init(fourmi_stats_t* st) {
+    st->max_degats = DEFAULT_ATTACK;
+    st->max_eau = DEFAULT_MAX_WATER;
+    st->max_food = DEFAULT_MAX_FOOD;
+    st->max_vie = DEFAULT_MAX_LIFE;
 }
 
 void fourmi_stats_body_pp(logcat_t cat, loglevel_t level, fourmi_stats_t* stats) {
