@@ -6,21 +6,38 @@ void reine_update_envoyer_fourmi(reine_t* reine, uint8_t arg);
 
 void reine_update_recuperer_fourmi(reine_t* reine, uint8_t arg);
 
-void reine_update_ameliore_stockage(reine_t* reine);
+void reine_update_ameliore_stockage(reine_t* reine) {
+    reine->stats.reine_stats.max_stockage += 1;
+}
 
-void reine_update_ameliore_production(reine_t* reine);
+void reine_update_ameliore_production(reine_t* reine) {
+    reine->stats.reine_stats.max_production += 1;
+}
 
-void reine_update_ameliore_envoi(reine_t* reine);
+void reine_update_ameliore_envoi(reine_t* reine) {
+    Error(CAT_OTHER, "Amélioration ENVOI non documentée");
+}
 
-void reine_update_ameliore_vitesse_amelioration(reine_t* reine);
+void reine_update_ameliore_vitesse_amelioration(reine_t* reine) {
+    if (reine->stats.reine_stats.max_vitesse_amelioration > 1)
+        reine->stats.reine_stats.max_vitesse_amelioration -= 1;
+}
 
-void reine_update_ameliore_ramassage(reine_t* reine);
+void reine_update_ameliore_ramassage(reine_t* reine) {
+    reine->stats.fourmi_stats.max_food += 1;
+}
 
-void reine_update_ameliore_vie(reine_t* reine);
+void reine_update_ameliore_vie(reine_t* reine) {
+    reine->stats.fourmi_stats.max_vie += 1;
+}
 
-void reine_update_ameliore_eau(reine_t* reine);
+void reine_update_ameliore_eau(reine_t* reine) {
+    reine->stats.fourmi_stats.max_eau += 5;
+}
 
-void reine_update_ameliore_degats(reine_t* reine);
+void reine_update_ameliore_degats(reine_t* reine) {
+    reine->stats.fourmi_stats.max_degats += 1;
+}
 
 void reine_update_passe(reine_t* reine);
 

@@ -2,7 +2,7 @@
 
 #include "stdint.h"
 
-#include "../fourmis/utils/stats.h"
+#include "../utils/stats/global_stats.h"
 
 typedef struct reine_s {
     uint64_t tick;
