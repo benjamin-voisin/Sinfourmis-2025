@@ -16,8 +16,8 @@ void interrupt_incr(fourmi_etat *etat, fourminterrupt_t inter) {
 
 fourminterrupt_t interrupt(fourmi_etat *etat, const salle *salle) {
     memoire_commun_t *mem = (memoire_commun_t *)etat->memoire;
-    if ((etat->eau < mem->stats.max_eau / 2 + 7) && !(pile_vide(etat->memoire))) {
-        Log_warning(CAT_FOURMIS, "INTERRUPT_WATER DETECTEE\n");
+    if ((etat->eau < mem->stats.max_eau / 2 + 11) && !(pile_vide(etat->memoire))) {
+        Log_warning(CAT_FOURMIS, "INTERRUPT_WATER DETECTEE %d <\n", mem->stats.max_eau / 2 + 11);
         interrupt_incr(etat, INTERRUPT_WATER);
         return INTERRUPT_WATER;
     }
