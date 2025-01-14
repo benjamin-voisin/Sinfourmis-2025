@@ -1,5 +1,7 @@
 #include "basics.h"
 
+#include <assert.h>
+
 reine_retour reine_action_appel(reine_action act, uint8_t arg) {
     reine_retour ret;
     assert(act <= REINE_PASSE);
